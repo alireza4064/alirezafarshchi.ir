@@ -331,7 +331,7 @@ export function initAssistantAndChat(content) {
     });
     if (name === "chat" && SITE_CONFIG.WORKER_URL && !pollTimer) {
       pollTelegramReplies();
-      pollTimer = window.setInterval(pollTelegramReplies, 5000);
+      pollTimer = window.setInterval(pollTelegramReplies, 3000);
     }
   }
   tabs.forEach((t) => t.addEventListener("click", () => activateTab(t.getAttribute("data-tab"))));
@@ -419,8 +419,8 @@ export function initAssistantAndChat(content) {
   async function pollTelegramReplies() {
     if (!SITE_CONFIG.WORKER_URL) return;
     try {
-      const url = `${SITE_CONFIG.WORKER_URL.replace(/\/$/, "")}/api/messages?session=${encodeURIComponent(sessionId)}`;
-      const res = await fetch(url);
+      const url = `${SITE_CONFIG.WORKER_URL.replace(/\/$/, "")}/api/messages?session=${encodeURIComponent(sessionId)}&_t=${Date.now()}`;
+      const res = await fetch(url, { cache: "no-store" });
       if (!res.ok) return;
       const data = await res.json();
       if (Array.isArray(data.replies) && data.replies.length) {
