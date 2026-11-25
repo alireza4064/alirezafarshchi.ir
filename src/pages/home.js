@@ -327,21 +327,38 @@ export function initHomePage(content) {
     });
   }
 
-  // 2. Subtle Desktop Pointer Parallax on Hero Sculpture (respects reduced-motion)
-  const heroSculpture = document.getElementById("hero-sculpture");
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // 2. Interactive Figma Multiplayer "Guest" Cursor on Hero Canvas (desktop fine pointer)
+  const figmaCanvas = document.getElementById("figma-canvas");
+  const guestCursor = document.getElementById("figma-guest-cursor");
+  const figmaStage = figmaCanvas?.closest(".figma-stage");
   const finePointer = window.matchMedia("(pointer: fine)").matches;
 
-  if (heroSculpture && !prefersReduced && finePointer) {
-    heroSculpture.addEventListener("pointermove", (e) => {
-      const rect = heroSculpture.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      heroSculpture.style.transform = `perspective(900px) rotateX(${(-y * 5).toFixed(2)}deg) rotateY(${(x * 5).toFixed(2)}deg)`;
+  if (figmaCanvas && guestCursor && finePointer) {
+    figmaCanvas.addEventListener("pointerenter", () => {
+      figmaCanvas.classList.add("is-guest-hover");
+      figmaStage?.classList.add("is-guest-active");
     });
 
-    heroSculpture.addEventListener("pointerleave", () => {
-      heroSculpture.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+    figmaCanvas.addEventListener("pointermove", (e) => {
+      const rect = figmaCanvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      guestCursor.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
+    });
+
+    figmaCanvas.addEventListener("pointerleave", () => {
+      figmaCanvas.classList.remove("is-guest-hover");
+      figmaStage?.classList.remove("is-guest-active");
+    });
+
+    figmaCanvas.addEventListener("pointerdown", (e) => {
+      const rect = figmaCanvas.getBoundingClientRect();
+      const ping = document.createElement("span");
+      ping.className = "figma-click-ping";
+      ping.style.left = `${(e.clientX - rect.left).toFixed(1)}px`;
+      ping.style.top = `${(e.clientY - rect.top).toFixed(1)}px`;
+      figmaCanvas.appendChild(ping);
+      window.setTimeout(() => ping.remove(), 550);
     });
   }
 }

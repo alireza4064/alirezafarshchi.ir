@@ -62,6 +62,7 @@ export function renderHeroFigmaStage() {
         </div>
 
         <div class="figma-toolbar-right">
+          <span class="figma-avatar figma-avatar--guest" id="figma-guest-avatar" title="Guest (You)">G</span>
           <span class="figma-avatar" title="Alireza Farshchi">AF</span>
           <span class="figma-share-pill">Share</span>
           <span class="figma-zoom">100%</span>
@@ -88,7 +89,21 @@ export function renderHeroFigmaStage() {
         </aside>
 
         <!-- Center Infinite Dot-Grid Canvas -->
-        <div class="figma-canvas">
+        <div class="figma-canvas" id="figma-canvas">
+          <!-- Interactive Visitor Multiplayer Cursor ("Guest") -->
+          <div class="figma-guest-cursor" id="figma-guest-cursor" aria-hidden="true">
+            <svg width="18" height="20" viewBox="0 0 16 18" fill="none">
+              <path
+                d="M1.5 1.5L6.3 15.6L8.7 9.8L14.5 7.6L1.5 1.5Z"
+                fill="#0ACF83"
+                stroke="#FFFFFF"
+                stroke-width="1.4"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span class="figma-guest-cursor__tag">Guest</span>
+          </div>
+
           <div class="figma-canvas-frame-head">
             <span class="figma-frame-label">❖ Dashify / Overview — Desktop 1440</span>
             <span class="figma-frame-badge">Auto Layout</span>
