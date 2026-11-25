@@ -42,25 +42,68 @@
   overflow: hidden;
 }
 
-/* Symbol Studio Expanded Top Strip */
-.site-nav__meta-strip {
+/* Symbol Studio-Inspired Expanded Tray (Visibly open on load, folds shut on scroll) */
+.site-nav__expanded-tray {
   display: grid;
   grid-template-rows: 1fr;
   opacity: 1;
-  border-bottom: 1px solid var(--border);
-  transition: grid-template-rows var(--dur-nav-collapse) var(--ease-out),
-    opacity 220ms var(--ease-out),
-    border-color var(--dur-nav-collapse) var(--ease-out);
+  border-top: 1px solid var(--border);
+  background: var(--surface-subtle);
+  transition: grid-template-rows 560ms cubic-bezier(0.45, 0, 0.2, 1),
+    opacity 260ms var(--ease-out),
+    border-color 320ms var(--ease-out);
 }
 
-.site-nav__meta-inner {
+.site-nav__expanded-inner {
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 22px;
-  font-size: 0.78rem;
+  gap: 14px;
+  padding: 11px 22px;
+  font-size: 0.8rem;
   color: var(--ink-muted);
+  flex-wrap: wrap;
+}
+
+.site-nav__quick-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.nav-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 11px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--ink-secondary);
+  transition: all 180ms var(--ease-out);
+}
+
+.nav-chip:hover {
+  border-color: var(--primary-border);
+  color: var(--primary-text-on-soft);
+  background: var(--primary-soft);
+}
+
+.nav-chip--ai {
+  background: var(--primary-soft);
+  border-color: var(--primary-border);
+  color: var(--primary-text-on-soft);
+  font-weight: 600;
+}
+
+.site-nav.is-compact .site-nav__expanded-tray {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  border-top-color: transparent;
 }
 
 .site-nav__status {
@@ -425,23 +468,24 @@ html[dir="rtl"] .btn:hover .btn__arrow {
   border-color: var(--primary-border);
 }
 
-/* --- Project Card (Uniform Clean Grid — Milestoners-inspired finish) --- */
+/* --- Project Card (Milestoners-inspired rounded inner frame + playful spring hover) --- */
 .project-card {
   display: flex;
   flex-direction: column;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: 24px;
+  padding: 12px;
   overflow: hidden;
   transition: border-color var(--dur-card) var(--ease-out),
-    box-shadow var(--dur-card) var(--ease-out),
-    transform var(--dur-card) var(--ease-out);
+    box-shadow 320ms var(--ease-out),
+    transform 340ms var(--ease-spring);
 }
 
 .project-card:hover {
   border-color: var(--primary-border);
   box-shadow: var(--shadow-md);
-  transform: translateY(-4px);
+  transform: translateY(-6px);
 }
 
 .project-card__media {
@@ -449,27 +493,28 @@ html[dir="rtl"] .btn:hover .btn__arrow {
   aspect-ratio: 4 / 3;
   background: var(--surface-subtle);
   overflow: hidden;
-  border-bottom: 1px solid var(--border);
+  border-radius: 16px;
+  border: 1px solid var(--border);
 }
 
 [data-theme="dark"] .project-card__media {
-  padding: 12px;
+  padding: 8px;
   background: radial-gradient(circle at 50% 0%, var(--primary-soft), var(--surface-subtle) 72%);
 }
 
 [data-theme="dark"] .project-card__media img {
-  border-radius: 12px;
+  border-radius: 11px;
 }
 
 .project-card__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 420ms var(--ease-out);
+  transition: transform 480ms var(--ease-out);
 }
 
 .project-card:hover .project-card__media img {
-  transform: scale(1.04);
+  transform: scale(1.045);
 }
 
 .project-card__visual-fallback {
@@ -484,7 +529,7 @@ html[dir="rtl"] .btn:hover .btn__arrow {
 }
 
 .project-card__body {
-  padding: 26px;
+  padding: 20px 14px 14px;
   display: flex;
   flex-direction: column;
   flex: 1;

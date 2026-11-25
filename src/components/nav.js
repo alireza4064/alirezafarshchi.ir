@@ -1,7 +1,7 @@
 /* ==========================================================================
-   Section 01 — Symbol Studio-Inspired Animated Header
-   Opens in expanded editorial state -> collapses into compact sticky pill on scroll
-   Includes Light/Dark Theme Switcher & Route-Preserving Language Switcher
+   Section 01 — Symbol Studio-Inspired Open -> Collapse Morphing Header
+   Opens with an expanded editorial showcase tray, then folds smoothly into
+   a compact centered floating sticky bar on scroll.
    ========================================================================== */
 
 import { PROFILE } from "../data/content-en.js";
@@ -33,15 +33,15 @@ const MOON_ICON = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" a
 
 export function renderNavigation(content, activePage) {
   const prefix = `/${content.lang}`;
+  const isFa = content.lang === "fa";
   const isHome = activePage === "home";
   const contactHref = isHome ? "#contact" : `${prefix}/#contact`;
   const altLangHref = computeAlternateLangHref(content.lang);
   const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
 
-  const statusText =
-    content.lang === "fa"
-      ? "طراح محصول · تفکر سیستمی"
-      : "Product Designer · Systems Thinker";
+  const statusText = isFa
+    ? "طراح محصول · +۴ سال تجربه در B2B، فینتک، GovTech و سیستم‌های طراحی"
+    : "Product Designer · 4+ yrs across B2B, Fintech, GovTech & Design Systems";
 
   const navLinksHtml = `
     <a class="site-nav__link" href="${prefix}/" ${activePage === "home" ? 'aria-current="page"' : ""}>${content.nav.home}</a>
@@ -56,22 +56,11 @@ export function renderNavigation(content, activePage) {
     <a class="skip-link" href="#main-content">${content.skipToContent}</a>
     <header class="site-nav-wrap">
       <nav class="site-nav" id="site-nav" aria-label="Primary">
-        <!-- Expanded Top Metadata Strip (collapses smoothly on scroll like Symbol Studio) -->
-        <div class="site-nav__meta-strip" aria-hidden="false">
-          <div class="site-nav__meta-inner">
-            <span class="site-nav__status">
-              <span class="site-nav__status-dot" aria-hidden="true"></span>
-              <span>${statusText}</span>
-            </span>
-            <span class="site-nav__domain-tag">${PROFILE.domain}</span>
-          </div>
-        </div>
-
-        <!-- Main Navigation Bar -->
+        <!-- Main Bar -->
         <div class="site-nav__bar">
           <a class="site-nav__brand" href="${prefix}/">
             <span class="site-nav__brand-mark" aria-hidden="true">${PROFILE.initials}</span>
-            <span class="site-nav__brand-name">${content.lang === "fa" ? "علیرضا فرشچی" : PROFILE.shortName}</span>
+            <span class="site-nav__brand-name">${isFa ? "علیرضا فرشچی" : PROFILE.shortName}</span>
           </a>
 
           <div class="site-nav__links">
@@ -83,9 +72,9 @@ export function renderNavigation(content, activePage) {
               type="button"
               class="icon-btn"
               id="theme-toggle"
-              aria-label="${content.lang === "fa" ? "تغییر حالت روشن و تاریک" : "Toggle light and dark theme"}"
+              aria-label="${isFa ? "تغییر حالت روشن و تاریک" : "Toggle light and dark theme"}"
               aria-pressed="${currentTheme === "dark" ? "true" : "false"}"
-              title="${content.lang === "fa" ? "تغییر تم" : "Toggle theme"}"
+              title="${isFa ? "تغییر تم" : "Toggle theme"}"
             >
               <span class="theme-icon-sun">${SUN_ICON}</span>
               <span class="theme-icon-moon">${MOON_ICON}</span>
@@ -115,13 +104,31 @@ export function renderNavigation(content, activePage) {
           </div>
         </div>
 
-        <!-- Smooth Collapsible Drawer (Expandable in Compact & Mobile states) -->
+        <!-- Symbol Studio-Inspired Expanded Tray (Opens on load, smoothly folds shut on scroll) -->
+        <div class="site-nav__expanded-tray" aria-label="${isFa ? "دسترسی سریع" : "Quick highlights"}">
+          <div class="site-nav__expanded-inner">
+            <div class="site-nav__status">
+              <span class="site-nav__status-dot" aria-hidden="true"></span>
+              <span>${statusText}</span>
+            </div>
+            <div class="site-nav__quick-chips">
+              <a class="nav-chip" href="${prefix}/work/iranserver/">${isFa ? "ایران‌سرور" : "IranServer"}</a>
+              <a class="nav-chip" href="${prefix}/work/made-in-iran/">${isFa ? "مید این ایران" : "Made In Iran"}</a>
+              <a class="nav-chip" href="${prefix}/work/farano/">${isFa ? "فرانو" : "Farano"}</a>
+              <button type="button" class="nav-chip nav-chip--ai" data-open-chat="ai">
+                ✦ ${isFa ? "دستیار هوش مصنوعی" : "Ask AI"}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Smooth Collapsible Drawer (Mobile / Compact Expand) -->
         <div class="site-nav__drawer-wrap" id="site-nav-drawer">
           <div class="site-nav__drawer">
             ${navLinksHtml}
-            <a class="btn btn--primary btn--sm" href="${contactHref}">
+            <button type="button" class="btn btn--primary btn--sm" data-open-chat="chat">
               ${content.nav.cta}
-            </a>
+            </button>
           </div>
         </div>
       </nav>
@@ -136,7 +143,6 @@ export function initNavigation(content) {
   const themeToggle = document.getElementById("theme-toggle");
   const progressBar = document.getElementById("scroll-progress");
 
-  // Theme Toggle Logic
   if (themeToggle) {
     themeToggle.addEventListener("click", () => {
       const current = document.documentElement.getAttribute("data-theme") || "light";
@@ -145,7 +151,7 @@ export function initNavigation(content) {
       try {
         localStorage.setItem("portfolio-theme", next);
       } catch {
-        // Ignore storage restrictions
+        // ignore
       }
       themeToggle.setAttribute("aria-pressed", String(next === "dark"));
     });
@@ -166,8 +172,8 @@ export function initNavigation(content) {
 
   toggle.addEventListener("click", () => setExpanded(!isExpanded));
 
-  nav.querySelectorAll(".site-nav__drawer a").forEach((link) => {
-    link.addEventListener("click", () => setExpanded(false));
+  nav.querySelectorAll(".site-nav__drawer a, .site-nav__drawer button").forEach((el) => {
+    el.addEventListener("click", () => setExpanded(false));
   });
 
   document.addEventListener("keydown", (e) => {
@@ -177,19 +183,17 @@ export function initNavigation(content) {
     }
   });
 
-  // Close drawer when clicking outside nav
   document.addEventListener("click", (e) => {
     if (isExpanded && !nav.contains(e.target)) {
       setExpanded(false);
     }
   });
 
-  // Scroll collapse (Symbol Studio behavior) + top scroll progress bar
   const onScroll = () => {
     const scrollY = window.scrollY || 0;
-    const shouldCompact = scrollY > 88;
+    const shouldCompact = scrollY > 96;
     nav.classList.toggle("is-compact", shouldCompact);
-    if (!shouldCompact && isExpanded && window.innerWidth > 900) {
+    if (!shouldCompact && isExpanded && window.innerWidth > 960) {
       setExpanded(false);
     }
 

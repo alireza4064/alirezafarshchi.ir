@@ -4,7 +4,7 @@
    Design Approach, Experience, About, Contact Sculpture, Subpages
    ========================================================================== */
 
-/* --- 02. Hero Section (Bliss Agency-inspired soft atmosphere) --- */
+/* --- 02. Hero Section (Bliss Agency-inspired luminous drifting atmosphere) --- */
 .hero {
   position: relative;
   padding-block: clamp(44px, 6vw, 88px) clamp(56px, 7vw, 100px);
@@ -14,13 +14,24 @@
 .hero::before {
   content: "";
   position: absolute;
-  inset: -120px -80px auto -80px;
-  height: 620px;
-  background: radial-gradient(circle at 74% 38%, var(--hero-aura-1) 0%, transparent 46%),
-    radial-gradient(circle at 60% 20%, var(--hero-aura-2) 0%, transparent 40%),
-    radial-gradient(circle at 18% 30%, var(--hero-aura-3) 0%, transparent 48%);
+  inset: -140px -100px auto -100px;
+  height: 680px;
+  background: radial-gradient(circle at 74% 36%, var(--hero-aura-1) 0%, transparent 44%),
+    radial-gradient(circle at 58% 18%, var(--hero-aura-2) 0%, transparent 38%),
+    radial-gradient(circle at 18% 34%, var(--hero-aura-3) 0%, transparent 46%);
+  filter: blur(18px);
+  animation: auraDrift 16s ease-in-out infinite alternate;
   pointer-events: none;
   z-index: 0;
+}
+
+@keyframes auraDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(18px, -14px, 0) scale(1.05);
+  }
 }
 
 .hero__grid {
