@@ -1,87 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr" data-lang="en" data-page="home">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alireza Farshchi — Portfolio</title>
-  <meta name="description" content="Personal portfolio of Alireza Farshchi." />
-  <link rel="stylesheet" href="styles.css" />
+  <title>Alireza Farshchi — Product Designer & Systems Thinker</title>
+  <meta name="description" content="Personal portfolio of Alireza Mohammadzade Farshchi, Product Designer with 4+ years of experience making complex products clearer, more connected, and easier to scale." />
+  
+  <meta property="og:title" content="Alireza Farshchi — Product Designer & Systems Thinker" />
+  <meta property="og:description" content="Personal portfolio of Alireza Mohammadzade Farshchi, Product Designer with 4+ years of experience making complex products clearer, more connected, and easier to scale." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://alirezafarshchi.ir/assets/sculpture-hero.jpg" />
+  <meta name="theme-color" content="#F7F7F5" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="/src/styles/tokens.css" />
+  <link rel="stylesheet" href="/src/styles/base.css" />
+  <link rel="stylesheet" href="/src/styles/components.css" />
+  <link rel="stylesheet" href="/src/styles/sections.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav">
-      <a href="#" class="logo">Alireza Farshchi</a>
-      <nav class="nav-links">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </nav>
+  <div id="app"></div>
+  <noscript>
+    <div style="max-width:680px;margin:64px auto;padding:24px;font-family:sans-serif;">
+      <h1>Alireza Mohammadzade Farshchi — Product Designer</h1>
+      <p>Please enable JavaScript to view the interactive portfolio.</p>
     </div>
-  </header>
-
-  <main>
-    <section class="hero container">
-      <span class="badge">Available for opportunities</span>
-      <h1>Hi, I'm Alireza Farshchi.</h1>
-      <p class="subtitle">
-        Welcome to my personal portfolio on <strong>alirezafarshchi.ir</strong>.
-        This is the initial live version — projects, experience, and full details are coming soon.
-      </p>
-      <div class="actions">
-        <a href="#projects" class="btn btn-primary">View Projects</a>
-        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
-      </div>
-    </section>
-
-    <section id="about" class="section container">
-      <h2>About</h2>
-      <p class="section-text">
-        Replace this section with a short introduction about your background, skills, and what you love building.
-      </p>
-    </section>
-
-    <section id="projects" class="section container">
-      <h2>Selected Projects</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>Project One</h3>
-          <p>A brief description of your featured project, the problem it solves, and the tools used.</p>
-          <span class="tag">Featured</span>
-        </article>
-        <article class="card">
-          <h3>Project Two</h3>
-          <p>Highlight another work sample, case study, or open-source repository here.</p>
-          <span class="tag">Case Study</span>
-        </article>
-        <article class="card">
-          <h3>Project Three</h3>
-          <p>Add a link to a live demo or GitHub repository once your projects are ready.</p>
-          <span class="tag">In Progress</span>
-        </article>
-      </div>
-    </section>
-
-    <section id="contact" class="section container">
-      <h2>Contact</h2>
-      <p class="section-text">
-        Want to collaborate or say hello? Reach out via email or connect on social links below.
-      </p>
-      <div class="links">
-        <a href="mailto:hello@alirezafarshchi.ir">Email</a>
-        <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; <span id="year"></span> Alireza Farshchi. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  </noscript>
+  <script type="module" src="/src/app.js"></script>
 </body>
 </html>

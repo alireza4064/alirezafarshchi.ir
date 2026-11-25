@@ -1,0 +1,4 @@
+# Prevent accidental upload of private exports or OS junk to public repo
+*.zip
+.DS_Store
+Thumbs.db

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Study Encryptor (Local Tool)</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="/src/styles/tokens.css" />
+  <link rel="stylesheet" href="/src/styles/base.css" />
+  <link rel="stylesheet" href="/src/styles/components.css" />
+  <style>
+    .tool-wrap { max-width: 780px; margin: 48px auto; padding: 0 20px; }
+    .tool-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 32px; display: grid; gap: 18px; }
+    textarea, input { width: 100%; padding: 12px 14px; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--canvas); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9rem; }
+    textarea { min-height: 180px; }
+    label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+  <main class="tool-wrap">
+    <div class="tool-card">
+      <div>
+        <div class="eyebrow">OWNER UTILITY · LOCAL ENCRYPTION</div>
+        <h1 style="font-size:1.75rem;margin-bottom:8px;">Encrypt a Confidential Case Study</h1>
+        <p style="color:var(--ink-muted);font-size:0.95rem;">
+          Encrypts your case study JSON locally in your browser using <strong>AES-256-GCM + PBKDF2-SHA256</strong>.
+          Save the generated output as <code>src/data/encrypted-case-studies/&lt;slug&gt;.json</code>.
+        </p>
+      </div>
+
+      <div>
+        <label for="slug">Project Slug (e.g. iranserver, made-in-iran, farano, word-plus)</label>
+        <input id="slug" type="text" value="iranserver" />
+      </div>
+
+      <div>
+        <label for="pass">Choose Strong Passphrase (never committed to Git)</label>
+        <input id="pass" type="password" placeholder="Use a strong unique passphrase" />
+      </div>
+
+      <div>
+        <label for="payload">Case Study Content (JSON)</label>
+        <textarea id="payload">{
+  "title": "IranServer — Full Case Study",
+  "subtitle": "Confidential research, internal flows, and design system architecture.",
+  "sections": [
+    {
+      "heading": "Research & Diagnostics",
+      "paragraphs": ["Add your confidential research findings here."],
+      "bullets": ["Key insight 1", "Key insight 2"]
+    }
+  ]
+}</textarea>
+      </div>
+
+      <div>
+        <button id="encrypt-btn" class="btn btn--primary" type="button">Encrypt &amp; Generate JSON</button>
+      </div>
+
+      <div>
+        <label for="output">Encrypted Output (save to <code>src/data/encrypted-case-studies/&lt;slug&gt;.json</code>)</label>
+        <textarea id="output" readonly placeholder="Encrypted bundle will appear here..."></textarea>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { encryptCaseStudyPayload } from "/src/lib/crypto-gate.js";
+
+    document.getElementById("encrypt-btn").addEventListener("click", async () => {
+      const pass = document.getElementById("pass").value.trim();
+      const raw = document.getElementById("payload").value.trim();
+      const out = document.getElementById("output");
+      if (!pass) {
+        out.value = "Error: Please enter a strong passphrase.";
+        return;
+      }
+      try {
+        const parsed = JSON.parse(raw);
+        const encrypted = await encryptCaseStudyPayload(parsed, pass);
+        out.value = JSON.stringify(encrypted, null, 2);
+      } catch (err) {
+        out.value = "Error: " + err.message;
+      }
+    });
+  </script>
+</body>
+</html>

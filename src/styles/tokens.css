@@ -1,0 +1,90 @@
+/* ==========================================================================
+   PLAYFUL PRECISION — Design System Tokens
+   Light-first editorial neutrals (Taraznama-inspired) + Primary Cobalt Blue
+   (#165EF6 from TopFast Reports) + Sky (#57C1FF) & Periwinkle (#B9C8FF)
+   ========================================================================== */
+
+:root {
+  /* Palette: Surfaces & Canvas */
+  --canvas: #f7f7f5;
+  --surface: #ffffff;
+  --surface-subtle: #f2f2ef;
+  --surface-elevated: rgba(255, 255, 255, 0.88);
+
+  /* Palette: Ink & Typography */
+  --ink: #181917;
+  --ink-secondary: #43433f;
+  --ink-muted: #67665f;
+  --ink-subtle: #86857f;
+
+  /* Palette: Borders & Hairlines */
+  --border: #e7e6e2;
+  --border-strong: #d8d6d0;
+
+  /* Palette: Primary Brand Blue (TopFast Reports #165EF6) */
+  --primary: #165ef6;
+  --primary-hover: #2b6ff8;
+  --primary-deep: #1048c4;
+  --primary-soft: #ebf2ff;
+  --primary-border: rgba(22, 94, 246, 0.26);
+  --primary-glow: rgba(22, 94, 246, 0.14);
+
+  /* Palette: Supporting Accents (Sculpture & Highlights) */
+  --accent-sky: #57c1ff;
+  --accent-sky-soft: rgba(87, 193, 255, 0.12);
+  --accent-lavender: #b9c8ff;
+  --accent-lavender-soft: rgba(185, 200, 255, 0.22);
+
+  /* Semantic Status */
+  --success: #167a45;
+  --success-bg: #e9f6ef;
+  --danger: #c62839;
+  --danger-bg: #fdedef;
+
+  /* Typography */
+  --font-en: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-fa: "Peyda", "Estedad", "Vazirmatn", Tahoma, sans-serif;
+  --font-sans: var(--font-en);
+
+  /* Type Scale */
+  --text-hero: clamp(2.4rem, 4.7vw, 4.5rem);
+  --text-h2: clamp(1.85rem, 3.1vw, 2.85rem);
+  --text-h3: clamp(1.25rem, 1.8vw, 1.55rem);
+  --text-lead: clamp(1.0625rem, 1.35vw, 1.25rem);
+  --text-body: 1.03125rem;
+  --text-sm: 0.9375rem;
+  --text-caption: 0.8125rem;
+
+  /* Spacing & Layout */
+  --container-max: 1240px;
+  --container-narrow: 920px;
+  --gutter: clamp(20px, 4vw, 48px);
+  --section-py: clamp(72px, 9vw, 128px);
+
+  /* Radii */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(24, 25, 23, 0.04);
+  --shadow-sm: 0 4px 16px rgba(24, 25, 23, 0.05);
+  --shadow-md: 0 12px 36px rgba(24, 25, 23, 0.07);
+  --shadow-primary: 0 8px 24px rgba(22, 94, 246, 0.22);
+
+  /* Motion Tokens */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-nav-reveal: 700ms;
+  --dur-nav-collapse: 350ms;
+  --dur-card: 250ms;
+  --dur-btn: 180ms;
+  --dur-reveal: 450ms;
+  --dur-audience: 300ms;
+}
+
+html[dir="rtl"] {
+  --font-sans: var(--font-fa);
+}
