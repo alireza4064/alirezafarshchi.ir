@@ -7,10 +7,8 @@
    ========================================================================== */
 
 export const SITE_CONFIG = {
-  // Example after deploying cloudflare-worker/telegram-chat-worker.js:
-  // WORKER_URL: "https://portfolio-chat.your-subdomain.workers.dev",
-  WORKER_URL: "",
+  WORKER_URL: "https://portfolio-chat.farshchi78.workers.dev",
 
-  // Optional direct Telegram username fallback (without @) if Worker is not set yet
+  // Optional direct Telegram username fallback (without @)
   TELEGRAM_USERNAME: "",
 };
