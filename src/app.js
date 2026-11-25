@@ -1,11 +1,12 @@
 /* ==========================================================================
-   Application Entry Point — Bootstraps Nav, Page View, Motion & Footer
+   Application Entry Point — Bootstraps Nav, Page View, Assistant & Footer
    ========================================================================== */
 
 import { CONTENT_EN } from "./data/content-en.js";
 import { CONTENT_FA } from "./data/content-fa.js";
 import { renderNavigation, initNavigation } from "./components/nav.js";
 import { renderFooter } from "./components/footer.js";
+import { renderAssistantAndChat, initAssistantAndChat } from "./components/assistant.js";
 import { renderHomePage, initHomePage } from "./pages/home.js";
 import { renderWorkPage, initWorkPage } from "./pages/work.js";
 import { renderProjectOverviewPage } from "./pages/project-overview.js";
@@ -69,9 +70,11 @@ function bootstrap() {
     ${renderNavigation(content, page)}
     <main id="main-content">${mainHtml}</main>
     ${renderFooter(content)}
+    ${renderAssistantAndChat(content)}
   `;
 
   initNavigation(content);
+  initAssistantAndChat(content);
 
   if (page === "home") initHomePage(content);
   if (page === "work") initWorkPage(content);

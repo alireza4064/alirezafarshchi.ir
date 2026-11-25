@@ -1,6 +1,8 @@
 /* ==========================================================================
    Authenticated Encryption Engine for Protected Case Studies
-   Web Crypto API: PBKDF2-SHA256 (250,000 iterations) + AES-256-GCM
+   Supports both:
+   - AES-256-GCM + PBKDF2-SHA256 (Web Crypto local tool)
+   - AES-256-CBC + HMAC-SHA256 (Encrypt-then-MAC, PBKDF2-SHA256)
    Zero plaintext secrets or passwords stored in public source code.
    ========================================================================== */
 
@@ -24,7 +26,7 @@ function base64ToBytes(base64) {
   return bytes;
 }
 
-async function deriveKey(password, salt, iterations = 250000) {
+async function deriveGcmKey(password, salt, iterations = 250000) {
   const keyMaterial = await crypto.subtle.importKey(
     "raw",
     encoder.encode(password),
@@ -34,12 +36,7 @@ async function deriveKey(password, salt, iterations = 250000) {
   );
 
   return crypto.subtle.deriveKey(
-    {
-      name: "PBKDF2",
-      salt,
-      iterations,
-      hash: "SHA-256",
-    },
+    { name: "PBKDF2", salt, iterations, hash: "SHA-256" },
     keyMaterial,
     { name: "AES-GCM", length: 256 },
     false,
@@ -47,15 +44,44 @@ async function deriveKey(password, salt, iterations = 250000) {
   );
 }
 
-/**
- * Encrypts a JSON-serializable case study object with a user-supplied passphrase.
- * Used locally by the site owner via /tools/encrypt-case-study.html.
- */
+async function deriveCbcHmacKeys(password, salt, iterations = 100000) {
+  const keyMaterial = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(password),
+    "PBKDF2",
+    false,
+    ["deriveBits"]
+  );
+
+  const bits = await crypto.subtle.deriveBits(
+    { name: "PBKDF2", salt, iterations, hash: "SHA-256" },
+    keyMaterial,
+    512
+  );
+
+  const raw = new Uint8Array(bits);
+  const encKey = await crypto.subtle.importKey(
+    "raw",
+    raw.slice(0, 32),
+    { name: "AES-CBC" },
+    false,
+    ["decrypt"]
+  );
+  const macKey = await crypto.subtle.importKey(
+    "raw",
+    raw.slice(32, 64),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["verify"]
+  );
+  return { encKey, macKey };
+}
+
 export async function encryptCaseStudyPayload(dataObject, password) {
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const iterations = 250000;
-  const key = await deriveKey(password, salt, iterations);
+  const key = await deriveGcmKey(password, salt, iterations);
 
   const plaintext = encoder.encode(JSON.stringify(dataObject));
   const ciphertextBuffer = await crypto.subtle.encrypt(
@@ -75,10 +101,6 @@ export async function encryptCaseStudyPayload(dataObject, password) {
   };
 }
 
-/**
- * Decrypts an encrypted case study bundle fetched from /src/data/encrypted-case-studies/<slug>.json.
- * Throws if the passphrase is invalid or the payload is tampered with.
- */
 export async function decryptCaseStudyPayload(bundle, password) {
   if (!bundle || !bundle.ciphertext || !bundle.salt || !bundle.iv) {
     throw new Error("INVALID_BUNDLE");
@@ -87,14 +109,34 @@ export async function decryptCaseStudyPayload(bundle, password) {
   const salt = base64ToBytes(bundle.salt);
   const iv = base64ToBytes(bundle.iv);
   const ciphertext = base64ToBytes(bundle.ciphertext);
-  const iterations = Number(bundle.iterations) || 250000;
+  const iterations = Number(bundle.iterations) || 100000;
 
-  const key = await deriveKey(password, salt, iterations);
+  if (bundle.algorithm === "AES-256-CBC-HMAC-SHA256") {
+    const mac = base64ToBytes(bundle.mac || "");
+    const { encKey, macKey } = await deriveCbcHmacKeys(password, salt, iterations);
+
+    const macInput = new Uint8Array(iv.length + ciphertext.length);
+    macInput.set(iv, 0);
+    macInput.set(ciphertext, iv.length);
+
+    const valid = await crypto.subtle.verify("HMAC", macKey, mac, macInput);
+    if (!valid) {
+      throw new Error("INVALID_PASSWORD");
+    }
+
+    const plainBuffer = await crypto.subtle.decrypt(
+      { name: "AES-CBC", iv },
+      encKey,
+      ciphertext
+    );
+    return JSON.parse(decoder.decode(plainBuffer));
+  }
+
+  const key = await deriveGcmKey(password, salt, iterations);
   const plainBuffer = await crypto.subtle.decrypt(
     { name: "AES-GCM", iv },
     key,
     ciphertext
   );
-
   return JSON.parse(decoder.decode(plainBuffer));
 }

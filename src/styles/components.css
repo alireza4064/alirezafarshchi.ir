@@ -272,12 +272,17 @@
   transform: translateY(-2.8px) rotate(-45deg);
 }
 
-/* Compact Sticky State (Symbol Studio Collapse) */
+/* Compact Sticky State (Exact Symbol Studio Desktop Behavior:
+   Keeps inline nav links visible inside a centered compact bar on desktop,
+   collapses to Logo + Menu trigger on mobile) */
 .site-nav.is-compact {
-  max-width: 600px;
-  border-radius: 28px;
+  max-width: 820px;
+  border-radius: 16px;
   box-shadow: var(--shadow-md);
   border-color: var(--border-strong);
+  transition: max-width 680ms cubic-bezier(0.45, 0, 0.2, 1),
+    border-radius 680ms cubic-bezier(0.45, 0, 0.2, 1),
+    box-shadow 450ms var(--ease-out);
 }
 
 .site-nav.is-compact .site-nav__meta-strip {
@@ -287,20 +292,16 @@
 }
 
 .site-nav.is-compact .site-nav__bar {
-  padding: 9px 14px;
-  min-height: 52px;
+  padding: 8px 14px;
+  min-height: 50px;
 }
 
-.site-nav.is-compact:not(.is-expanded) .site-nav__links {
-  display: none;
-}
-
-.site-nav.is-compact .nav-toggle {
-  display: inline-flex;
+.site-nav.is-compact .site-nav__brand-mark {
+  transform: scale(0.9);
 }
 
 .site-nav.is-compact.is-expanded {
-  max-width: 720px;
+  max-width: 820px;
   border-radius: var(--radius-lg);
 }
 

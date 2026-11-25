@@ -1,0 +1,10 @@
+{
+    "version":  1,
+    "algorithm":  "AES-256-CBC-HMAC-SHA256",
+    "kdf":  "PBKDF2-SHA256",
+    "iterations":  100000,
+    "salt":  "e8cQmCHCQyAw7Vu2lCe/Xw==",
+    "iv":  "fUWnszwIWSVC+kj3a+exxQ==",
+    "mac":  "jgcAKOiUCP5yyR7jrqzsVELTcV+DK5BffTEiJxwl5Dw=",
+    "ciphertext":  "DK3k7YDVobR3rlBhU0+iI65ZpggEypgXBsz5X4FrOak30zQ11ylwisWB3B56XBrstc/OjkoSsdS7jXhWyntkBe5ygUdaLq181IwPa+tgxp/5OSjwVEkc3pLcG1ZKLQnYuUNA3DPYQWA/cdrcYvG+v1IRxuJlc+p4hdKC5Qy+1CC72f+bpKF2BggNe61BUfnOs/1vWOIwUDMs/DRuBWFRsX8uHOhm8QKnDtMkhW2+15Sob49COs2T1Yhi9V/t4MdmxWR4ER2VR6uSzxFyXQnWEzI13zEEqLiy7qtYLCBc/VDsQ3WScwBnDlKUzAQ/QVkPZFhnYP7+KzDHCAk6bn4IaREFxeDZoQ8vvFEwHcDsuJXZVRDjVBtXQL+wcKoACNnyWQaq4skD1fiFqDKW2GAFSy9+i4O8iWPQl0MhK62Haj+X1b2tbrApPGA2vYpp/f3RiAc+kryxG6kg8l25pIMwVV1hRpqQJVsfo0rDEGP+H96fRAxuhKhqD4ZiPUkpDRFZ6p9aIRv7qs/6RyxIqsh0oymNXMMXhQ33v1MbWrj+DTKH1XAD0nc7dpH78Z/JNIxjIy/Dfzbhl4XXAUvjnb8DVmpyCbjIPR3tKnFRd/9wMIwDtI0wsG8OIB+5ZZMCSpj9xamua9fEvDLAR8nPnSkviyQ5UPie6UxuRgfg3t1N1/FOAHmfl1pbXe0/AfeFvh5zv/2Vd3+FwiGzMWSaf5DAT+c5WFB8DK7pQvlR4KaPmUDCJdW5SFX4xuWsQAHxzIMr"
+}

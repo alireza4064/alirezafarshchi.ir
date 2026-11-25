@@ -95,9 +95,9 @@ export function renderNavigation(content, activePage) {
               ${content.nav.switchLang}
             </a>
 
-            <a class="btn btn--primary btn--sm site-nav__cta-desktop" href="${contactHref}">
+            <button type="button" class="btn btn--primary btn--sm site-nav__cta-desktop" data-open-chat="chat">
               ${content.nav.cta}
-            </a>
+            </button>
 
             <button
               class="nav-toggle"

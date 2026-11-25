@@ -257,11 +257,14 @@ export function renderHomePage(content) {
             <div class="eyebrow">${content.contact.eyebrow}</div>
             <h2 class="section-title" id="contact-heading">${content.contact.heading}</h2>
             <p class="section-desc" style="margin-bottom:28px;">${content.contact.body}</p>
-            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-              <a class="btn btn--primary btn--lg" href="mailto:${PROFILE.email}?subject=Product%20Design%20Inquiry">
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+              <button type="button" class="btn btn--primary btn--lg" data-open-chat="chat">
                 <span>${content.contact.cta}</span>
                 <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
-              </a>
+              </button>
+              <button type="button" class="btn btn--secondary btn--lg" data-open-chat="ai">
+                <span>${content.lang === "fa" ? "سوال از دستیار هوشمند" : "Ask AI Assistant"}</span>
+              </button>
             </div>
           </div>
 
