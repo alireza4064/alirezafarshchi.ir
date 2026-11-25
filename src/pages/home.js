@@ -61,28 +61,31 @@ export function renderHomePage(content) {
     <section class="hero" aria-labelledby="hero-title">
       <div class="container hero__grid">
         <div class="hero__copy">
-          <div class="eyebrow hero-stagger" style="--stagger-delay:60ms;">
-            <span class="eyebrow__dot" aria-hidden="true"></span>
-            <span>${content.hero.eyebrow}</span>
+          <div class="hero__copy-main">
+            <div class="eyebrow hero-stagger" style="--stagger-delay:50ms;margin-bottom:12px;">
+              <span class="eyebrow__dot" aria-hidden="true"></span>
+              <span>${content.hero.eyebrow}</span>
+            </div>
+            <h1 class="hero__title hero-stagger" id="hero-title" style="--stagger-delay:120ms;">
+              ${content.hero.headline}
+            </h1>
           </div>
-          <h1 class="hero__title hero-stagger" id="hero-title" style="--stagger-delay:140ms;">
-            ${content.hero.headline}
-          </h1>
-          <div class="hero__intro hero-stagger" style="--stagger-delay:220ms;">
-            ${content.hero.intro.map((p) => `<p>${p}</p>`).join("")}
-          </div>
-          <div class="hero__actions hero-stagger" style="--stagger-delay:300ms;">
-            <a class="btn btn--primary btn--lg" href="#selected-work">
-              <span>${content.hero.primaryCta}</span>
-              <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
-            </a>
-            <a class="btn btn--secondary btn--lg" href="${prefix}/about/">
-              <span>${content.hero.secondaryCta}</span>
-            </a>
+
+          <div class="hero__copy-aside hero-stagger" style="--stagger-delay:190ms;">
+            <p class="hero__intro">${content.hero.intro[0]}</p>
+            <div class="hero__actions">
+              <a class="btn btn--primary" href="#selected-work">
+                <span>${content.hero.primaryCta}</span>
+                <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
+              </a>
+              <a class="btn btn--secondary" href="${prefix}/about/">
+                <span>${content.hero.secondaryCta}</span>
+              </a>
+            </div>
           </div>
         </div>
 
-        <div class="hero__visual hero-stagger" id="hero-sculpture" style="--stagger-delay:220ms;">
+        <div class="hero__visual hero-stagger" style="--stagger-delay:250ms;">
           ${renderHeroFigmaStage()}
         </div>
       </div>

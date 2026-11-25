@@ -1,252 +1,207 @@
 /* ==========================================================================
-   Hero Live Figma Design Stage (Inside Safari Browser Frame)
-   Choreographed 60fps CSS motion: Alireza's Figma cursor actively selecting,
-   aligning, and styling the Dashify dark dashboard UI with bounding boxes,
-   smart-guide spacing badges, and live layer highlights.
+   Hero Live Photorealistic Figma Design Stage (Inside Safari Browser Frame)
+   Uses the real high-res Dashify UI inside an authentic macOS Safari + Figma
+   interface with pixel-aligned percentage selection overlays, red smart guides,
+   live Layers + Design Inspector sync, and Alireza's animated Figma cursor.
    ========================================================================== */
 
 export function renderHeroFigmaStage() {
   return `
-    <div class="figma-stage" dir="ltr" aria-label="Animated Figma workspace inside Safari showing Alireza designing the Dashify analytics dashboard">
-      <!-- Safari Browser Chrome -->
+    <div class="figma-stage" dir="ltr" aria-label="Live animated Figma workspace inside Safari showing Alireza designing the Dashify dashboard">
+      <!-- Authentic macOS Safari Top Chrome -->
       <div class="safari-bar">
-        <div class="safari-dots" aria-hidden="true">
-          <span class="safari-dot safari-dot--red"></span>
-          <span class="safari-dot safari-dot--yellow"></span>
-          <span class="safari-dot safari-dot--green"></span>
+        <div class="safari-left">
+          <div class="safari-dots" aria-hidden="true">
+            <span class="safari-dot safari-dot--red"></span>
+            <span class="safari-dot safari-dot--yellow"></span>
+            <span class="safari-dot safari-dot--green"></span>
+          </div>
+          <div class="safari-nav-arrows" aria-hidden="true">
+            <span>‹</span>
+            <span>›</span>
+          </div>
         </div>
+
         <div class="safari-url">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="2.2"/>
             <path d="M8 11V8a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="2.2"/>
           </svg>
-          <span>figma.com/design/alireza-system</span>
+          <span>figma.com/design/alireza-farshchi/Dashify-System</span>
         </div>
-        <div class="safari-actions" aria-hidden="true">
-          <span></span><span></span>
+
+        <div class="safari-right" aria-hidden="true">
+          <span class="safari-ico">↑</span>
+          <span class="safari-ico">+</span>
         </div>
       </div>
 
-      <!-- Figma Top Toolbar -->
+      <!-- Authentic Figma Top Toolbar -->
       <div class="figma-toolbar">
         <div class="figma-tools" aria-hidden="true">
-          <span class="figma-tool figma-tool--active" title="Move">↖</span>
-          <span class="figma-tool" title="Frame">#</span>
+          <span class="figma-logo-mark" title="Figma">
+            <svg width="12" height="16" viewBox="0 0 38 57" fill="none">
+              <path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z" fill="#1ABCFE"/>
+              <path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z" fill="#0ACF83"/>
+              <path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z" fill="#FF7262"/>
+              <path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z" fill="#F24E1E"/>
+              <path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z" fill="#A259FF"/>
+            </svg>
+          </span>
+          <span class="figma-tool figma-tool--active" title="Move (V)">↖</span>
+          <span class="figma-tool" title="Frame (F)">#</span>
+          <span class="figma-tool" title="Rectangle (R)">▭</span>
+          <span class="figma-tool" title="Pen (P)">✒</span>
+          <span class="figma-tool" title="Text (T)">T</span>
           <span class="figma-tool" title="Component">❖</span>
-          <span class="figma-tool" title="Text">T</span>
         </div>
+
         <div class="figma-file-title">
-          <span class="figma-file-folder">Dashify /</span>
-          <strong>Overview UI</strong>
+          <span class="figma-file-folder">Product Systems /</span>
+          <strong>Dashify — Overview Dashboard</strong>
         </div>
+
         <div class="figma-toolbar-right">
-          <span class="figma-avatar" title="Alireza">AF</span>
+          <span class="figma-avatar" title="Alireza Farshchi">AF</span>
           <span class="figma-share-pill">Share</span>
+          <span class="figma-zoom">100%</span>
         </div>
       </div>
 
-      <!-- Figma Workspace Body -->
+      <!-- Figma 3-Column Workspace -->
       <div class="figma-workspace">
-        <!-- Left Layers Sidebar -->
+        <!-- Left Layers Panel -->
         <aside class="figma-layers" aria-hidden="true">
+          <div class="figma-panel-tabs">
+            <span class="is-active">File</span>
+            <span>Assets</span>
+          </div>
           <div class="figma-panel-label">Layers</div>
-          <div class="figma-layer figma-layer--root"># Dashify / Desktop</div>
-          <div class="figma-layer figma-layer--child figma-layer--k1">❖ KPI / Total Sales</div>
+          <div class="figma-layer figma-layer--root">▾ # Desktop — 1440 × 900</div>
+          <div class="figma-layer figma-layer--child">◫ Sidebar / Navigation</div>
+          <div class="figma-layer figma-layer--child figma-layer--k1">❖ KPI / Total Sales (Primary)</div>
           <div class="figma-layer figma-layer--child figma-layer--k2">❖ KPI / Total Orders</div>
+          <div class="figma-layer figma-layer--child">❖ KPI / Visitor &amp; Sold</div>
+          <div class="figma-layer figma-layer--child">❖ Card / Last Orders</div>
           <div class="figma-layer figma-layer--child figma-layer--k3">❖ Table / Recent Sales</div>
           <div class="figma-layer figma-layer--child figma-layer--k4">❖ Chart / Sales Expert</div>
         </aside>
 
-        <!-- Center Figma Canvas -->
+        <!-- Center Infinite Dot-Grid Canvas -->
         <div class="figma-canvas">
-          <div class="figma-frame-label">Desktop — 1440 × 900</div>
-
-          <!-- Dashify Dark Dashboard Artboard (faithful to user's uploaded design) -->
-          <div class="dashify-artboard">
-            <!-- Left Mini Sidebar -->
-            <div class="dash-side" aria-hidden="true">
-              <div class="dash-logo">
-                <span></span><span></span>
-              </div>
-              <div class="dash-nav-dot dash-nav-dot--active"></div>
-              <div class="dash-nav-dot"></div>
-              <div class="dash-nav-dot"></div>
-              <div class="dash-nav-dot"></div>
-              <div class="dash-side-spacer"></div>
-              <div class="dash-nav-dot"></div>
-            </div>
-
-            <!-- Main Dashboard Content -->
-            <div class="dash-main">
-              <div class="dash-top">
-                <span class="dash-heading">Overview</span>
-                <div class="dash-top-icons" aria-hidden="true">
-                  <span class="dash-pill-icon"></span>
-                  <span class="dash-pill-icon"></span>
-                  <span class="dash-user-dot"></span>
-                </div>
-              </div>
-
-              <!-- KPI Row -->
-              <div class="dash-kpis">
-                <!-- Card 1: Primary Blue Total Sales (animated selection target 1) -->
-                <div class="dash-kpi dash-kpi--blue dash-target-1">
-                  <div class="dash-kpi__head">
-                    <span class="dash-kpi__ico"></span>
-                    <span class="dash-badge dash-badge--up">+7.8%</span>
-                  </div>
-                  <div class="dash-kpi__label">Total Sales</div>
-                  <div class="dash-kpi__val">$425.<span>103</span></div>
-                  <!-- Figma Selection Overlay 1 -->
-                  <div class="figma-sel figma-sel--1" aria-hidden="true">
-                    <i class="h tl"></i><i class="h tr"></i><i class="h bl"></i><i class="h br"></i>
-                    <span class="figma-dim">164 × 76</span>
-                  </div>
-                </div>
-
-                <!-- Smart Guide Spacing Indicator between Card 1 and Card 2 -->
-                <div class="figma-guide-gap" aria-hidden="true">
-                  <span>12</span>
-                </div>
-
-                <!-- Card 2: Total Orders (animated selection target 2) -->
-                <div class="dash-kpi dash-target-2">
-                  <div class="dash-kpi__head">
-                    <span class="dash-kpi__ico dash-kpi__ico--amber"></span>
-                    <span class="dash-badge dash-badge--down">-2.5%</span>
-                  </div>
-                  <div class="dash-kpi__label">Total Orders</div>
-                  <div class="dash-kpi__val">4251</div>
-                  <div class="figma-sel figma-sel--2" aria-hidden="true">
-                    <i class="h tl"></i><i class="h tr"></i><i class="h bl"></i><i class="h br"></i>
-                    <span class="figma-dim">Auto · 12px</span>
-                  </div>
-                </div>
-
-                <!-- Card 3: Visitor -->
-                <div class="dash-kpi">
-                  <div class="dash-kpi__head">
-                    <span class="dash-kpi__ico dash-kpi__ico--purple"></span>
-                    <span class="dash-badge dash-badge--down">-12%</span>
-                  </div>
-                  <div class="dash-kpi__label">Visitor</div>
-                  <div class="dash-kpi__val">64321</div>
-                </div>
-
-                <!-- Card 4: Sold Products -->
-                <div class="dash-kpi dash-kpi--hide-sm">
-                  <div class="dash-kpi__head">
-                    <span class="dash-kpi__ico dash-kpi__ico--rose"></span>
-                    <span class="dash-badge dash-badge--up">+20%</span>
-                  </div>
-                  <div class="dash-kpi__label">Sold</div>
-                  <div class="dash-kpi__val">16324</div>
-                </div>
-              </div>
-
-              <!-- Lower Split: Recent Sales Table + Sales Expert Chart -->
-              <div class="dash-lower">
-                <!-- Recent Sales Table (animated selection target 3) -->
-                <div class="dash-panel dash-target-3">
-                  <div class="dash-panel__head">
-                    <span class="dash-panel__title">Recent Sales</span>
-                    <span class="dash-panel__meta">132 Items</span>
-                  </div>
-                  <div class="dash-table">
-                    <div class="dash-tr">
-                      <span class="dash-prod">MacBook Pro 13"</span>
-                      <span class="dash-status dash-status--paid">Paid</span>
-                      <span class="dash-amt">$1,799</span>
-                    </div>
-                    <div class="dash-tr">
-                      <span class="dash-prod">AirPods Max</span>
-                      <span class="dash-status dash-status--unpaid">Unpaid</span>
-                      <span class="dash-amt">$549</span>
-                    </div>
-                    <div class="dash-tr">
-                      <span class="dash-prod">Apple Watch S9</span>
-                      <span class="dash-status dash-status--paid">Paid</span>
-                      <span class="dash-amt">$399</span>
-                    </div>
-                  </div>
-                  <div class="figma-sel figma-sel--3" aria-hidden="true">
-                    <i class="h tl"></i><i class="h tr"></i><i class="h bl"></i><i class="h br"></i>
-                    <span class="figma-dim">Table / 3 rows</span>
-                  </div>
-                </div>
-
-                <!-- Sales Expert Sparkline Card (animated selection target 4) -->
-                <div class="dash-panel dash-target-4">
-                  <div class="dash-panel__head">
-                    <span class="dash-panel__title">Sales Expert</span>
-                  </div>
-                  <div class="dash-expert-val"><span>$</span>48,654.<small>00</small></div>
-                  <svg class="dash-chart" viewBox="0 0 140 46" fill="none" aria-hidden="true">
-                    <defs>
-                      <linearGradient id="dashLineGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#165EF6" stop-opacity="0.35" />
-                        <stop offset="100%" stop-color="#165EF6" stop-opacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      d="M2 38 C16 36, 22 24, 34 26 C44 28, 50 8, 62 12 C74 16, 78 28, 92 22 C104 16, 114 34, 138 14 L138 46 L2 46 Z"
-                      fill="url(#dashLineGrad)"
-                    />
-                    <path
-                      class="dash-chart-line"
-                      d="M2 38 C16 36, 22 24, 34 26 C44 28, 50 8, 62 12 C74 16, 78 28, 92 22 C104 16, 114 34, 138 14"
-                      stroke="#2B6FF8"
-                      stroke-width="2.2"
-                      stroke-linecap="round"
-                    />
-                    <circle class="dash-chart-dot" cx="62" cy="12" r="3.2" fill="#57C1FF" stroke="#0B0C10" stroke-width="1.5" />
-                  </svg>
-                  <div class="figma-sel figma-sel--4" aria-hidden="true">
-                    <i class="h tl"></i><i class="h tr"></i><i class="h bl"></i><i class="h br"></i>
-                    <span class="figma-dim">Token / primary</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="figma-canvas-frame-head">
+            <span class="figma-frame-label">❖ Dashify / Overview — Desktop 1440</span>
+            <span class="figma-frame-badge">Auto Layout</span>
           </div>
 
-          <!-- Animated Multiplayer Figma Cursor ("Alireza") -->
-          <div class="figma-cursor" aria-hidden="true">
-            <svg width="16" height="18" viewBox="0 0 16 18" fill="none">
-              <path
-                d="M1.5 1.5L6.3 15.6L8.7 9.8L14.5 7.6L1.5 1.5Z"
-                fill="#165EF6"
-                stroke="#FFFFFF"
-                stroke-width="1.4"
-                stroke-linejoin="round"
-              />
-            </svg>
-            <span class="figma-cursor__tag">Alireza</span>
+          <!-- Real High-Res Dashify UI Artboard with Percentage-Aligned Figma Overlays -->
+          <div class="figma-artboard-wrap">
+            <img
+              class="figma-artboard-img"
+              src="/assets/dashify-hero-ui.png"
+              alt="Dashify dark analytics dashboard UI inside Figma canvas"
+              width="1024"
+              height="768"
+              fetchpriority="high"
+            />
+
+            <!-- Selection Box 1: Blue Total Sales Card -->
+            <div class="figma-sel figma-sel--1" aria-hidden="true">
+              <i class="h tl"></i><i class="h tr"></i><i class="h bl"></i><i class="h br"></i>
+              <span class="figma-dim">KPI / Primary · 248 × 148</span>
+            </div>
+
+            <!-- Red Smart Guide between Card 1 & Card 2 -->
+            <div class="figma-guide-gap" aria-hidden="true">
+              <span class="figma-guide-line"></span>
+              <span class="figma-guide-pill">16</span>
+            </div>
+
+            <!-- Selection Box 2: Total Orders Card -->
+            <div class="figma-sel figma-sel--2" aria-hidden="true">
+              <i class="h tl"></i><i class="h tr"></i><i class="h bl"></i><i class="h br"></i>
+              <span class="figma-dim">KPI / Orders · R16</span>
+            </div>
+
+            <!-- Selection Box 3: Recent Sales Table -->
+            <div class="figma-sel figma-sel--3" aria-hidden="true">
+              <i class="h tl"></i><i class="h tr"></i><i class="h bl"></i><i class="h br"></i>
+              <span class="figma-dim">Table / Recent Sales · Auto Layout</span>
+            </div>
+
+            <!-- Selection Box 4: Sales Expert Chart -->
+            <div class="figma-sel figma-sel--4" aria-hidden="true">
+              <i class="h tl"></i><i class="h tr"></i><i class="h bl"></i><i class="h br"></i>
+              <span class="figma-dim">Chart / Sales Expert · #165EF6</span>
+            </div>
+
+            <!-- Animated Multiplayer Figma Cursor ("Alireza") -->
+            <div class="figma-cursor" aria-hidden="true">
+              <svg width="18" height="20" viewBox="0 0 16 18" fill="none">
+                <path
+                  d="M1.5 1.5L6.3 15.6L8.7 9.8L14.5 7.6L1.5 1.5Z"
+                  fill="#165EF6"
+                  stroke="#FFFFFF"
+                  stroke-width="1.4"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <span class="figma-cursor__tag">Alireza</span>
+            </div>
           </div>
         </div>
 
-        <!-- Right Compact Inspector -->
+        <!-- Right Figma Design Inspector Panel -->
         <aside class="figma-inspector" aria-hidden="true">
-          <div class="figma-panel-label">Design</div>
-          <div class="figma-prop-grid">
-            <span>W <em>1440</em></span>
-            <span>H <em>900</em></span>
-            <span>R <em>14</em></span>
-            <span>G <em>12</em></span>
+          <div class="figma-panel-tabs">
+            <span class="is-active">Design</span>
+            <span>Prototype</span>
           </div>
-          <div class="figma-panel-label" style="margin-top:10px;">Fill Token</div>
-          <div class="figma-token-row">
-            <span class="figma-swatch"></span>
-            <span>primary/500</span>
+
+          <div class="figma-insp-section">
+            <div class="figma-panel-label">Position &amp; Layout</div>
+            <div class="figma-prop-grid">
+              <span>X <em>112</em></span>
+              <span>Y <em>148</em></span>
+              <span>W <em>1440</em></span>
+              <span>H <em>900</em></span>
+              <span>R <em>16</em></span>
+              <span>G <em>16</em></span>
+            </div>
           </div>
-          <div class="figma-token-row">
-            <span class="figma-swatch figma-swatch--dark"></span>
-            <span>surface/950</span>
+
+          <div class="figma-insp-section">
+            <div class="figma-panel-label">Auto Layout</div>
+            <div class="figma-al-pills">
+              <span>→ 16px</span>
+              <span>⊞ 24px</span>
+            </div>
           </div>
-          <div class="figma-panel-label" style="margin-top:10px;">Auto Layout</div>
-          <div class="figma-al-pills">
-            <span>→ 12</span>
-            <span>⊞ 14</span>
+
+          <div class="figma-insp-section">
+            <div class="figma-panel-label">Color Tokens</div>
+            <div class="figma-token-row">
+              <span class="figma-swatch"></span>
+              <span>blue / 500</span>
+              <em>#165EF6</em>
+            </div>
+            <div class="figma-token-row">
+              <span class="figma-swatch figma-swatch--sky"></span>
+              <span>sky / 400</span>
+              <em>#57C1FF</em>
+            </div>
+            <div class="figma-token-row">
+              <span class="figma-swatch figma-swatch--dark"></span>
+              <span>surface / 950</span>
+              <em>#0B0C10</em>
+            </div>
+          </div>
+
+          <div class="figma-insp-section">
+            <div class="figma-panel-label">Effects</div>
+            <div class="figma-token-row">
+              <span>Drop shadow · Soft 24</span>
+            </div>
           </div>
         </aside>
       </div>

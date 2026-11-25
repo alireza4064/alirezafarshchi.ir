@@ -56,72 +56,72 @@ function answerFromKnowledgeBase(query, lang) {
   const isFa = lang === "fa" || /[\u0600-\u06FF]/.test(query);
 
   // IranServer
-  if (/(iranserver|hosting|vps|bounce|clarity|ga4|ایران\s?سرور|هاست|پرش)/.test(q)) {
+  if (/(iranserver|hosting|vps|bounce|clarity|ga4|Ø§ÛŒØ±Ø§Ù†\s?Ø³Ø±ÙˆØ±|Ù‡Ø§Ø³Øª|Ù¾Ø±Ø´)/.test(q)) {
     return isFa
-      ? "در **ایران‌سرور** (اردیبهشت ۱۴۰۴ تا اسفند ۱۴۰۴ — طراح ارشد محصول)، علیرضا مالکیت کامل سیستم طراحی (کامپوننت‌ها، توکن‌ها و استایل‌ها) و بازطراحی پنل کاربری و وب‌سایت را در کل خط محصول (هاستینگ، دامنه، VPS و سرور اختصاصی) بر عهده داشت. در بازبینی فصلی صفحه اصلی بازطراحی‌شده با GA4 و کلاریتی: **+۲۲٪ رشد کاربر، ۱۸.۵ واحد درصد کاهش نرخ پرش و ۶.۷ واحد کاهش کلیک مرده** گزارش شد."
-      : "At **IranServer** (May 2025 – Mar 2026, Senior Product Designer), Alireza owned the design system end-to-end and redesigned core portal & website flows across hosting, domains, VPS, and dedicated servers. His quarterly UX review (GA4 + Microsoft Clarity) reported **+22% users, an 18.5pt reduction in bounce rate, and -6.7pts dead clicks**.";
+      ? "Ø¯Ø± **Ø§ÛŒØ±Ø§Ù†â€ŒØ³Ø±ÙˆØ±** (Ø§Ø±Ø¯ÛŒØ¨Ù‡Ø´Øª Û±Û´Û°Û´ ØªØ§ Ø§Ø³ÙÙ†Ø¯ Û±Û´Û°Û´ â€” Ø·Ø±Ø§Ø­ Ø§Ø±Ø´Ø¯ Ù…Ø­ØµÙˆÙ„)ØŒ Ø¹Ù„ÛŒØ±Ø¶Ø§ Ù…Ø§Ù„Ú©ÛŒØª Ú©Ø§Ù…Ù„ Ø³ÛŒØ³ØªÙ… Ø·Ø±Ø§Ø­ÛŒ (Ú©Ø§Ù…Ù¾ÙˆÙ†Ù†Øªâ€ŒÙ‡Ø§ØŒ ØªÙˆÚ©Ù†â€ŒÙ‡Ø§ Ùˆ Ø§Ø³ØªØ§ÛŒÙ„â€ŒÙ‡Ø§) Ùˆ Ø¨Ø§Ø²Ø·Ø±Ø§Ø­ÛŒ Ù¾Ù†Ù„ Ú©Ø§Ø±Ø¨Ø±ÛŒ Ùˆ ÙˆØ¨â€ŒØ³Ø§ÛŒØª Ø±Ø§ Ø¯Ø± Ú©Ù„ Ø®Ø· Ù…Ø­ØµÙˆÙ„ (Ù‡Ø§Ø³ØªÛŒÙ†Ú¯ØŒ Ø¯Ø§Ù…Ù†Ù‡ØŒ VPS Ùˆ Ø³Ø±ÙˆØ± Ø§Ø®ØªØµØ§ØµÛŒ) Ø¨Ø± Ø¹Ù‡Ø¯Ù‡ Ø¯Ø§Ø´Øª. Ø¯Ø± Ø¨Ø§Ø²Ø¨ÛŒÙ†ÛŒ ÙØµÙ„ÛŒ ØµÙØ­Ù‡ Ø§ØµÙ„ÛŒ Ø¨Ø§Ø²Ø·Ø±Ø§Ø­ÛŒâ€ŒØ´Ø¯Ù‡ Ø¨Ø§ GA4 Ùˆ Ú©Ù„Ø§Ø±ÛŒØªÛŒ: **+Û²Û²Ùª Ø±Ø´Ø¯ Ú©Ø§Ø±Ø¨Ø±ØŒ Û±Û¸.Ûµ ÙˆØ§Ø­Ø¯ Ø¯Ø±ØµØ¯ Ú©Ø§Ù‡Ø´ Ù†Ø±Ø® Ù¾Ø±Ø´ Ùˆ Û¶.Û· ÙˆØ§Ø­Ø¯ Ú©Ø§Ù‡Ø´ Ú©Ù„ÛŒÚ© Ù…Ø±Ø¯Ù‡** Ú¯Ø²Ø§Ø±Ø´ Ø´Ø¯."
+      : "At **IranServer** (May 2025 â€“ Mar 2026, Senior Product Designer), Alireza owned the design system end-to-end and redesigned core portal & website flows across hosting, domains, VPS, and dedicated servers. His quarterly UX review (GA4 + Microsoft Clarity) reported **+22% users, an 18.5pt reduction in bounce rate, and -6.7pts dead clicks**.";
   }
 
   // Farano / AI workflow / GovTech
-  if (/(farano|govtech|digital console|prd|ai|هوش مصنوعی|فرانو|دولتی)/.test(q)) {
+  if (/(farano|govtech|digital console|prd|ai|Ù‡ÙˆØ´ Ù…ØµÙ†ÙˆØ¹ÛŒ|ÙØ±Ø§Ù†Ùˆ|Ø¯ÙˆÙ„ØªÛŒ)/.test(q)) {
     return isFa
-      ? "در **فرانو** (اسفند ۱۴۰۴ تا اکنون — طراح ارشد محصول روی کنسول دیجیتال ایران)، علیرضا نیازمندی‌های مبهم ذی‌نفعان را با تحقیق حل می‌کند و معماری اطلاعات را بر پایه امنیت، حریم خصوصی و کنترل دسترسی می‌سازد. او از **هوش مصنوعی** مستقیماً برای تست A/B جریان‌ها، شبیه‌سازی پرسونا، پالایش PRD و نوشتن سناریوهای تست استفاده می‌کند."
-      : "At **Farano** (Mar 2026 – Present, Senior Product Designer on the Iran Digital Console), Alireza resolves conflicting stakeholder requirements through research and designs IA around security, privacy, and access control from day one. He embeds **AI** directly into his workflow for A/B flow testing, persona simulations, PRD refinement, and test-case writing.";
+      ? "Ø¯Ø± **ÙØ±Ø§Ù†Ùˆ** (Ø§Ø³ÙÙ†Ø¯ Û±Û´Û°Û´ ØªØ§ Ø§Ú©Ù†ÙˆÙ† â€” Ø·Ø±Ø§Ø­ Ø§Ø±Ø´Ø¯ Ù…Ø­ØµÙˆÙ„ Ø±ÙˆÛŒ Ú©Ù†Ø³ÙˆÙ„ Ø¯ÛŒØ¬ÛŒØªØ§Ù„ Ø§ÛŒØ±Ø§Ù†)ØŒ Ø¹Ù„ÛŒØ±Ø¶Ø§ Ù†ÛŒØ§Ø²Ù…Ù†Ø¯ÛŒâ€ŒÙ‡Ø§ÛŒ Ù…Ø¨Ù‡Ù… Ø°ÛŒâ€ŒÙ†ÙØ¹Ø§Ù† Ø±Ø§ Ø¨Ø§ ØªØ­Ù‚ÛŒÙ‚ Ø­Ù„ Ù…ÛŒâ€ŒÚ©Ù†Ø¯ Ùˆ Ù…Ø¹Ù…Ø§Ø±ÛŒ Ø§Ø·Ù„Ø§Ø¹Ø§Øª Ø±Ø§ Ø¨Ø± Ù¾Ø§ÛŒÙ‡ Ø§Ù…Ù†ÛŒØªØŒ Ø­Ø±ÛŒÙ… Ø®ØµÙˆØµÛŒ Ùˆ Ú©Ù†ØªØ±Ù„ Ø¯Ø³ØªØ±Ø³ÛŒ Ù…ÛŒâ€ŒØ³Ø§Ø²Ø¯. Ø§Ùˆ Ø§Ø² **Ù‡ÙˆØ´ Ù…ØµÙ†ÙˆØ¹ÛŒ** Ù…Ø³ØªÙ‚ÛŒÙ…Ø§Ù‹ Ø¨Ø±Ø§ÛŒ ØªØ³Øª A/B Ø¬Ø±ÛŒØ§Ù†â€ŒÙ‡Ø§ØŒ Ø´Ø¨ÛŒÙ‡â€ŒØ³Ø§Ø²ÛŒ Ù¾Ø±Ø³ÙˆÙ†Ø§ØŒ Ù¾Ø§Ù„Ø§ÛŒØ´ PRD Ùˆ Ù†ÙˆØ´ØªÙ† Ø³Ù†Ø§Ø±ÛŒÙˆÙ‡Ø§ÛŒ ØªØ³Øª Ø§Ø³ØªÙØ§Ø¯Ù‡ Ù…ÛŒâ€ŒÚ©Ù†Ø¯."
+      : "At **Farano** (Mar 2026 â€“ Present, Senior Product Designer on the Iran Digital Console), Alireza resolves conflicting stakeholder requirements through research and designs IA around security, privacy, and access control from day one. He embeds **AI** directly into his workflow for A/B flow testing, persona simulations, PRD refinement, and test-case writing.";
   }
 
   // Made In Iran / Design Systems
-  if (/(made in iran|design system|token|tailwind|material|26|مید این ایران|سیستم طراحی|دیزاین سیستم|توکن)/.test(q)) {
+  if (/(made in iran|design system|token|tailwind|material|26|Ù…ÛŒØ¯ Ø§ÛŒÙ† Ø§ÛŒØ±Ø§Ù†|Ø³ÛŒØ³ØªÙ… Ø·Ø±Ø§Ø­ÛŒ|Ø¯ÛŒØ²Ø§ÛŒÙ† Ø³ÛŒØ³ØªÙ…|ØªÙˆÚ©Ù†)/.test(q)) {
     return isFa
-      ? "تجربه عمیق سیستم طراحی علیرضا شامل: ۱) ساخت اولین سیستم طراحی **مید این ایران** از صفر با **۲۶ کامپوننت** در ۴ بستر (خریدار، تأمین‌کننده، ادمین و وب‌سایت) بر پایه Material و Tailwind؛ ۲) مالکیت کامل سیستم طراحی **ایران‌سرور**؛ ۳) مشارکت در **سیستم طراحی پارت** با تیم ۱۱ نفره و ساخت گردش‌کار توکن با پلاگین فیگما پیش از پشتیبانی بومی فیگما."
+      ? "ØªØ¬Ø±Ø¨Ù‡ Ø¹Ù…ÛŒÙ‚ Ø³ÛŒØ³ØªÙ… Ø·Ø±Ø§Ø­ÛŒ Ø¹Ù„ÛŒØ±Ø¶Ø§ Ø´Ø§Ù…Ù„: Û±) Ø³Ø§Ø®Øª Ø§ÙˆÙ„ÛŒÙ† Ø³ÛŒØ³ØªÙ… Ø·Ø±Ø§Ø­ÛŒ **Ù…ÛŒØ¯ Ø§ÛŒÙ† Ø§ÛŒØ±Ø§Ù†** Ø§Ø² ØµÙØ± Ø¨Ø§ **Û²Û¶ Ú©Ø§Ù…Ù¾ÙˆÙ†Ù†Øª** Ø¯Ø± Û´ Ø¨Ø³ØªØ± (Ø®Ø±ÛŒØ¯Ø§Ø±ØŒ ØªØ£Ù…ÛŒÙ†â€ŒÚ©Ù†Ù†Ø¯Ù‡ØŒ Ø§Ø¯Ù…ÛŒÙ† Ùˆ ÙˆØ¨â€ŒØ³Ø§ÛŒØª) Ø¨Ø± Ù¾Ø§ÛŒÙ‡ Material Ùˆ TailwindØ› Û²) Ù…Ø§Ù„Ú©ÛŒØª Ú©Ø§Ù…Ù„ Ø³ÛŒØ³ØªÙ… Ø·Ø±Ø§Ø­ÛŒ **Ø§ÛŒØ±Ø§Ù†â€ŒØ³Ø±ÙˆØ±**Ø› Û³) Ù…Ø´Ø§Ø±Ú©Øª Ø¯Ø± **Ø³ÛŒØ³ØªÙ… Ø·Ø±Ø§Ø­ÛŒ Ù¾Ø§Ø±Øª** Ø¨Ø§ ØªÛŒÙ… Û±Û± Ù†ÙØ±Ù‡ Ùˆ Ø³Ø§Ø®Øª Ú¯Ø±Ø¯Ø´â€ŒÚ©Ø§Ø± ØªÙˆÚ©Ù† Ø¨Ø§ Ù¾Ù„Ø§Ú¯ÛŒÙ† ÙÛŒÚ¯Ù…Ø§ Ù¾ÛŒØ´ Ø§Ø² Ù¾Ø´ØªÛŒØ¨Ø§Ù†ÛŒ Ø¨ÙˆÙ…ÛŒ ÙÛŒÚ¯Ù…Ø§."
       : "Alireza's design systems experience spans: (1) independently building **Made In Iran's** first design system from scratch (**26 components** across 4 surfaces with Material & Tailwind tokens), (2) owning the **IranServer** design system end-to-end, and (3) co-building **Part Design System** with an 11-person team plus a Figma plugin token workflow ahead of native support.";
   }
 
   // Word+ / Research / PM
-  if (/(word\+|word plus|interview|research|pm|product manager|وردپلاس|مصاحبه|تحقیق|مدیر محصول)/.test(q)) {
+  if (/(word\+|word plus|interview|research|pm|product manager|ÙˆØ±Ø¯Ù¾Ù„Ø§Ø³|Ù…ØµØ§Ø­Ø¨Ù‡|ØªØ­Ù‚ÛŒÙ‚|Ù…Ø¯ÛŒØ± Ù…Ø­ØµÙˆÙ„)/.test(q)) {
     return isFa
-      ? "در اپلیکیشن **Word+**، علیرضا هم‌زمان نقش طراح محصول و مدیر محصول را بر عهده داشت: سیستم طراحی Material 3 را ساخت، ۴۰ مصاحبه تلفنی برای شخصی‌سازی و مصاحبه‌های عمیق تبدیل با ۸ کاربر انجام داد، مطالعه را به دو حالت روزانه تفکیک کرد، گیمیفیکیشن/ASMR افزود و مانع کلیدی تبدیل خرید اشتراک (ابهام پیام نسخه ویژه) را کشف کرد."
+      ? "Ø¯Ø± Ø§Ù¾Ù„ÛŒÚ©ÛŒØ´Ù† **Word+**ØŒ Ø¹Ù„ÛŒØ±Ø¶Ø§ Ù‡Ù…â€ŒØ²Ù…Ø§Ù† Ù†Ù‚Ø´ Ø·Ø±Ø§Ø­ Ù…Ø­ØµÙˆÙ„ Ùˆ Ù…Ø¯ÛŒØ± Ù…Ø­ØµÙˆÙ„ Ø±Ø§ Ø¨Ø± Ø¹Ù‡Ø¯Ù‡ Ø¯Ø§Ø´Øª: Ø³ÛŒØ³ØªÙ… Ø·Ø±Ø§Ø­ÛŒ Material 3 Ø±Ø§ Ø³Ø§Ø®ØªØŒ Û´Û° Ù…ØµØ§Ø­Ø¨Ù‡ ØªÙ„ÙÙ†ÛŒ Ø¨Ø±Ø§ÛŒ Ø´Ø®ØµÛŒâ€ŒØ³Ø§Ø²ÛŒ Ùˆ Ù…ØµØ§Ø­Ø¨Ù‡â€ŒÙ‡Ø§ÛŒ Ø¹Ù…ÛŒÙ‚ ØªØ¨Ø¯ÛŒÙ„ Ø¨Ø§ Û¸ Ú©Ø§Ø±Ø¨Ø± Ø§Ù†Ø¬Ø§Ù… Ø¯Ø§Ø¯ØŒ Ù…Ø·Ø§Ù„Ø¹Ù‡ Ø±Ø§ Ø¨Ù‡ Ø¯Ùˆ Ø­Ø§Ù„Øª Ø±ÙˆØ²Ø§Ù†Ù‡ ØªÙÚ©ÛŒÚ© Ú©Ø±Ø¯ØŒ Ú¯ÛŒÙ…ÛŒÙÛŒÚ©ÛŒØ´Ù†/ASMR Ø§ÙØ²ÙˆØ¯ Ùˆ Ù…Ø§Ù†Ø¹ Ú©Ù„ÛŒØ¯ÛŒ ØªØ¨Ø¯ÛŒÙ„ Ø®Ø±ÛŒØ¯ Ø§Ø´ØªØ±Ø§Ú© (Ø§Ø¨Ù‡Ø§Ù… Ù¾ÛŒØ§Ù… Ù†Ø³Ø®Ù‡ ÙˆÛŒÚ˜Ù‡) Ø±Ø§ Ú©Ø´Ù Ú©Ø±Ø¯."
       : "On **Word+**, Alireza worked dual-hatted as Product Designer and Product Manager: he owned the Material 3 design system, ran 40 structured phone interviews plus 8 in-depth conversion interviews, split study into two daily modes, added gamification/ASMR mechanics, and uncovered the core premium conversion blocker.";
   }
 
   // Merat / Fintech / Signal
-  if (/(merat|ara|signal|fintech|bank|heuristic|nielsen|مرآت|سیگنال|فینتک|نیلسن|بانک)/.test(q)) {
+  if (/(merat|ara|signal|fintech|bank|heuristic|nielsen|Ù…Ø±Ø¢Øª|Ø³ÛŒÚ¯Ù†Ø§Ù„|ÙÛŒÙ†ØªÚ©|Ù†ÛŒÙ„Ø³Ù†|Ø¨Ø§Ù†Ú©)/.test(q)) {
     return isFa
-      ? "در حوزه **فینتک**، علیرضا روی **سیگنال** (محصول با بیش از ۵ میلیون کاربر — بخش سهام، دیده‌بان، انتخاب بانک و لندینگ) و **مرآت/آرا** (محصول بانکی رسالت — ارزیابی کامل ۱۰ اصل نیلسن، بازطراحی دوگانه متقاضی و کارشناس اعتبارسنجی و ساخت سیستم طراحی اختصاصی) کار کرده است."
+      ? "Ø¯Ø± Ø­ÙˆØ²Ù‡ **ÙÛŒÙ†ØªÚ©**ØŒ Ø¹Ù„ÛŒØ±Ø¶Ø§ Ø±ÙˆÛŒ **Ø³ÛŒÚ¯Ù†Ø§Ù„** (Ù…Ø­ØµÙˆÙ„ Ø¨Ø§ Ø¨ÛŒØ´ Ø§Ø² Ûµ Ù…ÛŒÙ„ÛŒÙˆÙ† Ú©Ø§Ø±Ø¨Ø± â€” Ø¨Ø®Ø´ Ø³Ù‡Ø§Ù…ØŒ Ø¯ÛŒØ¯Ù‡â€ŒØ¨Ø§Ù†ØŒ Ø§Ù†ØªØ®Ø§Ø¨ Ø¨Ø§Ù†Ú© Ùˆ Ù„Ù†Ø¯ÛŒÙ†Ú¯) Ùˆ **Ù…Ø±Ø¢Øª/Ø¢Ø±Ø§** (Ù…Ø­ØµÙˆÙ„ Ø¨Ø§Ù†Ú©ÛŒ Ø±Ø³Ø§Ù„Øª â€” Ø§Ø±Ø²ÛŒØ§Ø¨ÛŒ Ú©Ø§Ù…Ù„ Û±Û° Ø§ØµÙ„ Ù†ÛŒÙ„Ø³Ù†ØŒ Ø¨Ø§Ø²Ø·Ø±Ø§Ø­ÛŒ Ø¯ÙˆÚ¯Ø§Ù†Ù‡ Ù…ØªÙ‚Ø§Ø¶ÛŒ Ùˆ Ú©Ø§Ø±Ø´Ù†Ø§Ø³ Ø§Ø¹ØªØ¨Ø§Ø±Ø³Ù†Ø¬ÛŒ Ùˆ Ø³Ø§Ø®Øª Ø³ÛŒØ³ØªÙ… Ø·Ø±Ø§Ø­ÛŒ Ø§Ø®ØªØµØ§ØµÛŒ) Ú©Ø§Ø± Ú©Ø±Ø¯Ù‡ Ø§Ø³Øª."
       : "In **Fintech**, Alireza designed for **Signal** (5M+ users: stock viewing, Watchlist, bank selection, and responsive landing page) and led a full **Nielsen 10-heuristic evaluation** & dual-user redesign for **Merat (Ara)** alongside a custom product design system.";
   }
 
   // Games
-  if (/(game|khiaar|freedom park|shah gol|unity|بازی|خیار|پارک آزادی|شاه گل)/.test(q)) {
+  if (/(game|khiaar|freedom park|shah gol|unity|Ø¨Ø§Ø²ÛŒ|Ø®ÛŒØ§Ø±|Ù¾Ø§Ø±Ú© Ø¢Ø²Ø§Ø¯ÛŒ|Ø´Ø§Ù‡ Ú¯Ù„)/.test(q)) {
     return isFa
-      ? "علیرضا ۳ بازی موبایل منتشرشده در کافه‌بازار و مایکت دارد: **شاه‌گل** (گل یا پوچ آنلاین چندنفره با چت زنده و همکاری با یونیتی)، **پارک آزادی** (لید طراحی محصول، چیدمان نقشه و منتورینگ ۲ طراح جونیور) و **خیار** (بازی معمایی کلمات با چرخه‌های پلی‌تست)."
-      : "Alireza shipped 3 mobile games live on Café Bazaar and Myket: **Shah Gol** (real-time multiplayer card game with live chat & Unity handoff), **Freedom Park** (Product Design Lead, map layout, MVP scoping & mentoring 2 juniors), and **Khiaar** (word puzzle game refined through playtesting).";
+      ? "Ø¹Ù„ÛŒØ±Ø¶Ø§ Û³ Ø¨Ø§Ø²ÛŒ Ù…ÙˆØ¨Ø§ÛŒÙ„ Ù…Ù†ØªØ´Ø±Ø´Ø¯Ù‡ Ø¯Ø± Ú©Ø§ÙÙ‡â€ŒØ¨Ø§Ø²Ø§Ø± Ùˆ Ù…Ø§ÛŒÚ©Øª Ø¯Ø§Ø±Ø¯: **Ø´Ø§Ù‡â€ŒÚ¯Ù„** (Ú¯Ù„ ÛŒØ§ Ù¾ÙˆÚ† Ø¢Ù†Ù„Ø§ÛŒÙ† Ú†Ù†Ø¯Ù†ÙØ±Ù‡ Ø¨Ø§ Ú†Øª Ø²Ù†Ø¯Ù‡ Ùˆ Ù‡Ù…Ú©Ø§Ø±ÛŒ Ø¨Ø§ ÛŒÙˆÙ†ÛŒØªÛŒ)ØŒ **Ù¾Ø§Ø±Ú© Ø¢Ø²Ø§Ø¯ÛŒ** (Ù„ÛŒØ¯ Ø·Ø±Ø§Ø­ÛŒ Ù…Ø­ØµÙˆÙ„ØŒ Ú†ÛŒØ¯Ù…Ø§Ù† Ù†Ù‚Ø´Ù‡ Ùˆ Ù…Ù†ØªÙˆØ±ÛŒÙ†Ú¯ Û² Ø·Ø±Ø§Ø­ Ø¬ÙˆÙ†ÛŒÙˆØ±) Ùˆ **Ø®ÛŒØ§Ø±** (Ø¨Ø§Ø²ÛŒ Ù…Ø¹Ù…Ø§ÛŒÛŒ Ú©Ù„Ù…Ø§Øª Ø¨Ø§ Ú†Ø±Ø®Ù‡â€ŒÙ‡Ø§ÛŒ Ù¾Ù„ÛŒâ€ŒØªØ³Øª)."
+      : "Alireza shipped 3 mobile games live on CafÃ© Bazaar and Myket: **Shah Gol** (real-time multiplayer card game with live chat & Unity handoff), **Freedom Park** (Product Design Lead, map layout, MVP scoping & mentoring 2 juniors), and **Khiaar** (word puzzle game refined through playtesting).";
   }
 
   // Skills / Tools / Leadership / Mentoring
-  if (/(skill|tool|figma|mentor|teach|leader|مهارت|ابزار|فیگما|منتور|تدریس)/.test(q)) {
+  if (/(skill|tool|figma|mentor|teach|leader|Ù…Ù‡Ø§Ø±Øª|Ø§Ø¨Ø²Ø§Ø±|ÙÛŒÚ¯Ù…Ø§|Ù…Ù†ØªÙˆØ±|ØªØ¯Ø±ÛŒØ³)/.test(q)) {
     return isFa
-      ? "مهارت‌های اصلی علیرضا در ۴ محور است: **طراحی و تحقیق** (UX Research، تست کاربردپذیری، معماری اطلاعات، سیستم طراحی)، **گردش‌کار هوش مصنوعی** (تست A/B، شبیه‌سازی پرسونا، پالایش PRD)، **ابزارها** (Figma، Design Tokens، Material، Tailwind، UIKit) و **رهبری** (منتورینگ ۲ طراح جونیور و تدریس دوره‌های معماری اطلاعات و دیزاین سیستم در کالج پارت)."
+      ? "Ù…Ù‡Ø§Ø±Øªâ€ŒÙ‡Ø§ÛŒ Ø§ØµÙ„ÛŒ Ø¹Ù„ÛŒØ±Ø¶Ø§ Ø¯Ø± Û´ Ù…Ø­ÙˆØ± Ø§Ø³Øª: **Ø·Ø±Ø§Ø­ÛŒ Ùˆ ØªØ­Ù‚ÛŒÙ‚** (UX ResearchØŒ ØªØ³Øª Ú©Ø§Ø±Ø¨Ø±Ø¯Ù¾Ø°ÛŒØ±ÛŒØŒ Ù…Ø¹Ù…Ø§Ø±ÛŒ Ø§Ø·Ù„Ø§Ø¹Ø§ØªØŒ Ø³ÛŒØ³ØªÙ… Ø·Ø±Ø§Ø­ÛŒ)ØŒ **Ú¯Ø±Ø¯Ø´â€ŒÚ©Ø§Ø± Ù‡ÙˆØ´ Ù…ØµÙ†ÙˆØ¹ÛŒ** (ØªØ³Øª A/BØŒ Ø´Ø¨ÛŒÙ‡â€ŒØ³Ø§Ø²ÛŒ Ù¾Ø±Ø³ÙˆÙ†Ø§ØŒ Ù¾Ø§Ù„Ø§ÛŒØ´ PRD)ØŒ **Ø§Ø¨Ø²Ø§Ø±Ù‡Ø§** (FigmaØŒ Design TokensØŒ MaterialØŒ TailwindØŒ UIKit) Ùˆ **Ø±Ù‡Ø¨Ø±ÛŒ** (Ù…Ù†ØªÙˆØ±ÛŒÙ†Ú¯ Û² Ø·Ø±Ø§Ø­ Ø¬ÙˆÙ†ÛŒÙˆØ± Ùˆ ØªØ¯Ø±ÛŒØ³ Ø¯ÙˆØ±Ù‡â€ŒÙ‡Ø§ÛŒ Ù…Ø¹Ù…Ø§Ø±ÛŒ Ø§Ø·Ù„Ø§Ø¹Ø§Øª Ùˆ Ø¯ÛŒØ²Ø§ÛŒÙ† Ø³ÛŒØ³ØªÙ… Ø¯Ø± Ú©Ø§Ù„Ø¬ Ù¾Ø§Ø±Øª)."
       : "Alireza's core capabilities span 4 pillars: **Design & Research** (UX research, usability testing, IA, design systems), **AI-Augmented Workflow** (A/B flow testing, persona simulation, PRD refinement), **Technical** (Figma, Design Tokens, Material/Tailwind, UIKit libraries), and **Leadership** (mentoring 2 juniors & teaching IA and Design Systems at Part College).";
   }
 
   // Education / Certifications
-  if (/(education|university|degree|ibm|cert|تحصیل|دانشگاه|فردوسی|مدرک|گواهینامه)/.test(q)) {
+  if (/(education|university|degree|ibm|cert|ØªØ­ØµÛŒÙ„|Ø¯Ø§Ù†Ø´Ú¯Ø§Ù‡|ÙØ±Ø¯ÙˆØ³ÛŒ|Ù…Ø¯Ø±Ú©|Ú¯ÙˆØ§Ù‡ÛŒÙ†Ø§Ù…Ù‡)/.test(q)) {
     return isFa
-      ? "علیرضا فارغ‌التحصیل **کارشناسی مهندسی کامپیوتر از دانشگاه فردوسی مشهد** (۱۳۹۶–۱۴۰۲) است و دارای گواهینامه‌های **IBM Enterprise Design Thinking (Co-Creator & Practitioner)**، دوره تخصصی **you.I کالج پارت** (۱ نفر از ۱۷ نفر میان ۳۰۰ متقاضی) و لوح تقدیر مدرس UI/UX از کالج پارت است."
-      : "Alireza holds a **B.S. in Computer Engineering from Ferdowsi University of Mashhad** (2017–2023), **IBM Enterprise Design Thinking Co-Creator & Practitioner** certifications, and graduated from Part Software Group's **you.I** program (1 of 17 selected from 300 applicants), later earning a Certificate of Appreciation as a UI/UX instructor.";
+      ? "Ø¹Ù„ÛŒØ±Ø¶Ø§ ÙØ§Ø±Øºâ€ŒØ§Ù„ØªØ­ØµÛŒÙ„ **Ú©Ø§Ø±Ø´Ù†Ø§Ø³ÛŒ Ù…Ù‡Ù†Ø¯Ø³ÛŒ Ú©Ø§Ù…Ù¾ÛŒÙˆØªØ± Ø§Ø² Ø¯Ø§Ù†Ø´Ú¯Ø§Ù‡ ÙØ±Ø¯ÙˆØ³ÛŒ Ù…Ø´Ù‡Ø¯** (Û±Û³Û¹Û¶â€“Û±Û´Û°Û²) Ø§Ø³Øª Ùˆ Ø¯Ø§Ø±Ø§ÛŒ Ú¯ÙˆØ§Ù‡ÛŒÙ†Ø§Ù…Ù‡â€ŒÙ‡Ø§ÛŒ **IBM Enterprise Design Thinking (Co-Creator & Practitioner)**ØŒ Ø¯ÙˆØ±Ù‡ ØªØ®ØµØµÛŒ **you.I Ú©Ø§Ù„Ø¬ Ù¾Ø§Ø±Øª** (Û± Ù†ÙØ± Ø§Ø² Û±Û· Ù†ÙØ± Ù…ÛŒØ§Ù† Û³Û°Û° Ù…ØªÙ‚Ø§Ø¶ÛŒ) Ùˆ Ù„ÙˆØ­ ØªÙ‚Ø¯ÛŒØ± Ù…Ø¯Ø±Ø³ UI/UX Ø§Ø² Ú©Ø§Ù„Ø¬ Ù¾Ø§Ø±Øª Ø§Ø³Øª."
+      : "Alireza holds a **B.S. in Computer Engineering from Ferdowsi University of Mashhad** (2017â€“2023), **IBM Enterprise Design Thinking Co-Creator & Practitioner** certifications, and graduated from Part Software Group's **you.I** program (1 of 17 selected from 300 applicants), later earning a Certificate of Appreciation as a UI/UX instructor.";
   }
 
   // Contact / Resume / Availability / Hire
-  if (/(contact|email|hire|resume|cv|telegram|تماس|ایمیل|رزومه|همکاری|تلگرام)/.test(q)) {
+  if (/(contact|email|hire|resume|cv|telegram|ØªÙ…Ø§Ø³|Ø§ÛŒÙ…ÛŒÙ„|Ø±Ø²ÙˆÙ…Ù‡|Ù‡Ù…Ú©Ø§Ø±ÛŒ|ØªÙ„Ú¯Ø±Ø§Ù…)/.test(q)) {
     return isFa
-      ? `می‌تونی همین الان از تب **«چت مستقیم با علیرضا»** پیام بفرستی تا مستقیماً روی تلگرامش بره، یا به **${PROFILE.email}** ایمیل بزنی. رزومه PDF هم از لینک Resume در منوی بالا قابل دریافت است.`
+      ? `Ù…ÛŒâ€ŒØªÙˆÙ†ÛŒ Ù‡Ù…ÛŒÙ† Ø§Ù„Ø§Ù† Ø§Ø² ØªØ¨ **Â«Ú†Øª Ù…Ø³ØªÙ‚ÛŒÙ… Ø¨Ø§ Ø¹Ù„ÛŒØ±Ø¶Ø§Â»** Ù¾ÛŒØ§Ù… Ø¨ÙØ±Ø³ØªÛŒ ØªØ§ Ù…Ø³ØªÙ‚ÛŒÙ…Ø§Ù‹ Ø±ÙˆÛŒ ØªÙ„Ú¯Ø±Ø§Ù…Ø´ Ø¨Ø±Ù‡ØŒ ÛŒØ§ Ø¨Ù‡ **${PROFILE.email}** Ø§ÛŒÙ…ÛŒÙ„ Ø¨Ø²Ù†ÛŒ. Ø±Ø²ÙˆÙ…Ù‡ PDF Ù‡Ù… Ø§Ø² Ù„ÛŒÙ†Ú© Resume Ø¯Ø± Ù…Ù†ÙˆÛŒ Ø¨Ø§Ù„Ø§ Ù‚Ø§Ø¨Ù„ Ø¯Ø±ÛŒØ§ÙØª Ø§Ø³Øª.`
       : `You can message Alireza directly via the **Live Chat** tab here (connected to Telegram), or email **${PROFILE.email}**. His full PDF resume is also available from the Resume link in the header.`;
   }
 
   // Default balanced overview
   return isFa
-    ? "علیرضا محمدزاده فرشچی طراح محصول با **بیش از ۴ سال تجربه** و رویکرد تفکر سیستمی در حوزه‌های B2B، B2C، GovTech، فینتک، بازی و هوش مصنوعی است (فرانو، ایران‌سرور، مید این ایران، گروه نرم‌افزاری پارت). می‌تونی درباره هر پروژه (مثل ایران‌سرور، فرانو، مید این ایران، Word+، مرآت)، سیستم‌های طراحی، مهارت‌ها یا تحصیلاتش دقیق‌تر بپرسی!"
-    : "Alireza Mohammadzade Farshchi is a **Product Designer with 4+ years of experience** and strong systems thinking across B2B, B2C, GovTech, fintech, gaming, and AI (Farano, IranServer, Made In Iran, Part Software Group). Ask me about any specific project, his design systems work, AI workflow, research process, or credentials!";
+    ? "Ø¹Ù„ÛŒØ±Ø¶Ø§ Ù…Ø­Ù…Ø¯Ø²Ø§Ø¯Ù‡ ÙØ±Ø´Ú†ÛŒ Ø·Ø±Ø§Ø­ Ù…Ø­ØµÙˆÙ„ Ø¨Ø§ **Ø¨ÛŒØ´ Ø§Ø² Û´ Ø³Ø§Ù„ ØªØ¬Ø±Ø¨Ù‡** Ùˆ Ø±ÙˆÛŒÚ©Ø±Ø¯ ØªÙÚ©Ø± Ø³ÛŒØ³ØªÙ…ÛŒ Ø¯Ø± Ø­ÙˆØ²Ù‡â€ŒÙ‡Ø§ÛŒ B2BØŒ B2CØŒ GovTechØŒ ÙÛŒÙ†ØªÚ©ØŒ Ø¨Ø§Ø²ÛŒ Ùˆ Ù‡ÙˆØ´ Ù…ØµÙ†ÙˆØ¹ÛŒ Ø§Ø³Øª (ÙØ±Ø§Ù†ÙˆØŒ Ø§ÛŒØ±Ø§Ù†â€ŒØ³Ø±ÙˆØ±ØŒ Ù…ÛŒØ¯ Ø§ÛŒÙ† Ø§ÛŒØ±Ø§Ù†ØŒ Ú¯Ø±ÙˆÙ‡ Ù†Ø±Ù…â€ŒØ§ÙØ²Ø§Ø±ÛŒ Ù¾Ø§Ø±Øª). Ù…ÛŒâ€ŒØªÙˆÙ†ÛŒ Ø¯Ø±Ø¨Ø§Ø±Ù‡ Ù‡Ø± Ù¾Ø±ÙˆÚ˜Ù‡ (Ù…Ø«Ù„ Ø§ÛŒØ±Ø§Ù†â€ŒØ³Ø±ÙˆØ±ØŒ ÙØ±Ø§Ù†ÙˆØŒ Ù…ÛŒØ¯ Ø§ÛŒÙ† Ø§ÛŒØ±Ø§Ù†ØŒ Word+ØŒ Ù…Ø±Ø¢Øª)ØŒ Ø³ÛŒØ³ØªÙ…â€ŒÙ‡Ø§ÛŒ Ø·Ø±Ø§Ø­ÛŒØŒ Ù…Ù‡Ø§Ø±Øªâ€ŒÙ‡Ø§ ÛŒØ§ ØªØ­ØµÛŒÙ„Ø§ØªØ´ Ø¯Ù‚ÛŒÙ‚â€ŒØªØ± Ø¨Ù¾Ø±Ø³ÛŒ!"
+    : "Alireza Mohammadzade Farshchi is a **Product Designer with 5+ years of experience** and strong systems thinking across B2B, B2C, GovTech, fintech, gaming, and AI (Farano, IranServer, Made In Iran, Part Software Group). Ask me about any specific project, his design systems work, AI workflow, research process, or credentials!";
 }
 
 export function renderAssistantAndChat(content) {
@@ -129,10 +129,10 @@ export function renderAssistantAndChat(content) {
 
   const quickPrompts = isFa
     ? [
-        "درباره نتایج پروژه ایران‌سرور بگو",
-        "تجربه سیستم طراحی علیرضا چیه؟",
-        "چطور از هوش مصنوعی در طراحی استفاده می‌کنه؟",
-        "تحصیلات و گواهینامه‌هاش چیه؟",
+        "Ø¯Ø±Ø¨Ø§Ø±Ù‡ Ù†ØªØ§ÛŒØ¬ Ù¾Ø±ÙˆÚ˜Ù‡ Ø§ÛŒØ±Ø§Ù†â€ŒØ³Ø±ÙˆØ± Ø¨Ú¯Ùˆ",
+        "ØªØ¬Ø±Ø¨Ù‡ Ø³ÛŒØ³ØªÙ… Ø·Ø±Ø§Ø­ÛŒ Ø¹Ù„ÛŒØ±Ø¶Ø§ Ú†ÛŒÙ‡ØŸ",
+        "Ú†Ø·ÙˆØ± Ø§Ø² Ù‡ÙˆØ´ Ù…ØµÙ†ÙˆØ¹ÛŒ Ø¯Ø± Ø·Ø±Ø§Ø­ÛŒ Ø§Ø³ØªÙØ§Ø¯Ù‡ Ù…ÛŒâ€ŒÚ©Ù†Ù‡ØŸ",
+        "ØªØ­ØµÛŒÙ„Ø§Øª Ùˆ Ú¯ÙˆØ§Ù‡ÛŒÙ†Ø§Ù…Ù‡â€ŒÙ‡Ø§Ø´ Ú†ÛŒÙ‡ØŸ",
       ]
     : [
         "What were the IranServer UX results?",
@@ -147,8 +147,8 @@ export function renderAssistantAndChat(content) {
       type="button"
       class="scroll-top-btn"
       id="scroll-top-btn"
-      aria-label="${isFa ? "بازگشت به بالا" : "Scroll to top"}"
-      title="${isFa ? "بازگشت به بالا" : "Back to top"}"
+      aria-label="${isFa ? "Ø¨Ø§Ø²Ú¯Ø´Øª Ø¨Ù‡ Ø¨Ø§Ù„Ø§" : "Scroll to top"}"
+      title="${isFa ? "Ø¨Ø§Ø²Ú¯Ø´Øª Ø¨Ù‡ Ø¨Ø§Ù„Ø§" : "Back to top"}"
     >
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M12 19V5M5 12L12 5L19 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -164,7 +164,7 @@ export function renderAssistantAndChat(content) {
       aria-controls="assistant-drawer"
     >
       <span class="assistant-fab__dot" aria-hidden="true"></span>
-      <span>${isFa ? "دستیار هوش مصنوعی و چت" : "AI Assistant & Chat"}</span>
+      <span>${isFa ? "Ø¯Ø³ØªÛŒØ§Ø± Ù‡ÙˆØ´ Ù…ØµÙ†ÙˆØ¹ÛŒ Ùˆ Ú†Øª" : "AI Assistant & Chat"}</span>
     </button>
 
     <!-- Dual-Mode Slide-Over Drawer (AI Resume Assistant + Telegram Live Chat) -->
@@ -172,28 +172,28 @@ export function renderAssistantAndChat(content) {
       class="assistant-drawer"
       id="assistant-drawer"
       aria-hidden="true"
-      aria-label="${isFa ? "دستیار هوشمند و گفت‌وگوی مستقیم" : "AI Assistant and Live Chat"}"
+      aria-label="${isFa ? "Ø¯Ø³ØªÛŒØ§Ø± Ù‡ÙˆØ´Ù…Ù†Ø¯ Ùˆ Ú¯ÙØªâ€ŒÙˆÚ¯ÙˆÛŒ Ù…Ø³ØªÙ‚ÛŒÙ…" : "AI Assistant and Live Chat"}"
     >
       <div class="assistant-drawer__header">
         <div>
           <div class="assistant-drawer__title">
-            ${isFa ? "دستیار علیرضا و چت مستقیم" : "Alireza's Assistant & Live Chat"}
+            ${isFa ? "Ø¯Ø³ØªÛŒØ§Ø± Ø¹Ù„ÛŒØ±Ø¶Ø§ Ùˆ Ú†Øª Ù…Ø³ØªÙ‚ÛŒÙ…" : "Alireza's Assistant & Live Chat"}
           </div>
           <div class="assistant-drawer__sub">
-            ${isFa ? "پاسخ فوری درباره رزومه یا پیام مستقیم به تلگرام" : "Instant resume Q&A or direct Telegram chat"}
+            ${isFa ? "Ù¾Ø§Ø³Ø® ÙÙˆØ±ÛŒ Ø¯Ø±Ø¨Ø§Ø±Ù‡ Ø±Ø²ÙˆÙ…Ù‡ ÛŒØ§ Ù¾ÛŒØ§Ù… Ù…Ø³ØªÙ‚ÛŒÙ… Ø¨Ù‡ ØªÙ„Ú¯Ø±Ø§Ù…" : "Instant resume Q&A or direct Telegram chat"}
           </div>
         </div>
-        <button type="button" class="icon-btn" id="assistant-close" aria-label="${isFa ? "بستن" : "Close"}">
-          ✕
+        <button type="button" class="icon-btn" id="assistant-close" aria-label="${isFa ? "Ø¨Ø³ØªÙ†" : "Close"}">
+          âœ•
         </button>
       </div>
 
       <div class="assistant-tabs" role="tablist">
         <button type="button" class="assistant-tab" role="tab" data-tab="ai" aria-selected="true">
-          ✦ ${isFa ? "دستیار هوشمند رزومه" : "AI Resume Assistant"}
+          âœ¦ ${isFa ? "Ø¯Ø³ØªÛŒØ§Ø± Ù‡ÙˆØ´Ù…Ù†Ø¯ Ø±Ø²ÙˆÙ…Ù‡" : "AI Resume Assistant"}
         </button>
         <button type="button" class="assistant-tab" role="tab" data-tab="chat" aria-selected="false">
-          ✈ ${isFa ? "چت مستقیم (تلگرام)" : "Live Chat (Telegram)"}
+          âœˆ ${isFa ? "Ú†Øª Ù…Ø³ØªÙ‚ÛŒÙ… (ØªÙ„Ú¯Ø±Ø§Ù…)" : "Live Chat (Telegram)"}
         </button>
       </div>
 
@@ -203,7 +203,7 @@ export function renderAssistantAndChat(content) {
           <div class="chat-msg chat-msg--bot">
             ${
               isFa
-                ? "سلام! من دستیار هوشمند پرتفولیوی علیرضا هستم. هر سوالی درباره سوابق، پروژه‌ها، سیستم‌های طراحی یا مهارت‌هاش داری بپرس."
+                ? "Ø³Ù„Ø§Ù…! Ù…Ù† Ø¯Ø³ØªÛŒØ§Ø± Ù‡ÙˆØ´Ù…Ù†Ø¯ Ù¾Ø±ØªÙÙˆÙ„ÛŒÙˆÛŒ Ø¹Ù„ÛŒØ±Ø¶Ø§ Ù‡Ø³ØªÙ…. Ù‡Ø± Ø³ÙˆØ§Ù„ÛŒ Ø¯Ø±Ø¨Ø§Ø±Ù‡ Ø³ÙˆØ§Ø¨Ù‚ØŒ Ù¾Ø±ÙˆÚ˜Ù‡â€ŒÙ‡Ø§ØŒ Ø³ÛŒØ³ØªÙ…â€ŒÙ‡Ø§ÛŒ Ø·Ø±Ø§Ø­ÛŒ ÛŒØ§ Ù…Ù‡Ø§Ø±Øªâ€ŒÙ‡Ø§Ø´ Ø¯Ø§Ø±ÛŒ Ø¨Ù¾Ø±Ø³."
                 : "Hi! I'm Alireza's portfolio assistant. Ask me anything about his experience, projects, design systems, AI workflow, or background."
             }
           </div>
@@ -220,11 +220,11 @@ export function renderAssistantAndChat(content) {
             type="text"
             id="ai-input"
             class="chat-composer__input"
-            placeholder="${isFa ? "سوالی درباره رزومه یا پروژه‌ها بپرسید..." : "Ask about experience, projects, skills..."}"
+            placeholder="${isFa ? "Ø³ÙˆØ§Ù„ÛŒ Ø¯Ø±Ø¨Ø§Ø±Ù‡ Ø±Ø²ÙˆÙ…Ù‡ ÛŒØ§ Ù¾Ø±ÙˆÚ˜Ù‡â€ŒÙ‡Ø§ Ø¨Ù¾Ø±Ø³ÛŒØ¯..." : "Ask about experience, projects, skills..."}"
             autocomplete="off"
           />
           <button type="submit" class="btn btn--primary btn--sm">
-            ${isFa ? "ارسال" : "Ask"}
+            ${isFa ? "Ø§Ø±Ø³Ø§Ù„" : "Ask"}
           </button>
         </form>
       </div>
@@ -238,7 +238,7 @@ export function renderAssistantAndChat(content) {
             type="text"
             id="tg-name"
             class="chat-composer__input"
-            placeholder="${isFa ? "نام شما (اختیاری)" : "Your name (optional)"}"
+            placeholder="${isFa ? "Ù†Ø§Ù… Ø´Ù…Ø§ (Ø§Ø®ØªÛŒØ§Ø±ÛŒ)" : "Your name (optional)"}"
             autocomplete="name"
           />
           <div style="display:flex;gap:8px;width:100%;">
@@ -246,22 +246,22 @@ export function renderAssistantAndChat(content) {
               type="text"
               id="tg-input"
               class="chat-composer__input"
-              placeholder="${isFa ? "پیام خود را برای علیرضا بنویسید..." : "Write a message to Alireza..."}"
+              placeholder="${isFa ? "Ù¾ÛŒØ§Ù… Ø®ÙˆØ¯ Ø±Ø§ Ø¨Ø±Ø§ÛŒ Ø¹Ù„ÛŒØ±Ø¶Ø§ Ø¨Ù†ÙˆÛŒØ³ÛŒØ¯..." : "Write a message to Alireza..."}"
               autocomplete="off"
               required
             />
             <button type="submit" class="btn btn--primary btn--sm">
-              ${isFa ? "ارسال" : "Send"}
+              ${isFa ? "Ø§Ø±Ø³Ø§Ù„" : "Send"}
             </button>
           </div>
           <div class="tg-status-note" id="tg-status-note">
             ${
               SITE_CONFIG.WORKER_URL
                 ? isFa
-                  ? "متصل به تلگرام علیرضا — پاسخ‌ها همین‌جا نمایش داده می‌شوند."
-                  : "Connected to Alireza's Telegram — replies appear live right here."
+                  ? "Ù…ØªØµÙ„ Ø¨Ù‡ ØªÙ„Ú¯Ø±Ø§Ù… Ø¹Ù„ÛŒØ±Ø¶Ø§ â€” Ù¾Ø§Ø³Ø®â€ŒÙ‡Ø§ Ù‡Ù…ÛŒÙ†â€ŒØ¬Ø§ Ù†Ù…Ø§ÛŒØ´ Ø¯Ø§Ø¯Ù‡ Ù…ÛŒâ€ŒØ´ÙˆÙ†Ø¯."
+                  : "Connected to Alireza's Telegram â€” replies appear live right here."
                 : isFa
-                  ? "پیام شما ثبت می‌شود و با یک کلیک از طریق ایمیل/تلگرام ارسال می‌گردد (بعد از اتصال Cloudflare Worker کاملاً خودکار و دوطرفه می‌شود)."
+                  ? "Ù¾ÛŒØ§Ù… Ø´Ù…Ø§ Ø«Ø¨Øª Ù…ÛŒâ€ŒØ´ÙˆØ¯ Ùˆ Ø¨Ø§ ÛŒÚ© Ú©Ù„ÛŒÚ© Ø§Ø² Ø·Ø±ÛŒÙ‚ Ø§ÛŒÙ…ÛŒÙ„/ØªÙ„Ú¯Ø±Ø§Ù… Ø§Ø±Ø³Ø§Ù„ Ù…ÛŒâ€ŒÚ¯Ø±Ø¯Ø¯ (Ø¨Ø¹Ø¯ Ø§Ø² Ø§ØªØµØ§Ù„ Cloudflare Worker Ú©Ø§Ù…Ù„Ø§Ù‹ Ø®ÙˆØ¯Ú©Ø§Ø± Ùˆ Ø¯ÙˆØ·Ø±ÙÙ‡ Ù…ÛŒâ€ŒØ´ÙˆØ¯)."
                   : "Live two-way Telegram relay is ready once you add your Cloudflare Worker URL in src/config.js (instant email fallback active meanwhile)."
             }
           </div>
@@ -402,8 +402,8 @@ export function initAssistantAndChat(content) {
     messages.push({
       who: "bot",
       text: isFa
-        ? "سلام! پیامت رو اینجا بنویس تا مستقیم برای تلگرام علیرضا ارسال بشه و جوابش همین‌جا برات بیاد."
-        : "Hi! Drop a message here — it routes directly to Alireza's Telegram so he can reply right back to this chat.",
+        ? "Ø³Ù„Ø§Ù…! Ù¾ÛŒØ§Ù…Øª Ø±Ùˆ Ø§ÛŒÙ†Ø¬Ø§ Ø¨Ù†ÙˆÛŒØ³ ØªØ§ Ù…Ø³ØªÙ‚ÛŒÙ… Ø¨Ø±Ø§ÛŒ ØªÙ„Ú¯Ø±Ø§Ù… Ø¹Ù„ÛŒØ±Ø¶Ø§ Ø§Ø±Ø³Ø§Ù„ Ø¨Ø´Ù‡ Ùˆ Ø¬ÙˆØ§Ø¨Ø´ Ù‡Ù…ÛŒÙ†â€ŒØ¬Ø§ Ø¨Ø±Ø§Øª Ø¨ÛŒØ§Ø¯."
+        : "Hi! Drop a message here â€” it routes directly to Alireza's Telegram so he can reply right back to this chat.",
     });
   }
 
@@ -444,7 +444,7 @@ export function initAssistantAndChat(content) {
   tgForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const text = tgInput.value.trim();
-    const sender = tgName?.value.trim() || (isFa ? "بازدیدکننده سایت" : "Portfolio Visitor");
+    const sender = tgName?.value.trim() || (isFa ? "Ø¨Ø§Ø²Ø¯ÛŒØ¯Ú©Ù†Ù†Ø¯Ù‡ Ø³Ø§ÛŒØª" : "Portfolio Visitor");
     if (!text) return;
 
     tgInput.value = "";
@@ -463,8 +463,8 @@ export function initAssistantAndChat(content) {
           messages.push({
             who: "system",
             text: isFa
-              ? "✓ پیام به تلگرام علیرضا ارسال شد. منتظر پاسخ باشید..."
-              : "✓ Sent to Alireza's Telegram. Replies will appear here automatically.",
+              ? "âœ“ Ù¾ÛŒØ§Ù… Ø¨Ù‡ ØªÙ„Ú¯Ø±Ø§Ù… Ø¹Ù„ÛŒØ±Ø¶Ø§ Ø§Ø±Ø³Ø§Ù„ Ø´Ø¯. Ù…Ù†ØªØ¸Ø± Ù¾Ø§Ø³Ø® Ø¨Ø§Ø´ÛŒØ¯..."
+              : "âœ“ Sent to Alireza's Telegram. Replies will appear here automatically.",
           });
           saveChatHistory(messages);
           renderTgFeed();
@@ -480,7 +480,7 @@ export function initAssistantAndChat(content) {
     messages.push({
       who: "system",
       text: isFa
-        ? `پیام ذخیره شد. برای ارسال فوری تا زمان اتصال ربات تلگرام، روی این ایمیل کلیک کنید: ${PROFILE.email}`
+        ? `Ù¾ÛŒØ§Ù… Ø°Ø®ÛŒØ±Ù‡ Ø´Ø¯. Ø¨Ø±Ø§ÛŒ Ø§Ø±Ø³Ø§Ù„ ÙÙˆØ±ÛŒ ØªØ§ Ø²Ù…Ø§Ù† Ø§ØªØµØ§Ù„ Ø±Ø¨Ø§Øª ØªÙ„Ú¯Ø±Ø§Ù…ØŒ Ø±ÙˆÛŒ Ø§ÛŒÙ† Ø§ÛŒÙ…ÛŒÙ„ Ú©Ù„ÛŒÚ© Ú©Ù†ÛŒØ¯: ${PROFILE.email}`
         : `Saved! To deliver immediately before your Telegram Worker is connected, send via email: ${PROFILE.email}`,
     });
     saveChatHistory(messages);
