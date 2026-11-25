@@ -7,6 +7,7 @@ import { getFeaturedProjects } from "../data/projects.js";
 import { PROFILE } from "../data/content-en.js";
 import { renderProjectCard } from "../components/project-card.js";
 import { PRINCIPLE_GLYPHS } from "../components/glyphs.js";
+import { renderHeroFigmaStage } from "../components/hero-figma-stage.js";
 
 function renderAudiencePanelContent(item, content) {
   const linksHtml = item.links
@@ -81,16 +82,8 @@ export function renderHomePage(content) {
           </div>
         </div>
 
-        <div class="hero__visual hero-stagger" style="--stagger-delay:220ms;">
-          <div class="sculpture-frame" id="hero-sculpture">
-            <img
-              src="/assets/sculpture-hero.jpg"
-              alt="${content.hero.sculptureAlt}"
-              width="720"
-              height="720"
-              fetchpriority="high"
-            />
-          </div>
+        <div class="hero__visual hero-stagger" id="hero-sculpture" style="--stagger-delay:220ms;">
+          ${renderHeroFigmaStage()}
         </div>
       </div>
     </section>
