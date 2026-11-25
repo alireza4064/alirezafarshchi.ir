@@ -1,5 +1,6 @@
 /* ==========================================================================
    Homepage Renderer — Exact 8-Section Architecture
+   Includes Hero Stagger & Pointer Parallax + Contact Sculpture Composition
    ========================================================================== */
 
 import { getFeaturedProjects } from "../data/projects.js";
@@ -59,15 +60,17 @@ export function renderHomePage(content) {
     <section class="hero" aria-labelledby="hero-title">
       <div class="container hero__grid">
         <div class="hero__copy">
-          <div class="eyebrow">
+          <div class="eyebrow hero-stagger" style="--stagger-delay:60ms;">
             <span class="eyebrow__dot" aria-hidden="true"></span>
             <span>${content.hero.eyebrow}</span>
           </div>
-          <h1 class="hero__title" id="hero-title">${content.hero.headline}</h1>
-          <div class="hero__intro">
+          <h1 class="hero__title hero-stagger" id="hero-title" style="--stagger-delay:140ms;">
+            ${content.hero.headline}
+          </h1>
+          <div class="hero__intro hero-stagger" style="--stagger-delay:220ms;">
             ${content.hero.intro.map((p) => `<p>${p}</p>`).join("")}
           </div>
-          <div class="hero__actions">
+          <div class="hero__actions hero-stagger" style="--stagger-delay:300ms;">
             <a class="btn btn--primary btn--lg" href="#selected-work">
               <span>${content.hero.primaryCta}</span>
               <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
@@ -78,8 +81,8 @@ export function renderHomePage(content) {
           </div>
         </div>
 
-        <div class="hero__visual">
-          <div class="sculpture-frame">
+        <div class="hero__visual hero-stagger" style="--stagger-delay:220ms;">
+          <div class="sculpture-frame" id="hero-sculpture">
             <img
               src="/assets/sculpture-hero.jpg"
               alt="${content.hero.sculptureAlt}"
@@ -129,7 +132,7 @@ export function renderHomePage(content) {
     </section>
 
     <!-- Section 04 — Selected Work -->
-    <section class="section section--bordered" id="selected-work" aria-labelledby="work-heading">
+    <section class="section section--bordered section--surface-band" id="selected-work" aria-labelledby="work-heading">
       <div class="container">
         <div class="section-header reveal">
           <div class="eyebrow">${content.selectedWork.eyebrow}</div>
@@ -163,7 +166,7 @@ export function renderHomePage(content) {
           ${content.approach.principles
             .map(
               (p, i) => `
-            <article class="principle-card reveal">
+            <article class="principle-card reveal" style="--reveal-delay:${i * 65}ms;">
               <div style="display:flex;align-items:center;justify-content:space-between;">
                 <div class="principle-card__glyph">${PRINCIPLE_GLYPHS[i]}</div>
                 <span class="principle-card__num">${p.num}</span>
@@ -190,8 +193,8 @@ export function renderHomePage(content) {
         <div class="exp-list">
           ${content.experience.entries
             .map(
-              (entry) => `
-            <div class="exp-row reveal">
+              (entry, i) => `
+            <div class="exp-row reveal" style="--reveal-delay:${i * 55}ms;">
               <div>
                 <div class="exp-row__company">${entry.company}</div>
                 <div class="exp-row__domain">${entry.domain}</div>
@@ -246,7 +249,7 @@ export function renderHomePage(content) {
       </div>
     </section>
 
-    <!-- Section 08 — Contact -->
+    <!-- Section 08 — Contact (with Abstract Sculpture) -->
     <section class="section section--bordered" id="contact" aria-labelledby="contact-heading">
       <div class="container">
         <div class="contact-box reveal">
@@ -254,27 +257,41 @@ export function renderHomePage(content) {
             <div class="eyebrow">${content.contact.eyebrow}</div>
             <h2 class="section-title" id="contact-heading">${content.contact.heading}</h2>
             <p class="section-desc" style="margin-bottom:28px;">${content.contact.body}</p>
-            <a class="btn btn--primary btn--lg" href="mailto:${PROFILE.email}?subject=Product%20Design%20Inquiry">
-              <span>${content.contact.cta}</span>
-              <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
-            </a>
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+              <a class="btn btn--primary btn--lg" href="mailto:${PROFILE.email}?subject=Product%20Design%20Inquiry">
+                <span>${content.contact.cta}</span>
+                <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
+              </a>
+            </div>
           </div>
 
-          <div class="contact-links">
-            ${content.contact.links
-              .map(
-                (item) => `
-              <a
-                class="contact-link-item"
-                href="${item.href}"
-                ${item.external ? 'target="_blank" rel="noopener noreferrer"' : ""}
-              >
-                <span>${item.label}</span>
-                <span style="color:var(--ink-subtle);font-weight:400;">${item.value} ↗</span>
-              </a>
-            `
-              )
-              .join("")}
+          <div class="contact-right">
+            <div style="display:flex;justify-content:center;">
+              <div class="sculpture-frame sculpture-frame--contact">
+                <img
+                  src="/assets/sculpture-contact.jpg"
+                  alt="${content.hero.sculptureAlt}"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </div>
+            <div class="contact-links">
+              ${content.contact.links
+                .map(
+                  (item) => `
+                <a
+                  class="contact-link-item"
+                  href="${item.href}"
+                  ${item.external ? 'target="_blank" rel="noopener noreferrer"' : ""}
+                >
+                  <span>${item.label}</span>
+                  <span style="color:var(--ink-subtle);font-weight:400;">${item.value} ↗</span>
+                </a>
+              `
+                )
+                .join("")}
+            </div>
           </div>
         </div>
       </div>
@@ -283,30 +300,49 @@ export function renderHomePage(content) {
 }
 
 export function initHomePage(content) {
+  // 1. Audience Selector Interaction
   const buttons = document.querySelectorAll("[data-audience-id]");
   const panel = document.getElementById("audience-panel");
-  if (!buttons.length || !panel) return;
+  if (buttons.length && panel) {
+    let currentId = content.audience.items[0].id;
 
-  let currentId = content.audience.items[0].id;
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const nextId = btn.getAttribute("data-audience-id");
+        if (!nextId || nextId === currentId) return;
 
-  buttons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const nextId = btn.getAttribute("data-audience-id");
-      if (!nextId || nextId === currentId) return;
+        const nextItem = content.audience.items.find((i) => i.id === nextId);
+        if (!nextItem) return;
 
-      const nextItem = content.audience.items.find((i) => i.id === nextId);
-      if (!nextItem) return;
+        currentId = nextId;
+        buttons.forEach((b) =>
+          b.setAttribute("aria-pressed", String(b.getAttribute("data-audience-id") === nextId))
+        );
 
-      currentId = nextId;
-      buttons.forEach((b) =>
-        b.setAttribute("aria-pressed", String(b.getAttribute("data-audience-id") === nextId))
-      );
-
-      panel.classList.add("is-switching");
-      window.setTimeout(() => {
-        panel.innerHTML = renderAudiencePanelContent(nextItem, content);
-        panel.classList.remove("is-switching");
-      }, 160);
+        panel.classList.add("is-switching");
+        window.setTimeout(() => {
+          panel.innerHTML = renderAudiencePanelContent(nextItem, content);
+          panel.classList.remove("is-switching");
+        }, 160);
+      });
     });
-  });
+  }
+
+  // 2. Subtle Desktop Pointer Parallax on Hero Sculpture (respects reduced-motion)
+  const heroSculpture = document.getElementById("hero-sculpture");
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finePointer = window.matchMedia("(pointer: fine)").matches;
+
+  if (heroSculpture && !prefersReduced && finePointer) {
+    heroSculpture.addEventListener("pointermove", (e) => {
+      const rect = heroSculpture.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      heroSculpture.style.transform = `perspective(900px) rotateX(${(-y * 5).toFixed(2)}deg) rotateY(${(x * 5).toFixed(2)}deg)`;
+    });
+
+    heroSculpture.addEventListener("pointerleave", () => {
+      heroSculpture.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+    });
+  }
 }

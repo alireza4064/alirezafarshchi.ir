@@ -1,14 +1,31 @@
 /* ==========================================================================
    Page Sections & Views:
-   Homepage (8 sections), Work, Project Overview, Protected Case Study, About
+   Atmospheric Hero, Interactive Audience Selector, Uniform Work Grid,
+   Design Approach, Experience, About, Contact Sculpture, Subpages
    ========================================================================== */
 
-/* --- 02. Hero Section --- */
+/* --- 02. Hero Section (Bliss Agency-inspired soft atmosphere) --- */
 .hero {
-  padding-block: clamp(44px, 6vw, 84px) clamp(56px, 7vw, 96px);
+  position: relative;
+  padding-block: clamp(44px, 6vw, 88px) clamp(56px, 7vw, 100px);
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -120px -80px auto -80px;
+  height: 620px;
+  background: radial-gradient(circle at 74% 38%, var(--hero-aura-1) 0%, transparent 46%),
+    radial-gradient(circle at 60% 20%, var(--hero-aura-2) 0%, transparent 40%),
+    radial-gradient(circle at 18% 30%, var(--hero-aura-3) 0%, transparent 48%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .hero__grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.95fr);
   gap: clamp(32px, 5vw, 64px);
@@ -61,13 +78,32 @@ html[dir="rtl"] .hero__title {
   aspect-ratio: 1 / 1;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  background: var(--canvas);
+  background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
+  transition: transform 320ms var(--ease-out), box-shadow 320ms var(--ease-out);
+  will-change: transform;
+}
+
+[data-theme="dark"] .sculpture-frame {
+  padding: 12px;
+  background: radial-gradient(circle at 50% 0%, var(--primary-soft), var(--surface) 74%);
+  border-color: var(--border-strong);
+  box-shadow: 0 20px 56px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(87, 193, 255, 0.14);
+}
+
+[data-theme="dark"] .sculpture-frame img {
+  border-radius: 18px;
 }
 
 .sculpture-frame--landscape {
   aspect-ratio: 4 / 3;
+}
+
+.sculpture-frame--contact {
+  max-width: 260px;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-lg);
 }
 
 .sculpture-frame img {
@@ -80,10 +116,10 @@ html[dir="rtl"] .hero__title {
 @keyframes gentleFloat {
   0%,
   100% {
-    transform: translateY(0) scale(1.02);
+    transform: translateY(0) scale(1.015);
   }
   50% {
-    transform: translateY(-6px) scale(1.03);
+    transform: translateY(-6px) scale(1.028);
   }
 }
 
@@ -135,7 +171,7 @@ html[dir="rtl"] .hero__title {
 }
 
 .audience-card[aria-pressed="true"] .audience-card__title {
-  color: var(--primary-deep);
+  color: var(--primary-text-on-soft);
 }
 
 .audience-card__indicator {
@@ -150,7 +186,12 @@ html[dir="rtl"] .hero__title {
 .audience-card[aria-pressed="true"] .audience-card__indicator {
   background: var(--primary);
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(22, 94, 246, 0.16);
+  box-shadow: 0 0 0 4px var(--primary-soft-strong);
+}
+
+[data-theme="dark"] .audience-card[aria-pressed="true"] .audience-card__indicator {
+  background: var(--accent-sky);
+  border-color: var(--accent-sky);
 }
 
 .audience-card__desc {
@@ -217,6 +258,10 @@ html[dir="rtl"] .hero__title {
   flex-shrink: 0;
 }
 
+[data-theme="dark"] .audience-panel__bullet {
+  background: var(--accent-sky);
+}
+
 .audience-panel__aside {
   background: var(--surface-subtle);
   border: 1px solid var(--border);
@@ -227,10 +272,14 @@ html[dir="rtl"] .hero__title {
 .audience-panel__aside-label {
   font-size: var(--text-caption);
   font-weight: 600;
-  color: var(--primary);
+  color: var(--primary-text-on-soft);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-bottom: 12px;
+}
+
+[data-theme="dark"] .audience-panel__aside-label {
+  color: var(--accent-sky);
 }
 
 html[dir="rtl"] .audience-panel__aside-label {
@@ -255,12 +304,18 @@ html[dir="rtl"] .audience-panel__aside-label {
   font-size: var(--text-sm);
   font-weight: 500;
   transition: border-color var(--dur-btn) var(--ease-out),
-    color var(--dur-btn) var(--ease-out);
+    color var(--dur-btn) var(--ease-out),
+    transform var(--dur-btn) var(--ease-out);
 }
 
 .audience-quick-link:hover {
   border-color: var(--primary);
-  color: var(--primary);
+  color: var(--primary-text-on-soft);
+  transform: translateX(3px);
+}
+
+html[dir="rtl"] .audience-quick-link:hover {
+  transform: translateX(-3px);
 }
 
 /* --- 04. Selected Work Grid --- */
@@ -276,7 +331,7 @@ html[dir="rtl"] .audience-panel__aside-label {
   justify-content: flex-start;
 }
 
-/* --- 05. Design Approach (5 Principles with bespoke abstract geometric marks) --- */
+/* --- 05. Design Approach --- */
 .principles-list {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -292,12 +347,14 @@ html[dir="rtl"] .audience-panel__aside-label {
   flex-direction: column;
   gap: 16px;
   transition: border-color var(--dur-card) var(--ease-out),
-    transform var(--dur-card) var(--ease-out);
+    transform var(--dur-card) var(--ease-out),
+    box-shadow var(--dur-card) var(--ease-out);
 }
 
 .principle-card:hover {
   border-color: var(--primary-border);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
 }
 
 .principle-card__glyph {
@@ -309,6 +366,10 @@ html[dir="rtl"] .audience-panel__aside-label {
   display: grid;
   place-items: center;
   color: var(--primary);
+}
+
+[data-theme="dark"] .principle-card__glyph {
+  color: var(--accent-sky);
 }
 
 .principle-card__num {
@@ -345,11 +406,13 @@ html[dir="rtl"] .audience-panel__aside-label {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  transition: border-color var(--dur-btn) var(--ease-out);
+  transition: border-color var(--dur-btn) var(--ease-out),
+    transform var(--dur-btn) var(--ease-out);
 }
 
 .exp-row:hover {
   border-color: var(--primary-border);
+  transform: translateY(-1px);
 }
 
 .exp-row__company {
@@ -410,45 +473,53 @@ html[dir="rtl"] .audience-panel__aside-label {
   font-weight: 500;
 }
 
-/* --- 08. Contact Section --- */
+/* --- 08. Contact Section (with Abstract Sculpture) --- */
 .contact-box {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
-  padding: clamp(36px, 6vw, 68px);
+  padding: clamp(32px, 5.5vw, 64px);
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
-  gap: 36px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(28px, 4vw, 48px);
   align-items: center;
   position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .contact-box::before {
   content: "";
   position: absolute;
-  inset-inline-end: -80px;
+  inset-inline-end: -60px;
   top: -80px;
-  width: 320px;
-  height: 320px;
+  width: 360px;
+  height: 360px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--primary-soft) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--hero-aura-1) 0%, transparent 68%);
   pointer-events: none;
+}
+
+.contact-right {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  z-index: 1;
 }
 
 .contact-links {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  position: relative;
-  z-index: 1;
+  gap: 10px;
 }
 
 .contact-link-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  gap: 12px;
+  padding: 15px 18px;
   border-radius: var(--radius-md);
   background: var(--canvas);
   border: 1px solid var(--border);
@@ -461,7 +532,7 @@ html[dir="rtl"] .audience-panel__aside-label {
 
 .contact-link-item:hover {
   border-color: var(--primary);
-  color: var(--primary);
+  color: var(--primary-text-on-soft);
   background: var(--primary-soft);
 }
 
@@ -487,13 +558,14 @@ html[dir="rtl"] .audience-panel__aside-label {
 
 .filter-pill:hover {
   border-color: var(--primary-border);
-  color: var(--primary);
+  color: var(--primary-text-on-soft);
 }
 
 .filter-pill[aria-pressed="true"] {
   background: var(--primary);
   border-color: var(--primary);
   color: #ffffff;
+  box-shadow: 0 4px 14px rgba(22, 94, 246, 0.25);
 }
 
 /* --- Project Overview Page --- */
@@ -513,7 +585,7 @@ html[dir="rtl"] .audience-panel__aside-label {
 }
 
 .back-link:hover {
-  color: var(--primary);
+  color: var(--primary-text-on-soft);
 }
 
 .overview-meta-grid {
@@ -548,6 +620,15 @@ html[dir="rtl"] .audience-panel__aside-label {
   background: var(--surface-subtle);
 }
 
+[data-theme="dark"] .overview-cover {
+  padding: 14px;
+  background: radial-gradient(circle at 50% 0%, var(--primary-soft), var(--surface-subtle) 75%);
+}
+
+[data-theme="dark"] .overview-cover img {
+  border-radius: 16px;
+}
+
 .overview-cover img {
   width: 100%;
   height: 100%;
@@ -556,8 +637,8 @@ html[dir="rtl"] .audience-panel__aside-label {
 
 .overview-content {
   display: grid;
-  gap: 32px;
-  padding-block: 48px;
+  gap: 28px;
+  padding-block: 44px;
 }
 
 .overview-block {
@@ -620,6 +701,10 @@ html[dir="rtl"] .audience-panel__aside-label {
   margin-bottom: 20px;
 }
 
+[data-theme="dark"] .gate-icon {
+  color: var(--accent-sky);
+}
+
 .gate-form {
   display: grid;
   gap: 14px;
@@ -660,10 +745,34 @@ html[dir="rtl"] .audience-panel__aside-label {
 .gate-status.is-info {
   display: block;
   background: var(--primary-soft);
-  color: var(--primary-deep);
+  color: var(--primary-text-on-soft);
 }
 
 /* --- About Full Page --- */
+.about-portrait-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 18px 10px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-xs);
+}
+
+html[dir="rtl"] .about-portrait-chip {
+  padding: 10px 10px 10px 18px;
+}
+
+.about-portrait-chip img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-border);
+}
+
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -703,10 +812,14 @@ html[dir="rtl"] .audience-panel__aside-label {
 .cert-card__org {
   font-size: var(--text-caption);
   font-weight: 600;
-  color: var(--primary);
+  color: var(--primary-text-on-soft);
 }
 
-/* --- Responsive Breakpoints (Tablet 768px & Mobile 375px) --- */
+[data-theme="dark"] .cert-card__org {
+  color: var(--accent-sky);
+}
+
+/* --- Responsive Breakpoints --- */
 @media (max-width: 1100px) {
   .principles-list {
     grid-template-columns: repeat(3, minmax(0, 1fr));

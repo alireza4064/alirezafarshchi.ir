@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Base Reset, Typography, Layout Primitives & Accessibility
+   Base Reset, Architectural Patterns, Typography & Motion Primitives
    ========================================================================== */
 
 *,
@@ -27,11 +27,34 @@ body {
   line-height: 1.65;
   overflow-x: hidden;
   min-height: 100vh;
+  transition: background-color 260ms var(--ease-out), color 260ms var(--ease-out);
+  /* Subtle architectural dot-grid pattern (Taraznama-inspired) */
+  background-image: radial-gradient(var(--pattern-dot) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: 0 0;
 }
 
 html[dir="rtl"] body {
   line-height: 1.85;
   letter-spacing: 0;
+}
+
+/* Scroll Progress Hairline */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  inset-inline-start: 0;
+  height: 2.5px;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent-sky) 100%);
+  z-index: 200;
+  pointer-events: none;
+}
+
+html[dir="rtl"] .scroll-progress {
+  transform-origin: right center;
 }
 
 img,
@@ -108,7 +131,7 @@ a {
   max-width: var(--container-narrow);
 }
 
-/* Section Rhythm */
+/* Section Rhythm & Subtle Grid Bands */
 .section {
   padding-block: var(--section-py);
   position: relative;
@@ -116,6 +139,16 @@ a {
 
 .section--bordered {
   border-top: 1px solid var(--border);
+}
+
+.section--surface-band {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--surface-subtle) 18%,
+    var(--surface-subtle) 82%,
+    transparent 100%
+  );
 }
 
 .section-header {
@@ -131,8 +164,12 @@ a {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--primary);
+  color: var(--primary-text-on-soft);
   margin-bottom: 16px;
+}
+
+[data-theme="dark"] .eyebrow {
+  color: var(--accent-sky);
 }
 
 html[dir="rtl"] .eyebrow {
@@ -147,6 +184,11 @@ html[dir="rtl"] .eyebrow {
   border-radius: 50%;
   background: var(--primary);
   box-shadow: 0 0 0 4px var(--primary-soft);
+}
+
+[data-theme="dark"] .eyebrow__dot {
+  background: var(--accent-sky);
+  box-shadow: 0 0 0 4px var(--accent-sky-soft);
 }
 
 .section-title {
@@ -174,17 +216,33 @@ html[dir="rtl"] .section-desc {
   line-height: 1.85;
 }
 
-/* Reveal Animation */
+/* Staggered Reveal Animation */
 .reveal {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(20px);
   transition: opacity var(--dur-reveal) var(--ease-out),
     transform var(--dur-reveal) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Hero Stagger Entrance */
+.hero-stagger {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: heroEnter 640ms var(--ease-out) forwards;
+  animation-delay: var(--stagger-delay, 0ms);
+}
+
+@keyframes heroEnter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Reduced Motion */
@@ -201,7 +259,8 @@ html[dir="rtl"] .section-desc {
     transition-duration: 0.01ms !important;
   }
 
-  .reveal {
+  .reveal,
+  .hero-stagger {
     opacity: 1;
     transform: none;
   }

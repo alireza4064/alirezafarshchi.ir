@@ -1,7 +1,7 @@
 /* ==========================================================================
    About Page (/en/about and /fa/about)
-   Full narrative, career timeline, transparent freelance engagements,
-   skills matrix, education, and real certifications.
+   Full narrative, real portrait chip, career timeline, transparent freelance
+   engagements, skills matrix, education, and real certifications.
    ========================================================================== */
 
 import { PROFILE } from "../data/content-en.js";
@@ -14,6 +14,18 @@ export function renderAboutPage(content) {
     <section class="section" style="padding-top:clamp(44px,6vw,76px);">
       <div class="container about-grid">
         <div>
+          <div class="about-portrait-chip">
+            <img src="/assets/alireza-portrait.jpg" alt="${PROFILE.name}" width="48" height="48" />
+            <div>
+              <div style="font-weight:700;font-size:0.95rem;color:var(--ink);">
+                ${content.lang === "fa" ? "علیرضا محمدزاده فرشچی" : PROFILE.name}
+              </div>
+              <div style="font-size:0.8rem;color:var(--ink-muted);">
+                ${content.lang === "fa" ? "طراح محصول · +۴ سال تجربه" : "Product Designer · 4+ Years Experience"}
+              </div>
+            </div>
+          </div>
+
           <div class="eyebrow">
             <span class="eyebrow__dot" aria-hidden="true"></span>
             <span>${a.eyebrow}</span>
@@ -50,11 +62,11 @@ export function renderAboutPage(content) {
           ${content.experience.entries
             .map(
               (entry) => `
-            <article class="overview-block">
+            <article class="overview-block reveal">
               <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:10px;">
                 <div>
                   <h3 style="font-size:1.25rem;font-weight:700;">${entry.company}</h3>
-                  <div style="color:var(--primary);font-weight:600;font-size:var(--text-sm);">${entry.role}</div>
+                  <div style="color:var(--primary-text-on-soft);font-weight:600;font-size:var(--text-sm);">${entry.role}</div>
                 </div>
                 <div style="text-align:end;">
                   <div style="font-weight:600;font-size:var(--text-sm);">${entry.period}</div>
@@ -81,11 +93,11 @@ export function renderAboutPage(content) {
           ${content.experience.freelanceEntries
             .map(
               (item) => `
-            <article class="overview-block">
+            <article class="overview-block reveal">
               <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:8px;">
                 <div>
                   <h3 style="font-size:1.1rem;font-weight:700;">${item.company}</h3>
-                  <div style="color:var(--primary);font-size:var(--text-sm);font-weight:500;">${item.role}</div>
+                  <div style="color:var(--primary-text-on-soft);font-size:var(--text-sm);font-weight:500;">${item.role}</div>
                 </div>
                 <div style="font-size:var(--text-sm);color:var(--ink-muted);">${item.period}</div>
               </div>
@@ -107,7 +119,7 @@ export function renderAboutPage(content) {
           ${a.skillGroups
             .map(
               (group) => `
-            <div class="skill-group">
+            <div class="skill-group reveal">
               <h3>${group.title}</h3>
               <div class="skill-tags">
                 ${group.items.map((skill) => `<span class="pill">${skill}</span>`).join("")}
@@ -125,11 +137,11 @@ export function renderAboutPage(content) {
       <div class="container container--narrow">
         <h2 class="section-title" style="margin-bottom:28px;">${a.educationHeading}</h2>
 
-        <div class="overview-block" style="margin-bottom:20px;">
+        <div class="overview-block reveal" style="margin-bottom:20px;">
           <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
             <div>
               <h3 style="font-size:1.15rem;font-weight:700;">${a.education.school}</h3>
-              <p style="color:var(--primary);font-weight:500;">${a.education.degree}</p>
+              <p style="color:var(--primary-text-on-soft);font-weight:500;">${a.education.degree}</p>
             </div>
             <div style="color:var(--ink-muted);font-size:var(--text-sm);">
               ${a.education.period} · ${a.education.location}
@@ -141,12 +153,12 @@ export function renderAboutPage(content) {
           ${a.certifications
             .map(
               (cert) => `
-            <article class="cert-card">
+            <article class="cert-card reveal">
               <div class="cert-card__org">${cert.org}</div>
               <h3 style="font-size:1rem;font-weight:600;line-height:1.4;">${cert.title}</h3>
               ${
                 cert.url
-                  ? `<a href="${cert.url}" target="_blank" rel="noopener noreferrer" style="color:var(--primary);font-size:var(--text-sm);font-weight:600;margin-top:6px;">Verify credential ↗</a>`
+                  ? `<a href="${cert.url}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-text-on-soft);font-size:var(--text-sm);font-weight:600;margin-top:6px;">Verify credential ↗</a>`
                   : ""
               }
               ${

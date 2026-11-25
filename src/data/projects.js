@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Projects Dataset — Strictly Grounded in Supplied Resume & CSV Exports
+   Projects Dataset — Grounded in Supplied Resume, CSV Exports & Notion Docs
    Zero fabricated metrics, screenshots, or confidential disclosures.
    ========================================================================== */
 
@@ -22,13 +22,13 @@ export const PROJECTS = [
         "Across a broad product line spanning web hosting, domains, VPS, dedicated servers, and cloud services, fragmented interfaces and weak visual hierarchy in purchase flows created usability friction and high drop-off.",
       contributions: [
         "Owned the IranServer design system end-to-end — components, design tokens/variables, and styles — while factoring in real connectivity and infrastructure constraints.",
-        "Redesigned core user portal and main website flows across hosting, domains, VPS, dedicated servers, and marketing landing pages.",
+        "Redesigned core user portal and main website flows across hosting (consultation & discount forms), domains, VPS/dedicated servers, and marketing (affiliate and AI-vertical landing pages).",
         "Ran Nielsen 10-heuristic evaluations and competitive benchmarking (vs. GoDaddy, Hostinger, ParsPack) on cart, checkout, and cloud-service flows alongside GA4 funnel analysis.",
-        "Represented product design in cross-functional PM retrospectives and used AI to assist in metric analysis and social sentiment monitoring.",
+        "Represented product design in cross-functional PM retrospectives and used AI to analyze metrics and monitor social user sentiment.",
       ],
       outcomes: [
         "Quarterly UX performance review of the redesigned homepage (GA4, Microsoft Clarity, heatmaps) reported +22% users and an 18.5 percentage-point reduction in bounce rate.",
-        "Reduced dead clicks by 6.7 percentage points and lowered rage clicks while identifying remaining areas (VIP, security, domain search) for further iteration.",
+        "Reduced dead clicks by 6.7 percentage points and lowered rage clicks while flagging VIP, security, and domain search sections for further iteration.",
       ],
     },
     fa: {
@@ -42,10 +42,10 @@ export const PROJECTS = [
       problem:
         "در مجموعه‌ای گسترده از محصولات شامل هاستینگ، دامنه، سرور مجازی، سرور اختصاصی و سرویس‌های ابری، ناهماهنگی رابط کاربری و سلسله‌مراتب بصری ضعیف در جریان خرید باعث اصطکاک کاربری و ریزش در قیف فروش شده بود.",
       contributions: [
-        "مالکیت کامل سیستم طراحی ایران‌سرور (کامپوننت‌ها، توکن‌ها و استایل‌ها) با در نظر گرفتن محدودیت‌های واقعی زیرساختی.",
-        "بازطراحی جریان‌های کلیدی پنل کاربری و وب‌سایت اصلی در محصولات هاستینگ، دامنه، سرورها و لندینگ‌های بازاریابی.",
+        "مالکیت کامل سیستم طراحی ایران‌سرور (کامپوننت‌ها، توکن‌ها و استایل‌ها) با در نظر گرفتن محدودیت‌های واقعی زیرساختی و اتصال.",
+        "بازطراحی جریان‌های کلیدی پنل کاربری و وب‌سایت اصلی در محصولات هاستینگ، دامنه، سرورها و لندینگ‌های بازاریابی (افیلیت و هوش مصنوعی).",
         "انجام ارزیابی ۱۰ اصل نیلسن، بنچمارک رقابتی (GoDaddy، Hostinger، پارس‌پک) و تحلیل قیف خرید GA4 روی جریان‌های سبد خرید و سرویس‌های ابری.",
-        "نمایندگی تیم طراحی محصول در جلسات رتروسپکتیو مدیران محصول و بهره‌گیری از هوش مصنوعی برای تحلیل متریک‌ها و بازخورد کاربران.",
+        "نمایندگی تیم طراحی محصول در جلسات رتروسپکتیو مدیران محصول و بهره‌گیری از هوش مصنوعی برای تحلیل متریک‌ها و پایش بازخورد کاربران.",
       ],
       outcomes: [
         "در بازبینی فصلی عملکرد UX صفحه اصلی بازطراحی‌شده (با GA4، کلاریتی و هیت‌مپ): ۲۲٪ افزایش کاربر و ۱۸.۵ واحد درصد کاهش نرخ پرش (Bounce Rate) گزارش شد.",
@@ -164,20 +164,20 @@ export const PROJECTS = [
       domain: "Mobile Application · Productivity / Content",
       role: "Product Designer · Design & Product Responsibilities",
       timeline: "Part Software Group (Dec 2021 — Jan 2025)",
-      scope: "Material 3 Design System, User Research, Gamification & PM",
+      scope: "Material 3 Design System, Research-Led Personalization & PM",
       shortDesc:
         "Combining product design, user research, and design system ownership to shape a consistent mobile experience.",
       problem:
-        "The language-learning app needed a cohesive mobile experience, stronger retention mechanics, and clarity around why learners hesitated to convert to premium plans.",
+        "The English-learning app needed a cohesive mobile experience, stronger daily engagement mechanics, and clarity around why learners hesitated to convert to premium plans.",
       contributions: [
-        "Led the creation and ownership of a Material 3-based design system and lightweight UIKit style/token library to keep mobile interfaces consistent.",
-        "Conducted user interviews with 8 participants (ages 16–33, students through master's-level professionals), developing personas, journey maps, and empathy maps.",
-        "Combined Product Designer and Product Manager responsibilities: defined KPIs, set up Firebase analytics events, built the roadmap, and coordinated technical and marketing teams.",
-        "Introduced gamification improvements, visual/example-based learning concepts, and saved-word history shaped directly by research findings.",
+        "Led the creation and ownership of a Material 3-based design system and lightweight UIKit style/token library.",
+        "Conducted structured user interviews (including 40 phone interviews for personalization plus in-depth conversion interviews with 8 learners ages 16–33), defining 2 research-grounded personas, journey maps, and empathy maps.",
+        "Split studying into two distinct modes to match how learners' available time varies day to day, added in-app error reporting, and layered gamification & ASMR-style engagement mechanics.",
+        "Combined Product Designer and Product Manager responsibilities: defined KPIs, configured Firebase & Google Analytics events, prioritized the backlog, and coordinated engineering and marketing.",
       ],
       outcomes: [
-        "Uncovered a key purchase-conversion blocker — unclear messaging about what premium access included — directly informing paywall and roadmap priorities.",
-        "Delivered a unified Material 3 mobile design foundation across learning and account flows.",
+        "Uncovered a key purchase-conversion blocker — unclear messaging about what premium access included — directly shaping paywall clarity and roadmap priorities (visual/example-based learning & saved-word history).",
+        "Delivered a unified Material 3 mobile design foundation across personalized study and account flows.",
       ],
     },
     fa: {
@@ -185,25 +185,117 @@ export const PROJECTS = [
       domain: "اپلیکیشن موبایل · یادگیری و بهره‌وری",
       role: "طراح محصول · مسئولیت طراحی و مدیریت محصول",
       timeline: "گروه نرم‌افزاری پارت (۱۴۰۰ — ۱۴۰۳)",
-      scope: "سیستم طراحی Material 3، تحقیق کاربر، گیمیفیکیشن و مدیریت محصول",
+      scope: "سیستم طراحی Material 3، شخصی‌سازی پژوهش‌محور و مدیریت محصول",
       shortDesc:
         "ترکیب طراحی محصول، تحقیق کاربر و مسئولیت توسعه سیستم طراحی برای شکل‌دادن به تجربه‌ای یکپارچه در اپلیکیشن.",
       problem:
-        "این اپلیکیشن یادگیری زبان به تجربه‌ای منسجم‌تر در موبایل، سازوکارهای مؤثرتر برای ماندگاری کاربران و شفاف‌سازی دلیل تردید کاربران در خرید اشتراک ویژه نیاز داشت.",
+        "این اپلیکیشن یادگیری زبان انگلیسی به تجربه‌ای منسجم‌تر در موبایل، سازوکارهای مؤثرتر برای ماندگاری روزانه و شفاف‌سازی دلیل تردید کاربران در خرید اشتراک ویژه نیاز داشت.",
       contributions: [
-        "هدایت و مالکیت سیستم طراحی مبتنی بر Material 3 و کتابخانه سبک UIKit با یکپارچگی توکن برای حفظ انسجام رابط کاربری.",
-        "انجام مصاحبه‌های کاربری با ۸ شرکت‌کننده (۱۶ تا ۳۳ سال، از دانش‌آموز تا کارشناس ارشد) و تدوین پرسونا، نقشه سفر و نقشه همدلی.",
-        "ترکیب نقش طراح محصول و مدیر محصول: تعریف KPIها، پیاده‌سازی رویدادهای تحلیلی Firebase، تدوین نقشه راه و هماهنگی تیم‌های فنی و بازاریابی.",
-        "بهبود رابط کاربری و افزودن گیمیفیکیشن، یادگیری مبتنی بر مثال/تصویر و تاریخچه واژگان ذخیره‌شده بر اساس یافته‌های تحقیق.",
+        "هدایت و مالکیت سیستم طراحی مبتنی بر Material 3 و کتابخانه سبک UIKit با یکپارچگی توکن.",
+        "انجام مصاحبه‌های ساختارمند (شامل ۴۰ مصاحبه تلفنی برای لایه شخصی‌سازی و مصاحبه‌های عمیق تبدیل با ۸ کاربر ۱۶ تا ۳۳ سال) و تدوین ۲ پرسونای پژوهش‌محور، نقشه سفر و نقشه همدلی.",
+        "تفکیک مطالعه به دو حالت مجزا متناسب با نوسان زمان روزانه کاربران، افزودن گزارش خطای درون‌برنامه‌ای و لایه‌بندی مکانیک‌های گیمیفیکیشن و ASMR.",
+        "ترکیب نقش طراح محصول و مدیر محصول: تعریف KPIها، پیکربندی رویدادهای Firebase و Google Analytics، اولویت‌بندی بک‌لاگ و هماهنگی تیم‌های فنی و بازاریابی.",
       ],
       outcomes: [
-        "شناسایی مانع کلیدی تبدیل خرید اشتراک (ابهام در پیام‌رسانی درباره امکانات نسخه ویژه) که مستقیماً اولویت‌های نقشه راه را جهت‌دهی کرد.",
-        "ایجاد پایه طراحی یکپارچه مبتنی بر Material 3 در تمامی جریان‌های یادگیری و حساب کاربری.",
+        "شناسایی مانع کلیدی تبدیل خرید اشتراک (ابهام در پیام‌رسانی درباره امکانات نسخه ویژه) که مستقیماً اولویت‌های نقشه راه (یادگیری تصویری/مثال‌محور و تاریخچه واژگان) را شکل داد.",
+        "ایجاد پایه طراحی یکپارچه مبتنی بر Material 3 در تمامی جریان‌های مطالعه و حساب کاربری.",
       ],
     },
   },
 
-  /* --- Additional Real Projects (Visible on /work listing) --- */
+  /* --- Additional Real Projects (Visible on /work listing, enriched from Notion Docs) --- */
+  {
+    slug: "merat-ara",
+    featured: false,
+    cover: null,
+    categories: ["Fintech", "Design Systems", "B2B"],
+    protectedCaseStudy: true,
+    en: {
+      title: "Merat (Ara) — Credit Assessment Platform",
+      domain: "Fintech · Banking Product (Resalat Bank)",
+      role: "Product Designer",
+      timeline: "Part Software Group (Dec 2021 — Jan 2025)",
+      scope: "Nielsen 10-Heuristic Evaluation, Dual-User Redesign & Custom Design System",
+      shortDesc:
+        "Full Nielsen heuristic evaluation, structural redesign for applicants and bank credit experts, and a custom design system.",
+      problem:
+        "A private financial credit-assessment dashboard serving two distinct groups — loan applicants and bank credit experts — suffered from inconsistent microcopy, RTL alignment bugs, and structural friction under strict data confidentiality.",
+      contributions: [
+        "Ran a full structured evaluation against Nielsen's 10 usability heuristics on the applicant-facing system and adapted research methods under strict financial confidentiality constraints.",
+        "Resolved critical UX defects: standardized inconsistent submit microcopy, replaced checkbox single-choice job fields with radio buttons, fixed RTL icon/checkbox alignment, added empty states, and expanded FAQ touch targets.",
+        "Led a structural redesign across both applicant and credit-expert surfaces, designed the 'Vasighe' extension, and collaborated on a custom design system with unambiguous developer handoff docs.",
+      ],
+      outcomes: [
+        "Delivered a research-backed, RTL-compliant dual-user banking redesign backed by a dedicated product design system.",
+      ],
+    },
+    fa: {
+      title: "مرآت (آرا) — پلتفرم اعتبارسنجی",
+      domain: "فینتک · محصول بانکی (بانک رسالت)",
+      role: "طراح محصول",
+      timeline: "گروه نرم‌افزاری پارت (۱۴۰۰ — ۱۴۰۳)",
+      scope: "ارزیابی ۱۰ اصل نیلسن، بازطراحی دوگانه و سیستم طراحی اختصاصی",
+      shortDesc:
+        "ارزیابی کامل اکتشافی نیلسن، بازطراحی ساختاری برای متقاضیان و کارشناسان اعتبارسنجی بانک و ساخت سیستم طراحی اختصاصی.",
+      problem:
+        "داشبورد مالی اعتبارسنجی برای دو گروه کاربری متفاوت (متقاضیان تسهیلات و کارشناسان اعتبارسنجی بانک) با چالش‌هایی مانند ناهماهنگی میکروکپی، خطاهای چیدمان راست‌به‌چپ و محدودیت دسترسی مستقیم به کاربران به دلیل محرمانگی مالی روبه‌رو بود.",
+      contributions: [
+        "انجام ارزیابی ساختارمند بر اساس ۱۰ اصل کاربردپذیری نیلسن روی سامانه متقاضیان و تطبیق روش تحقیق در شرایط محرمانگی داده‌های مالی.",
+        "رفع خطاهای کلیدی UX: یکسان‌سازی میکروکپی دکمه‌ها، اصلاح فیلد تک‌انتخابی شغل از چک‌باکس به رادیو باتن، اصلاح چیدمان RTL، افزودن Empty State و اصلاح ناحیه لمس کارت‌های FAQ.",
+        "هدایت بازطراحی ساختاری هر دو بخش متقاضی و کارشناس، طراحی سامانه الحاقی «وثیقه» و همکاری در ساخت سیستم طراحی اختصاصی همراه با مستندات تحویل به توسعه.",
+      ],
+      outcomes: [
+        "تحویل بازطراحی پژوهش‌محور و استاندارد RTL برای هر دو گروه کاربری همراه با سیستم طراحی اختصاصی محصول.",
+      ],
+    },
+  },
+  {
+    slug: "part-design-system",
+    featured: false,
+    cover: null,
+    categories: ["Design Systems", "B2B"],
+    protectedCaseStudy: true,
+    en: {
+      title: "Part Design System & Token Workflow",
+      domain: "Multi-Product Ecosystem · Design Systems",
+      role: "Product Designer",
+      timeline: "Part Software Group (Dec 2021 — Jan 2025)",
+      scope: "11-Person Cross-Functional System, Figma Plugin Tokens & UIKit Library",
+      shortDesc:
+        "Company-wide design system built with an 11-person cross-functional group and a Figma plugin-based token pipeline ahead of native token support.",
+      problem:
+        "Multiple web front-end and Android product teams across 20+ products were building without a shared design language, creating manual handoff overhead.",
+      contributions: [
+        "Audited existing design systems, interviewed product and engineering teams, and collaborated in an 11-person cross-functional group across web and Android.",
+        "Built a Figma plugin-based token workflow prior to native Figma token support to keep design and engineering synchronized.",
+        "Scoped and built a lightweight UIKit component and style library with token integration for Word+, Val-e-Asr, and Dade Negar.",
+      ],
+      outcomes: [
+        "Presented to company leadership and adopted across design and development teams.",
+        "Delivered internal UI/UX courses on Information Architecture and Building Design Systems.",
+      ],
+    },
+    fa: {
+      title: "سیستم طراحی پارت و گردش‌کار توکن",
+      domain: "اکوسیستم چندمحصولی · سیستم طراحی",
+      role: "طراح محصول",
+      timeline: "گروه نرم‌افزاری پارت (۱۴۰۰ — ۱۴۰۳)",
+      scope: "سیستم طراحی با تیم ۱۱ نفره بین‌تیمی، توکن فیگما و کتابخانه UIKit",
+      shortDesc:
+        "ساخت سیستم طراحی سازمانی با همکاری تیم ۱۱ نفره میان‌رشته‌ای و راه‌اندازی پایپ‌لاین توکن مبتنی بر پلاگین پیش از پشتیبانی بومی فیگما.",
+      problem:
+        "تیم‌های متعدد وب و اندروید در بیش از ۲۰ محصول بدون زبان طراحی مشترک فعالیت می‌کردند که موجب ناهماهنگی و کندی تحویل طراحی به توسعه می‌شد.",
+      contributions: [
+        "ممیزی سیستم‌های طراحی موجود، مصاحبه با تیم‌های محصول و توسعه و همکاری در گروه ۱۱ نفره بین‌تیمی وب و اندروید.",
+        "ایجاد گردش‌کار توکن مبتنی بر پلاگین فیگما پیش از پشتیبانی بومی فیگما برای همگام‌سازی طراحی و کد.",
+        "ساخت کتابخانه سبک کامپوننت و استایل UIKit با یکپارچگی توکن برای Word+، ولیعصر و داده‌نگار.",
+      ],
+      outcomes: [
+        "ارائه به مدیریت ارشد سازمان و پذیرش در تیم‌های طراحی و توسعه.",
+        "تدریس دوره‌های داخلی «معماری اطلاعات» و «ساخت سیستم طراحی» برای ارتقای دانش تیم.",
+      ],
+    },
+  },
   {
     slug: "kanon-ghazaei",
     featured: false,
@@ -248,53 +340,6 @@ export const PROJECTS = [
     },
   },
   {
-    slug: "part-design-system",
-    featured: false,
-    cover: null,
-    categories: ["Design Systems", "B2B"],
-    protectedCaseStudy: true,
-    en: {
-      title: "Part Design System & Token Workflow",
-      domain: "Multi-Product Ecosystem · Design Systems",
-      role: "Product Designer",
-      timeline: "Part Software Group (Dec 2021 — Jan 2025)",
-      scope: "Company-Wide System, Figma Plugin Token Pipeline & UIKit Library",
-      shortDesc:
-        "Collaborative company-wide design system aligned with Material 3 and a Figma plugin-based token workflow ahead of native token support.",
-      problem:
-        "With 20+ products across fintech, edtech, B2B, and mobile teams, keeping design and engineering synchronized without native Figma variables created manual handoff overhead.",
-      contributions: [
-        "Contributed to the collaborative creation of the Part Design System in alignment with Material 3 and modern system principles.",
-        "Built a Figma plugin-based token workflow prior to native Figma token support to keep design and engineering synchronized.",
-        "Scoped and built a lightweight UIKit component and style library with token integration for Word+, Val-e-Asr, and Dade Negar.",
-      ],
-      outcomes: [
-        "Improved design-to-development handoff consistency across multiple product teams.",
-        "Shared system architecture knowledge internally by teaching courses on Information Architecture and Building Design Systems.",
-      ],
-    },
-    fa: {
-      title: "سیستم طراحی پارت و گردش‌کار توکن",
-      domain: "اکوسیستم چندمحصولی · سیستم طراحی",
-      role: "طراح محصول",
-      timeline: "گروه نرم‌افزاری پارت (۱۴۰۰ — ۱۴۰۳)",
-      scope: "سیستم طراحی سازمانی، پایپ‌لاین توکن فیگما و کتابخانه UIKit",
-      shortDesc:
-        "مشارکت در ساخت سیستم طراحی سازمانی هم‌راستا با Material 3 و راه‌اندازی گردش‌کار توکن مبتنی بر پلاگین پیش از پشتیبانی بومی فیگما.",
-      problem:
-        "در سازمانی با بیش از ۲۰ محصول در حوزه‌های فینتک، آموزش، B2B و موبایل، همگام نگه داشتن طراحی و توسعه بدون توکن‌های بومی فیگما چالش بزرگی ایجاد کرده بود.",
-      contributions: [
-        "مشارکت در تحقیق و توسعه سیستم طراحی پارت هم‌راستا با اصول Material 3.",
-        "ایجاد گردش‌کار توکن مبتنی بر پلاگین فیگما پیش از پشتیبانی بومی فیگما برای همگام‌سازی طراحی و کد.",
-        "طراحی و ساخت کتابخانه سبک کامپوننت و استایل UIKit با یکپارچگی توکن برای Word+، ولیعصر و داده‌نگار.",
-      ],
-      outcomes: [
-        "افزایش انسجام و سرعت تحویل طراحی به توسعه در میان تیم‌های محصول.",
-        "انتقال دانش معماری سیستم‌ها از طریق تدریس دوره‌های داخلی «معماری اطلاعات» و «ساخت سیستم طراحی».",
-      ],
-    },
-  },
-  {
     slug: "signal",
     featured: false,
     cover: null,
@@ -302,17 +347,17 @@ export const PROJECTS = [
     protectedCaseStudy: true,
     en: {
       title: "Signal",
-      domain: "Fintech · Consumer Mobile & Web",
+      domain: "Fintech · Stock Market & Crypto Assistant",
       role: "Product Designer",
       timeline: "Part Software Group (Dec 2021 — Jan 2025)",
-      scope: "Stock-Viewing Section & Responsive Landing Page",
+      scope: "Watchlist, Stock Viewing, Bank Selection, Blog & Landing Page",
       shortDesc:
-        "Designing a stock-viewing experience and responsive landing page for a fintech application with 5M+ active users.",
+        "Designing core financial flows and a responsive landing page for a stock & crypto assistant app with 5M+ active users.",
       problem:
-        "Presenting dense market and stock information clearly on mobile while maintaining a high-clarity web entry point for millions of everyday retail investors.",
+        "Presenting dense stock and crypto data cleanly across web and mobile while maintaining a high-clarity onboarding and entry experience for millions of retail investors.",
       contributions: [
-        "Designed a stock-viewing section tailored for clear scanning of financial information.",
-        "Designed a responsive landing page for an App Store fintech product with 5M+ users.",
+        "Designed the stock-viewing section and Watchlist (bookmark) experience across web and mobile.",
+        "Designed the bank-selection flow, in-app education/blog section, and responsive product landing page.",
       ],
       outcomes: [
         "Contributed to a flagship consumer fintech product reaching 5M+ active users on Google Play.",
@@ -320,65 +365,20 @@ export const PROJECTS = [
     },
     fa: {
       title: "سیگنال (Signal)",
-      domain: "فینتک · اپلیکیشن موبایل و وب",
+      domain: "فینتک · دستیار بورس و رمزارز",
       role: "طراح محصول",
       timeline: "گروه نرم‌افزاری پارت (۱۴۰۰ — ۱۴۰۳)",
-      scope: "بخش مشاهده سهام و صفحه فرود واکنش‌گرا",
+      scope: "دیده‌بان، مشاهده سهام، انتخاب بانک، بلاگ و صفحه فرود",
       shortDesc:
-        "طراحی بخش مشاهده اطلاعات سهام و لندینگ‌پیج واکنش‌گرا برای اپلیکیشن فینتک با بیش از ۵ میلیون کاربر فعال.",
+        "طراحی جریان‌های کلیدی مالی و لندینگ‌پیج واکنش‌گرا برای دستیار بورس و رمزارز با بیش از ۵ میلیون کاربر فعال.",
       problem:
-        "نمایش خوانای داده‌های متراکم بازار سهام در موبایل و ایجاد نقطه ورود شفاف در وب برای میلیون‌ها کاربر سرمایه‌گذار.",
+        "نمایش خوانای داده‌های متراکم بورس و رمزارز در وب و موبایل و ایجاد نقطه ورود شفاف برای میلیون‌ها کاربر سرمایه‌گذار.",
       contributions: [
-        "طراحی بخش مشاهده سهام با تمرکز بر خوانایی و دسترسی سریع به اطلاعات مالی.",
-        "طراحی صفحه فرود واکنش‌گرا برای محصول فینتک با بیش از ۵ میلیون کاربر.",
+        "طراحی بخش مشاهده سهام و تجربه دیده‌بان (Watchlist) در نسخه‌های وب و موبایل.",
+        "طراحی جریان انتخاب بانک، بخش آموزش/بلاگ درون‌برنامه‌ای و صفحه فرود واکنش‌گرای محصول.",
       ],
       outcomes: [
         "مشارکت در طراحی یکی از محصولات پرکاربر فینتک با بیش از ۵ میلیون کاربر فعال در گوگل‌پلی.",
-      ],
-    },
-  },
-  {
-    slug: "merat-ara",
-    featured: false,
-    cover: null,
-    categories: ["Fintech", "Design Systems", "B2B"],
-    protectedCaseStudy: true,
-    en: {
-      title: "Merat (Ara)",
-      domain: "Fintech · Banking Product (Resalat Bank)",
-      role: "Product Designer",
-      timeline: "Part Software Group (Dec 2021 — Jan 2025)",
-      scope: "User Research, Usability Testing, Interface Redesign & Custom Design System",
-      shortDesc:
-        "User research, usability testing, interface redesign, and a custom design system for a private banking product.",
-      problem:
-        "An established private banking product required a more intuitive experience and a cohesive component foundation to align user needs with banking workflows.",
-      contributions: [
-        "Led user research and usability testing to uncover friction and guide a more intuitive redesigned interface.",
-        "Collaborated with a colleague to build a custom design system enhancing visual coherence and engineering efficiency.",
-        "Worked closely with developers to keep design decisions aligned with business goals.",
-      ],
-      outcomes: [
-        "Delivered a more intuitive, research-backed interface paired with a dedicated product design system.",
-      ],
-    },
-    fa: {
-      title: "مرآت (آرا)",
-      domain: "فینتک · محصول بانکی (بانک رسالت)",
-      role: "طراح محصول",
-      timeline: "گروه نرم‌افزاری پارت (۱۴۰۰ — ۱۴۰۳)",
-      scope: "تحقیق کاربر، تست کاربردپذیری، بازطراحی و سیستم طراحی اختصاصی",
-      shortDesc:
-        "تحقیق کاربر، تست کاربردپذیری، بازطراحی رابط کاربری و ساخت سیستم طراحی اختصاصی برای محصول بانکی.",
-      problem:
-        "این محصول خصوصی بانکی برای هم‌راستایی بهتر با جریان‌های بانکی و سهولت استفاده کاربران، به بازطراحی پژوهش‌محور و پایه کامپوننت منسجم نیاز داشت.",
-      contributions: [
-        "هدایت تحقیق کاربر و تست کاربردپذیری برای شناسایی گلوگاه‌ها و بازطراحی شهودی‌تر رابط کاربری.",
-        "همکاری در ساخت سیستم طراحی اختصاصی محصول برای افزایش انسجام بصری و بهره‌وری توسعه.",
-        "همکاری نزدیک با تیم فنی برای هم‌راستایی طراحی با اهداف کسب‌وکار.",
-      ],
-      outcomes: [
-        "تحویل رابط کاربری شهودی‌تر و پژوهش‌محور همراه با سیستم طراحی اختصاصی محصول.",
       ],
     },
   },
