@@ -1740,12 +1740,12 @@ html[dir="rtl"] .bliss-field select {
 .about-stat-card strong {
   font-size: 1.15rem;
   font-weight: 700;
-  color: var(--primary-text-on-soft);
+  color: var(--primary);
   letter-spacing: -0.02em;
 }
 
 [data-theme="dark"] .about-stat-card strong {
-  color: var(--accent-sky);
+  color: var(--primary);
 }
 
 .about-stat-card span {

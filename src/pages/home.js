@@ -1167,7 +1167,7 @@ function initAboutDotPortrait() {
     octx.drawImage(img, dx, dy, dw, dh);
     const pixels = octx.getImageData(0, 0, width, height).data;
 
-    const gap = width < 340 ? 6 : 6.5;
+    const gap = width < 340 ? 4 : 4.2;
     dots = [];
 
     for (let y = Math.floor(gap * 0.5); y < height; y += gap) {
@@ -1179,9 +1179,9 @@ function initAboutDotPortrait() {
         const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 
         // Pure black background cutout is skipped -> ONLY Alireza is rendered!
-        if (lum < 0.08) continue;
+        if (lum < 0.07) continue;
 
-        const baseRadius = 0.72 + Math.pow(lum, 0.85) * (gap * 0.36);
+        const baseRadius = 0.52 + Math.pow(lum, 0.88) * (gap * 0.38);
 
         dots.push({
           ox: x,
@@ -1201,7 +1201,7 @@ function initAboutDotPortrait() {
   function renderFrame() {
     if (isVisible && dots.length) {
       const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-      ctx.fillStyle = isDark ? "#0d1018" : "#f3f5fa";
+      ctx.fillStyle = isDark ? "#0d1018" : "#f4f5f7";
       ctx.fillRect(0, 0, width, height);
 
       scrollVelocity *= 0.88;
@@ -1218,17 +1218,17 @@ function initAboutDotPortrait() {
             const dx = d.x - mouse.x;
             const dy = d.y - mouse.y;
             const distSq = dx * dx + dy * dy;
-            const radius = 86;
+            const radius = 82;
             if (distSq < radius * radius && distSq > 0.1) {
               const dist = Math.sqrt(distSq);
-              const force = (1 - dist / radius) * 5.4;
+              const force = (1 - dist / radius) * 5.0;
               d.vx += (dx / dist) * force;
               d.vy += (dy / dist) * force;
             }
           }
 
-          d.vx += (d.ox - d.x) * 0.11;
-          d.vy += (d.oy - d.y) * 0.11;
+          d.vx += (d.ox - d.x) * 0.12;
+          d.vy += (d.oy - d.y) * 0.12;
           d.vx *= 0.78;
           d.vy *= 0.78;
           d.x += d.vx;
@@ -1236,24 +1236,17 @@ function initAboutDotPortrait() {
         }
 
         const disp = Math.abs(d.x - d.ox) + Math.abs(d.y - d.oy);
-        const radius = d.r + Math.min(1.15, disp * 0.04);
+        const radius = d.r + Math.min(0.85, disp * 0.035);
         ctx.beginPath();
         ctx.arc(d.x, d.y, radius, 0, Math.PI * 2);
 
-        // Cohesive Monochrome + Portfolio Cobalt/Sky Blue Palette (adapts to Light & Dark!)
-        if (disp > 4.2) {
-          ctx.fillStyle = isDark ? "#57c1ff" : "#165ef6";
-        } else if (isDark) {
-          const v = Math.round(96 + d.lum * 150);
-          const b = Math.min(255, Math.round(v + 28));
-          ctx.fillStyle = `rgb(${Math.round(v * 0.88)},${Math.round(v * 0.94)},${b})`;
+        // Pure High-Definition Black & White Monochrome Halftone Dots
+        if (isDark) {
+          const v = disp > 4.2 ? 255 : Math.round(78 + d.lum * 177);
+          ctx.fillStyle = `rgb(${v},${v},${v})`;
         } else {
-          // Light mode: crisp editorial graphite-cobalt halftone dots
-          const inv = 1 - d.lum * 0.65;
-          const rC = Math.round(18 + (1 - inv) * 44);
-          const gC = Math.round(30 + (1 - inv) * 78);
-          const bC = Math.round(64 + (1 - inv) * 165);
-          ctx.fillStyle = `rgb(${rC},${gC},${bC})`;
+          const v = disp > 4.2 ? 12 : Math.round(175 - d.lum * 158);
+          ctx.fillStyle = `rgb(${v},${v},${v})`;
         }
         ctx.fill();
       }
