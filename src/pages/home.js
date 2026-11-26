@@ -508,7 +508,7 @@ export function renderHomePage(content) {
                 <img class="about-mini-avatar" src="/assets/alireza-portrait.jpg" alt="${PROFILE.name}" width="32" height="32" loading="lazy" />
                 <div>
                   <strong>${isFa ? "علیرضا محمدزاده فرشچی" : "Alireza Farshchi"}</strong>
-                  <span>${isFa ? "مشهد / ریموت · طراحی محصول" : "Design Systems · Product & Code"}</span>
+                  <span>${isFa ? "طراح ارشد محصول · سیستم‌های طراحی" : "Senior Product Designer · Design Systems"}</span>
                 </div>
               </div>
             </div>
@@ -969,29 +969,32 @@ function initContactStarfieldCanvas() {
       float mDist = length(toMouse);
       vec2 mouseWarp = -toMouse * exp(-mDist * 2.2) * 0.22 * u_hover;
 
-      vec2 q = mat2(0.84, -0.54, 0.54, 0.84) * (p + mouseWarp - vec2(-0.18, 0.12));
-      float w1 = fbm(q * 1.25 + vec2(t * 0.18, -t * 0.14));
-      float w2 = fbm(q * 1.65 - vec2(t * 0.12, t * 0.20) + w1 * 0.7);
+      vec2 q = mat2(0.84, -0.54, 0.54, 0.84) * (p + mouseWarp - vec2(0.28, 0.04));
+      float w1 = fbm(q * 1.15 + vec2(t * 0.16, -t * 0.13));
+      float w2 = fbm(q * 1.55 - vec2(t * 0.11, t * 0.18) + w1 * 0.7);
 
-      float d1 = q.y + 0.18 * sin(q.x * 2.0 - t * 0.52) + (w1 - 0.5) * 0.68;
-      float ribbon1 = exp(-abs(d1) * 2.2);
-      float crest1  = exp(-abs(d1) * 5.2);
+      float d1 = q.y + 0.18 * sin(q.x * 1.9 - t * 0.48) + (w1 - 0.5) * 0.72;
+      float ribbon1 = exp(-abs(d1) * 1.9);
+      float crest1  = exp(-abs(d1) * 4.4);
 
-      float d2 = (q.x - 0.2) + 0.20 * cos(q.y * 1.8 + t * 0.42) + (w2 - 0.5) * 0.72;
-      float ribbon2 = exp(-abs(d2) * 1.9) * 0.65;
+      float d2 = (q.x - 0.16) + 0.20 * cos(q.y * 1.7 + t * 0.38) + (w2 - 0.5) * 0.76;
+      float ribbon2 = exp(-abs(d2) * 1.75) * 0.62;
 
-      // Soft interactive spotlight following mouse hover
-      float mouseGlow = exp(-mDist * 2.6) * 0.55 * u_hover;
+      // Keep left copy zone deeper for high contrast, let silk bloom richer beneath the right glass form card
+      float rightBias = smoothstep(0.02, 0.78, uv.x) * 0.72 + 0.28;
 
-      vec3 cBase     = vec3(0.031, 0.035, 0.047); // #08090C
-      vec3 cSapphire = vec3(0.045, 0.160, 0.460);
+      // Soft, restrained interactive spotlight following mouse hover
+      float mouseGlow = exp(-mDist * 2.5) * 0.38 * u_hover;
+
+      vec3 cBase     = vec3(0.028, 0.032, 0.046); // Deep obsidian #07080C
+      vec3 cSapphire = vec3(0.038, 0.140, 0.420);
       vec3 cCobalt   = vec3(0.086, 0.369, 0.965);
       vec3 cSky      = vec3(0.341, 0.757, 1.000);
 
       vec3 col = cBase;
-      col += cSapphire * (ribbon1 * 0.62 + ribbon2 * 0.48);
-      col += cCobalt   * (crest1 * 0.52 + mouseGlow * 0.85);
-      col += cSky      * (pow(crest1, 2.2) * 0.38 + pow(mouseGlow, 1.8) * 0.55);
+      col += cSapphire * (ribbon1 * 0.52 + ribbon2 * 0.42) * rightBias;
+      col += cCobalt   * (crest1 * 0.44 * rightBias + mouseGlow * 0.65);
+      col += cSky      * (pow(crest1, 2.4) * 0.28 * rightBias + pow(mouseGlow, 1.9) * 0.38);
 
       // Subtle Bliss diagonal micro-dot halftone texture
       float s = 0.70710678;
@@ -999,7 +1002,7 @@ function initContactStarfieldCanvas() {
       vec2 cell = fract(rc / (2.7 * u_dpr)) - 0.5;
       float dotMask = smoothstep(0.46, 0.15, length(cell));
       float lum = dot(col, vec3(0.299, 0.587, 0.114));
-      col *= mix(1.0, mix(0.78, 1.16, dotMask), smoothstep(0.03, 0.22, lum) * 0.52);
+      col *= mix(1.0, mix(0.82, 1.12, dotMask), smoothstep(0.03, 0.22, lum) * 0.44);
 
       gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
     }
