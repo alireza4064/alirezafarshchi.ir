@@ -611,6 +611,7 @@ function initHeroBlissCanvas() {
     uniform vec2 u_res;
     uniform float u_time;
     uniform float u_dpr;
+    uniform float u_light;
 
     float hash(vec2 p) {
       p = fract(p * vec2(123.34, 456.21));
@@ -692,8 +693,7 @@ function initHeroBlissCanvas() {
       vec2 fG = silkField(p, t);
       vec2 fB = silkField(p - disp * 1.15, t);
 
-      // Portfolio Blue Spectrum Ramp:
-      // Deep Void (#02040A) -> Sapphire (#0B2A78) -> Cobalt (#165EF6) -> Sky (#57C1FF) -> Periwinkle (#B9C8FF) -> Ice Core (#EEF7FF)
+      // Dark Mode Blue Spectrum Ramp
       vec3 cVoid       = vec3(0.008, 0.016, 0.042);
       vec3 cSapphire   = vec3(0.043, 0.165, 0.470);
       vec3 cCobalt     = vec3(0.086, 0.369, 0.965);
@@ -701,16 +701,30 @@ function initHeroBlissCanvas() {
       vec3 cPeriwinkle = vec3(0.690, 0.765, 1.000);
       vec3 cIceWhite   = vec3(0.935, 0.972, 1.000);
 
-      vec3 col = cVoid;
-      // Rich volumetric blue layers with chromatic fringe
-      col += cSapphire   * smoothstep(0.04, 0.78, fB.x) * 1.05;
-      col += cCobalt     * smoothstep(0.14, 0.92, fG.x) * 1.12;
-      col += cPeriwinkle * smoothstep(0.24, 0.98, fR.x) * 0.42;
-      col += cSky        * pow(clamp(fB.y, 0.0, 1.0), 1.45) * 0.78;
-
-      // Radiant white-ice caustic core at peak intersections
+      vec3 darkCol = cVoid;
+      darkCol += cSapphire   * smoothstep(0.04, 0.78, fB.x) * 1.05;
+      darkCol += cCobalt     * smoothstep(0.14, 0.92, fG.x) * 1.12;
+      darkCol += cPeriwinkle * smoothstep(0.24, 0.98, fR.x) * 0.42;
+      darkCol += cSky        * pow(clamp(fB.y, 0.0, 1.0), 1.45) * 0.78;
       float core = pow(clamp(fG.y * 0.88 + fR.y * 0.32, 0.0, 1.0), 2.35);
-      col = mix(col, cIceWhite, clamp(core * 0.88, 0.0, 0.92));
+      darkCol = mix(darkCol, cIceWhite, clamp(core * 0.88, 0.0, 0.92));
+
+      // Light Mode Luminous Silk Ramp (Porcelain #F5F7FC -> Mist Blue -> Cobalt Silk -> Sunlit Ice Core)
+      vec3 lBase       = vec3(0.962, 0.968, 0.986);
+      vec3 lMist       = vec3(0.755, 0.855, 0.995);
+      vec3 lSky        = vec3(0.365, 0.725, 0.995);
+      vec3 lCobalt     = vec3(0.110, 0.390, 0.965);
+      vec3 lLavender   = vec3(0.680, 0.755, 0.995);
+      vec3 lCore       = vec3(0.985, 0.994, 1.000);
+
+      vec3 lightCol = lBase;
+      lightCol = mix(lightCol, lMist,     smoothstep(0.04, 0.76, fB.x) * 0.72);
+      lightCol = mix(lightCol, lSky,      smoothstep(0.16, 0.88, fG.x) * 0.68);
+      lightCol = mix(lightCol, lCobalt,   smoothstep(0.26, 0.96, fG.y) * 0.64);
+      lightCol = mix(lightCol, lLavender, smoothstep(0.20, 0.94, fR.x) * 0.28);
+      lightCol = mix(lightCol, lCore,     clamp(core * 0.85, 0.0, 0.88));
+
+      vec3 col = mix(darkCol, lightCol, u_light);
 
       // Signature Bliss Agency diagonal micro-dot halftone / screen-print texture (~2.6px pitch)
       float s = 0.70710678;
@@ -723,15 +737,18 @@ function initHeroBlissCanvas() {
       float dotMask = smoothstep(0.47, 0.15, length(cell));
 
       float lum = dot(col, vec3(0.299, 0.587, 0.114));
-      // Strongest tactile micro-dot grain across mid-tones & silk folds, clean in deep void
-      float halftoneAmt = smoothstep(0.02, 0.24, lum) * (1.0 - smoothstep(0.82, 1.08, lum) * 0.45);
-      col *= mix(1.0, mix(0.74, 1.20, dotMask), halftoneAmt * 0.64);
+      float darkGrainAmt = smoothstep(0.02, 0.24, lum) * (1.0 - smoothstep(0.82, 1.08, lum) * 0.45);
+      float lightGrainAmt = smoothstep(0.05, 0.55, fG.x + fB.x * 0.5) * 0.36;
+      float grainDark = mix(1.0, mix(0.74, 1.20, dotMask), darkGrainAmt * 0.64);
+      float grainLight = mix(1.0, mix(0.90, 1.05, dotMask), lightGrainAmt);
+      col *= mix(grainDark, grainLight, u_light);
 
       // Subtle micro-dither to eliminate 8-bit gradient banding
       col += (hash(gl_FragCoord.xy + fract(t)) - 0.5) / 255.0;
 
-      // Soft bottom vignette melt
-      col *= smoothstep(0.0, 0.22, uv.y) * 0.92 + 0.08;
+      // Soft bottom vignette melt into page canvas
+      vec3 bottomTarget = mix(vec3(0.008, 0.016, 0.042), vec3(0.969, 0.969, 0.961), u_light);
+      col = mix(bottomTarget, col, smoothstep(0.0, 0.24, uv.y) * 0.92 + 0.08);
 
       gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
     }
@@ -777,6 +794,9 @@ function initHeroBlissCanvas() {
   const uRes = gl.getUniformLocation(prog, "u_res");
   const uTime = gl.getUniformLocation(prog, "u_time");
   const uDpr = gl.getUniformLocation(prog, "u_dpr");
+  const uLight = gl.getUniformLocation(prog, "u_light");
+
+  let lightMix = document.documentElement.getAttribute("data-theme") === "dark" ? 0 : 1;
 
   let dpr = Math.min(window.devicePixelRatio || 1, 1.5);
   function resize() {
@@ -808,10 +828,13 @@ function initHeroBlissCanvas() {
   const start = performance.now();
   function draw(now) {
     if (isVisible && !document.hidden) {
+      const targetLight = document.documentElement.getAttribute("data-theme") === "dark" ? 0 : 1;
+      lightMix += (targetLight - lightMix) * 0.12;
       const elapsed = prefersReduced ? 4.2 : (now - start) * 0.001 + 4.2;
       gl.uniform2f(uRes, canvas.width, canvas.height);
       gl.uniform1f(uTime, elapsed);
       gl.uniform1f(uDpr, dpr);
+      gl.uniform1f(uLight, lightMix);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     }
     if (!prefersReduced) {
@@ -1146,23 +1169,24 @@ function initAboutDotPortrait() {
   const img = new Image();
   img.src = "/assets/alireza-portrait-cutout.jpg";
 
-  // Monospace code & binary glyph ramp ordered from sparse to dense
-  const PORTRAIT_GLYPHS = [".", ":", "-", "=", "+", "/", "0", "1", "{", "}", "#", "@"];
-  const BG_BITS = ["0", "1", "0", "1", "<", ">", "/", ";"];
+  const CODE_CHARS = "0101100123456789ABCDEF";
 
-  let cells = [];
-  let bgColumns = [];
   let width = 0;
   let height = 0;
   let dpr = 1;
-  let cellSize = 7;
+  let cols = 0;
+  let rows = 0;
+  let cell = 5.4;
+  let lumGrid = null;
+  let streams = [];
   let isVisible = true;
+  let speedScale = 1;
+  let scrollBoost = 0;
   let lastScrollY = window.scrollY || 0;
-  let scrollVelocity = 0;
-  let frameCount = 0;
+  let tick = 0;
   const mouse = { x: -9999, y: -9999, active: false };
 
-  function samplePortrait() {
+  function buildPortraitMatrix() {
     const rect = stage.getBoundingClientRect();
     if (rect.width < 20 || rect.height < 20 || !img.naturalWidth) return;
 
@@ -1195,163 +1219,111 @@ function initAboutDotPortrait() {
     octx.drawImage(img, dx, dy, dw, dh);
     const pixels = octx.getImageData(0, 0, width, height).data;
 
-    cellSize = width < 340 ? 6.5 : 7.2;
-    cells = [];
+    cell = width < 340 ? 5.2 : 5.6;
+    cols = Math.ceil(width / cell);
+    rows = Math.ceil(height / cell);
+    lumGrid = new Float32Array(cols * rows);
 
-    for (let y = Math.floor(cellSize * 0.6); y < height; y += cellSize) {
-      for (let x = Math.floor(cellSize * 0.5); x < width; x += cellSize) {
-        const i = (Math.floor(y) * width + Math.floor(x)) * 4;
-        const r = pixels[i];
-        const g = pixels[i + 1];
-        const b = pixels[i + 2];
-        const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
-        // Pure black cutout background stays clean so subtle 0/1 code stream shines behind!
-        if (lum < 0.08) continue;
-
-        const gIdx = Math.min(
-          PORTRAIT_GLYPHS.length - 1,
-          Math.floor(Math.pow(lum, 0.85) * PORTRAIT_GLYPHS.length)
-        );
-
-        cells.push({
-          ox: x,
-          oy: y,
-          x,
-          y,
-          vx: 0,
-          vy: 0,
-          lum,
-          glyph: PORTRAIT_GLYPHS[gIdx],
-          phase: x * 0.03 + y * 0.025,
-        });
+    for (let r = 0; r < rows; r++) {
+      const py = Math.min(height - 1, Math.floor(r * cell + cell * 0.5));
+      for (let c = 0; c < cols; c++) {
+        const px = Math.min(width - 1, Math.floor(c * cell + cell * 0.5));
+        const idx = (py * width + px) * 4;
+        const lum = (0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2]) / 255;
+        lumGrid[r * cols + c] = lum < 0.07 ? 0 : lum;
       }
     }
 
-    // Build subtle drifting binary/code background columns
-    const colGap = 18;
-    const cols = Math.ceil(width / colGap);
-    bgColumns = Array.from({ length: cols }, (_, c) => ({
-      x: c * colGap + 8,
-      y: Math.random() * height,
-      speed: 0.32 + Math.random() * 0.55,
-      len: 5 + Math.floor(Math.random() * 7),
-      seed: Math.floor(Math.random() * 100),
+    streams = Array.from({ length: cols }, (_, c) => ({
+      offset: Math.random() * rows,
+      speed: 0.38 + Math.random() * 0.52,
+      seed: (c * 17 + Math.floor(Math.random() * 50)) % CODE_CHARS.length,
     }));
   }
 
   function renderFrame() {
-    if (isVisible && cells.length) {
-      frameCount++;
+    if (isVisible && lumGrid) {
+      tick++;
       const isDark = document.documentElement.getAttribute("data-theme") === "dark";
 
-      // 1. Deep Terminal / Blueprint Background
-      ctx.fillStyle = isDark ? "#070a12" : "#eef2f9";
+      // Smoothly slow falling speed when mouse hovers inside; fast stream otherwise!
+      const targetSpeed = mouse.active ? 0.12 : 1.0;
+      speedScale += (targetSpeed - speedScale) * 0.08;
+      scrollBoost *= 0.9;
+
+      ctx.fillStyle = isDark ? "#080b12" : "#f2f4f8";
       ctx.fillRect(0, 0, width, height);
 
-      // Subtle radial cobalt terminal aura behind portrait
-      const aura = ctx.createRadialGradient(
-        width * 0.5,
-        height * 0.42,
-        12,
-        width * 0.5,
-        height * 0.45,
-        Math.max(width, height) * 0.62
-      );
-      if (isDark) {
-        aura.addColorStop(0, "rgba(22, 94, 246, 0.22)");
-        aura.addColorStop(0.55, "rgba(22, 94, 246, 0.06)");
-        aura.addColorStop(1, "rgba(7, 10, 18, 0)");
-      } else {
-        aura.addColorStop(0, "rgba(22, 94, 246, 0.12)");
-        aura.addColorStop(0.6, "rgba(22, 94, 246, 0.03)");
-        aura.addColorStop(1, "rgba(238, 242, 249, 0)");
-      }
-      ctx.fillStyle = aura;
-      ctx.fillRect(0, 0, width, height);
-
-      // 2. Subtle Drifting 0/1 Binary Code Rain in Background
-      ctx.font = `600 9.5px ui-monospace, SFMono-Regular, Menlo, monospace`;
+      ctx.font = `600 ${Math.round(cell + 0.8)}px ui-monospace, SFMono-Regular, Menlo, monospace`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      for (let c = 0; c < bgColumns.length; c++) {
-        const col = bgColumns[c];
+      for (let c = 0; c < cols; c++) {
+        const st = streams[c];
         if (!prefersReduced) {
-          col.y += col.speed;
-          if (col.y - col.len * 14 > height) col.y = -12;
+          st.offset = (st.offset + st.speed * speedScale + scrollBoost * 0.08) % rows;
         }
-        for (let k = 0; k < col.len; k++) {
-          const by = col.y - k * 14;
-          if (by < -10 || by > height + 10) continue;
-          const alpha = (1 - k / col.len) * (isDark ? 0.19 : 0.14);
-          const bit = BG_BITS[(col.seed + k + Math.floor(frameCount / 22)) % BG_BITS.length];
-          ctx.fillStyle = isDark
-            ? `rgba(87, 193, 255, ${alpha.toFixed(3)})`
-            : `rgba(22, 94, 246, ${alpha.toFixed(3)})`;
-          ctx.fillText(bit, col.x, by);
-        }
-      }
+        const baseX = c * cell + cell * 0.5;
+        const headRow = Math.floor(st.offset);
 
-      // 3. Soft Terminal Scanline Sweep
-      if (!prefersReduced) {
-        const scanY = ((frameCount * 1.1) % (height + 80)) - 40;
-        const scanGrad = ctx.createLinearGradient(0, scanY - 26, 0, scanY + 26);
-        scanGrad.addColorStop(0, "rgba(22, 94, 246, 0)");
-        scanGrad.addColorStop(0.5, isDark ? "rgba(87, 193, 255, 0.07)" : "rgba(22, 94, 246, 0.06)");
-        scanGrad.addColorStop(1, "rgba(22, 94, 246, 0)");
-        ctx.fillStyle = scanGrad;
-        ctx.fillRect(0, scanY - 26, width, 52);
-      }
+        for (let r = 0; r < rows; r++) {
+          const lum = lumGrid[r * cols + c];
+          // Distance behind this column's falling stream head (0..rows)
+          const distFromHead = (headRow - r + rows) % rows;
+          const trail = distFromHead < 18 ? 1 - distFromHead / 18 : 0;
 
-      // 4. Crisp Interactive ASCII / Binary Code Portrait (Alireza ONLY!)
-      ctx.font = `700 ${Math.round(cellSize + 1.2)}px ui-monospace, SFMono-Regular, Menlo, monospace`;
-      scrollVelocity *= 0.88;
+          // Skip empty background except faint fast-falling code trails
+          if (lum === 0 && trail < 0.15) continue;
 
-      for (let i = 0; i < cells.length; i++) {
-        const d = cells[i];
-        if (!prefersReduced) {
-          if (Math.abs(scrollVelocity) > 0.08) {
-            d.vx += Math.sin(d.phase + d.oy * 0.02) * scrollVelocity * 0.16;
-            d.vy += Math.cos(d.phase + d.ox * 0.02) * scrollVelocity * 0.2;
-          }
+          let drawX = baseX;
+          let drawY = r * cell + cell * 0.5;
+          let mouseInfluence = 0;
 
-          if (mouse.active) {
-            const dx = d.x - mouse.x;
-            const dy = d.y - mouse.y;
-            const distSq = dx * dx + dy * dy;
-            const radius = 84;
-            if (distSq < radius * radius && distSq > 0.1) {
-              const dist = Math.sqrt(distSq);
-              const force = (1 - dist / radius) * 5.2;
-              d.vx += (dx / dist) * force;
-              d.vy += (dy / dist) * force;
+          // When mouse is inside, ALL nearby code digits ripple & shift gently!
+          if (mouse.active && !prefersReduced) {
+            const dx = drawX - mouse.x;
+            const dy = drawY - mouse.y;
+            const d2 = dx * dx + dy * dy;
+            const rad = 110;
+            if (d2 < rad * rad && d2 > 0.1) {
+              const d = Math.sqrt(d2);
+              const f = 1 - d / rad;
+              mouseInfluence = f;
+              const wave = Math.sin(tick * 0.14 - d * 0.08) * 3.2;
+              drawX += (dx / d) * f * 12 + wave * f;
+              drawY += (dy / d) * f * 12 + Math.cos(tick * 0.12 + c * 0.3) * 2.5 * f;
             }
           }
 
-          d.vx += (d.ox - d.x) * 0.12;
-          d.vy += (d.oy - d.y) * 0.12;
-          d.vx *= 0.78;
-          d.vy *= 0.78;
-          d.x += d.vx;
-          d.y += d.vy;
+          // Character cycles vertically with the falling stream
+          const charIdx = Math.abs(Math.floor(r - st.offset) + st.seed) % CODE_CHARS.length;
+          const ch = CODE_CHARS[charIdx];
+
+          if (lum > 0) {
+            // Portrait region: crisp monochrome digits illuminated by falling code stream
+            const boost = trail * 0.34;
+            const alpha = Math.min(1, 0.36 + lum * 0.64 + boost * 0.25);
+            if (mouseInfluence > 0.38) {
+              ctx.fillStyle = isDark
+                ? `rgba(87, 193, 255, ${alpha.toFixed(2)})`
+                : `rgba(22, 94, 246, ${alpha.toFixed(2)})`;
+            } else if (isDark) {
+              const v = Math.min(255, Math.round(118 + lum * 137 + boost * 40));
+              ctx.fillStyle = `rgba(${v},${v},${v},${alpha.toFixed(2)})`;
+            } else {
+              const v = Math.max(8, Math.round(145 - lum * 135));
+              ctx.fillStyle = `rgba(${v},${v},${v},${alpha.toFixed(2)})`;
+            }
+          } else {
+            // Subtle fast-falling background code rain (very clean, never noisy)
+            const bgAlpha = trail * (isDark ? 0.14 : 0.11);
+            ctx.fillStyle = isDark
+              ? `rgba(140, 165, 210, ${bgAlpha.toFixed(3)})`
+              : `rgba(22, 94, 246, ${bgAlpha.toFixed(3)})`;
+          }
+
+          ctx.fillText(ch, drawX, drawY);
         }
-
-        const disp = Math.abs(d.x - d.ox) + Math.abs(d.y - d.oy);
-        const isGlitched = disp > 3.6;
-        const ch = isGlitched ? ((frameCount + i) % 2 === 0 ? "1" : "0") : d.glyph;
-
-        if (isGlitched) {
-          ctx.fillStyle = isDark ? "#57c1ff" : "#165ef6";
-        } else if (isDark) {
-          const v = Math.round(92 + d.lum * 163);
-          ctx.fillStyle = `rgb(${v},${v},${Math.min(255, v + 8)})`;
-        } else {
-          const v = Math.round(168 - d.lum * 154);
-          ctx.fillStyle = `rgb(${v},${v},${Math.min(255, v + 12)})`;
-        }
-
-        ctx.fillText(ch, d.x, d.y);
       }
     }
 
@@ -1375,9 +1347,9 @@ function initAboutDotPortrait() {
     "scroll",
     () => {
       const y = window.scrollY || 0;
-      const delta = Math.max(-28, Math.min(28, y - lastScrollY));
+      const delta = Math.abs(y - lastScrollY);
       lastScrollY = y;
-      if (isVisible) scrollVelocity = delta * 0.35;
+      if (isVisible) scrollBoost = Math.min(14, scrollBoost + delta * 0.12);
     },
     { passive: true }
   );
@@ -1393,19 +1365,19 @@ function initAboutDotPortrait() {
   }
 
   img.onload = () => {
-    samplePortrait();
+    buildPortraitMatrix();
     renderFrame();
   };
 
   if (img.complete && img.naturalWidth) {
-    samplePortrait();
+    buildPortraitMatrix();
     renderFrame();
   }
 
   window.addEventListener(
     "resize",
     () => {
-      if (img.naturalWidth) samplePortrait();
+      if (img.naturalWidth) buildPortraitMatrix();
     },
     { passive: true }
   );
