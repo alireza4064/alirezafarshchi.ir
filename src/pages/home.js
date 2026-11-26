@@ -1523,38 +1523,42 @@ function initAboutDotPortrait() {
           const ch = CODE_CHARS[charIdx];
 
           if (lum > 0) {
-            const alpha = isDark
-              ? Math.min(1, 0.36 + lum * 0.64 + trail * 0.22)
-              : Math.min(0.94, 0.46 + Math.pow(lum, 0.78) * 0.48 + trail * 0.14);
-
-            if ((isHead && lum > 0.35) || disp > 9) {
-              ctx.fillStyle = isDark ? "#ffffff" : "#0b225c";
-            } else if (colorMode === "green") {
-              if (isDark) {
-                const g = Math.min(255, Math.round(130 + lum * 125 + trail * 32));
-                const rC = Math.round(lum > 0.72 ? (lum - 0.72) * 380 : 12);
+            if (isDark) {
+              // Dark Mode: bright skin/highlights glow brightest; eyes/beard stay deep for natural relief
+              const alpha = Math.min(1, 0.28 + Math.pow(lum, 0.9) * 0.72 + trail * 0.18);
+              if ((isHead && lum > 0.42) || disp > 9) {
+                ctx.fillStyle = "#ffffff";
+              } else if (colorMode === "green") {
+                const g = Math.min(255, Math.round(115 + lum * 140 + trail * 30));
+                const rC = Math.round(lum > 0.72 ? (lum - 0.72) * 380 : 10);
                 ctx.fillStyle = `rgba(${rC},${g},${Math.round(g * 0.55)},${alpha.toFixed(2)})`;
+              } else if (colorMode === "mono") {
+                const v = Math.min(255, Math.round(95 + lum * 160 + trail * 28));
+                ctx.fillStyle = `rgba(${v},${v},${v},${alpha.toFixed(2)})`;
+              } else if (disp > 3.5 || (lum > 0.78 && trail > 0.45)) {
+                ctx.fillStyle = `rgba(215, 240, 255, ${alpha.toFixed(2)})`;
               } else {
-                const g = Math.round(92 + lum * 56);
-                ctx.fillStyle = `rgba(8,${g},58,${alpha.toFixed(2)})`;
-              }
-            } else if (colorMode === "mono") {
-              const v = isDark
-                ? Math.min(255, Math.round(108 + lum * 147 + trail * 28))
-                : Math.max(18, Math.round(108 - lum * 84));
-              ctx.fillStyle = `rgba(${v},${v},${v},${alpha.toFixed(2)})`;
-            } else {
-              if (disp > 3.5 || (lum > 0.78 && trail > 0.45)) {
-                ctx.fillStyle = isDark ? `rgba(215, 240, 255, ${alpha.toFixed(2)})` : `rgba(10, 48, 158, ${alpha.toFixed(2)})`;
-              } else if (isDark) {
-                const b = Math.min(255, Math.round(155 + lum * 100));
-                const g = Math.min(255, Math.round(92 + lum * 148));
-                const rC = Math.min(255, Math.round(36 + lum * 145));
+                const b = Math.min(255, Math.round(150 + lum * 105));
+                const g = Math.min(255, Math.round(88 + lum * 152));
+                const rC = Math.min(255, Math.round(32 + lum * 148));
                 ctx.fillStyle = `rgba(${rC},${g},${b},${alpha.toFixed(2)})`;
+              }
+            } else {
+              // Light Mode: natural ink shading (dark eyes, eyebrows, hair & beard = bold deep ink; bright skin = delicate light ink!)
+              const ink = Math.pow(Math.max(0, 1 - lum), 0.85);
+              const alpha = Math.min(0.96, 0.24 + ink * 0.74 + trail * 0.10);
+              if (disp > 9) {
+                ctx.fillStyle = "#165ef6";
+              } else if (colorMode === "green") {
+                const g = Math.round(52 + (1 - ink) * 95);
+                ctx.fillStyle = `rgba(6,${g},42,${alpha.toFixed(2)})`;
+              } else if (colorMode === "mono") {
+                const v = Math.round(14 + (1 - ink) * 120);
+                ctx.fillStyle = `rgba(${v},${v},${v},${alpha.toFixed(2)})`;
               } else {
-                const rC = Math.round(14 + (1 - lum) * 36);
-                const gC = Math.round(44 + (1 - lum) * 62);
-                const bC = Math.round(148 + lum * 86);
+                const rC = Math.round(10 + (1 - ink) * 58);
+                const gC = Math.round(30 + (1 - ink) * 92);
+                const bC = Math.round(92 + (1 - ink) * 142);
                 ctx.fillStyle = `rgba(${rC},${gC},${bC},${alpha.toFixed(2)})`;
               }
             }

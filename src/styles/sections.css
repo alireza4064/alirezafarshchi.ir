@@ -1920,9 +1920,18 @@ html[dir="rtl"] .bliss-field select {
   gap: 10px;
   padding: 10px 12px;
   border-radius: 14px;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(20, 28, 52, 0.12);
+  box-shadow: 0 8px 24px rgba(16, 28, 60, 0.08);
+  color: #14161d;
+}
+
+[data-theme="dark"] .about-bento__visual-tag {
   background: rgba(13, 14, 18, 0.78);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: none;
   color: #ffffff;
 }
 
@@ -1932,8 +1941,12 @@ html[dir="rtl"] .bliss-field select {
   border-radius: 50%;
   object-fit: cover;
   object-position: center 22%;
-  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  border: 1.5px solid rgba(20, 28, 52, 0.14);
   flex-shrink: 0;
+}
+
+[data-theme="dark"] .about-mini-avatar {
+  border-color: rgba(255, 255, 255, 0.28);
 }
 
 .about-bento__visual-tag strong {
@@ -1946,6 +1959,10 @@ html[dir="rtl"] .bliss-field select {
 .about-bento__visual-tag span {
   display: block;
   font-size: 0.73rem;
+  color: #545b6e;
+}
+
+[data-theme="dark"] .about-bento__visual-tag span {
   color: rgba(244, 245, 248, 0.72);
 }
 
