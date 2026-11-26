@@ -4,11 +4,126 @@
    Design Approach, Experience, About, Contact Sculpture, Subpages
    ========================================================================== */
 
-/* --- 02. Hero Section (Compact Editorial Header + Large Full-Width Figma Stage) --- */
-.hero {
+/* --- 02. Bliss Blue Atmospheric Hero + Symbol Studio Opening Fold --- */
+.hero--bliss {
   position: relative;
-  padding-block: clamp(28px, 4vw, 52px) clamp(48px, 6vw, 84px);
+  padding-top: 470px;
+  padding-bottom: clamp(48px, 6vw, 84px);
   overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-bliss-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(ellipse 85% 60% at 50% 10%, rgba(22, 94, 246, 0.22), transparent 72%);
+}
+
+[data-theme="dark"] .hero-bliss-bg {
+  background: radial-gradient(ellipse 90% 65% at 50% 8%, rgba(22, 94, 246, 0.34), rgba(7, 16, 38, 0.45) 55%, transparent 82%);
+}
+
+/* Lightweight GPU-Composited Orbs (transform-only = 60fps, zero CPU lag) */
+.hero-bliss-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  will-change: transform;
+  opacity: 0.55;
+}
+
+.hero-bliss-orb--1 {
+  width: 620px;
+  height: 460px;
+  top: -120px;
+  left: -80px;
+  background: radial-gradient(circle, rgba(22, 94, 246, 0.48) 0%, transparent 70%);
+  animation: blissFloatA 18s ease-in-out infinite alternate;
+}
+
+.hero-bliss-orb--2 {
+  width: 560px;
+  height: 440px;
+  top: -60px;
+  right: -90px;
+  background: radial-gradient(circle, rgba(87, 193, 255, 0.42) 0%, transparent 70%);
+  animation: blissFloatB 22s ease-in-out infinite alternate;
+}
+
+.hero-bliss-orb--3 {
+  width: 520px;
+  height: 360px;
+  top: 260px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(185, 200, 255, 0.34) 0%, transparent 72%);
+}
+
+[data-theme="light"] .hero-bliss-orb {
+  opacity: 0.42;
+}
+
+@keyframes blissFloatA {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(42px, 24px, 0); }
+}
+
+@keyframes blissFloatB {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-38px, 28px, 0); }
+}
+
+.hero__stage-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.hero-opening-meta {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.hero-opening-bio {
+  max-width: 420px;
+  font-size: 0.92rem;
+  color: var(--ink-muted);
+  line-height: 1.65;
+}
+
+.hero-scroll-cue {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--primary-text-on-soft);
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--primary-soft);
+  border: 1px solid var(--primary-border);
+  transition: background-color 180ms ease;
+}
+
+.hero-scroll-cue:hover {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+/* Subpages top spacing for fixed compact Symbol Studio pill */
+html:not([data-page="home"]) #main-content {
+  padding-top: 78px;
+}
+
+@media (max-width: 960px) {
+  .hero--bliss {
+    padding-top: 96px;
+  }
 }
 
 .hero::before {

@@ -145,32 +145,25 @@ export function renderHomePage(content) {
   const initialExp = content.experience.entries[0];
 
   return `
-    <!-- Section 02 — Centered Editorial Hero + Interactive Multi-Tab Figma UI3 Stage -->
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="container hero__grid">
-        <div class="hero__copy hero__copy--centered">
-          <div class="eyebrow hero-stagger" style="--stagger-delay:40ms;">
-            <span class="eyebrow__dot" aria-hidden="true"></span>
-            <span>${content.hero.eyebrow}</span>
-          </div>
-          <h1 class="hero__title hero-stagger" id="hero-title" style="--stagger-delay:110ms;">
-            ${content.hero.headline}
-          </h1>
-          <p class="hero__intro hero-stagger" style="--stagger-delay:180ms;">
-            ${content.hero.intro[0]}
-          </p>
-          <div class="hero__actions hero-stagger" style="--stagger-delay:240ms;">
-            <a class="btn btn--primary" href="#selected-work">
-              <span>${content.hero.primaryCta}</span>
-              <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
-            </a>
-            <a class="btn btn--secondary" href="#contact">
-              <span>${content.nav.cta}</span>
-            </a>
-          </div>
+    <!-- Section 02 — Bliss Blue Atmospheric Hero (Symbol Studio Opening Fold + Full-Width Figma UI3 Workspace) -->
+    <section class="hero hero--bliss" aria-labelledby="hero-title">
+      <div class="hero-bliss-bg" aria-hidden="true">
+        <div class="hero-bliss-orb hero-bliss-orb--1"></div>
+        <div class="hero-bliss-orb hero-bliss-orb--2"></div>
+        <div class="hero-bliss-orb hero-bliss-orb--3"></div>
+      </div>
+
+      <div class="container hero__stage-wrap">
+        <!-- Flanking Symbol Studio Opening Footer Row (sits cleanly beneath the center morphing box) -->
+        <div class="hero-opening-meta">
+          <p class="hero-opening-bio">${content.hero.intro[0]}</p>
+          <a class="hero-scroll-cue" href="#figma-stage">
+            <span>${isFa ? "برای مشاهده فایل زنده فیگما اسکرول کنید ↓" : "Scroll to explore live Figma workspace ↓"}</span>
+          </a>
         </div>
 
-        <div class="hero__visual hero-stagger" style="--stagger-delay:300ms;">
+        <!-- Full-Width Interactive Figma UI3 Workspace -->
+        <div class="hero__visual">
           ${renderHeroFigmaStage(content.lang)}
         </div>
       </div>
