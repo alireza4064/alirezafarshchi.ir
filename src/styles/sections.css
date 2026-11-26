@@ -802,23 +802,21 @@ html[dir="rtl"] .cz-step--left .cz-card {
   z-index: 1;
 }
 
-/* --- Auto-Scrolling Companies & Products Marquee Strip --- */
+/* --- Bliss Agency-Style Borderless Clickable Wordmark Marquee --- */
 .brand-marquee-band {
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-  padding-block: 16px;
+  padding-block: 34px;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  background: transparent;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
 }
 
 .brand-marquee-track {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 64px;
   width: max-content;
-  animation: marqueeScroll 38s linear infinite;
+  animation: marqueeScroll 44s linear infinite;
 }
 
 .brand-marquee-band:hover .brand-marquee-track {
@@ -834,34 +832,71 @@ html[dir="rtl"] .cz-step--left .cz-card {
   }
 }
 
-.brand-pill {
+.brand-wordmark {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: var(--radius-pill);
-  background: var(--canvas);
-  border: 1px solid var(--border);
-  white-space: nowrap;
-}
-
-.brand-pill__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--primary);
-  opacity: 0.7;
-}
-
-.brand-pill__name {
-  font-size: 0.86rem;
-  font-weight: 600;
+  gap: 10px;
   color: var(--ink);
+  opacity: 0.38;
+  font-size: 1.05rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: opacity 240ms var(--ease-out),
+    color 240ms var(--ease-out),
+    transform 240ms var(--ease-out);
 }
 
-.brand-pill__tag {
-  font-size: 0.74rem;
-  color: var(--ink-subtle);
+.brand-wordmark:hover {
+  opacity: 1;
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .brand-wordmark:hover {
+  color: #ffffff;
+  text-shadow: 0 0 18px rgba(87, 193, 255, 0.35);
+}
+
+.brand-wordmark__glyph {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.55;
+  transform: rotate(45deg);
+  transition: background-color 240ms ease, opacity 240ms ease, transform 240ms ease;
+}
+
+.brand-wordmark:hover .brand-wordmark__glyph {
+  background: var(--primary);
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+.brand-wordmark--tracked {
+  letter-spacing: 0.14em;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.brand-wordmark--bold {
+  letter-spacing: -0.03em;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.brand-wordmark--editorial {
+  letter-spacing: 0.02em;
+  font-weight: 500;
+  font-size: 1.04rem;
+}
+
+.brand-wordmark--italic {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.16rem;
+  letter-spacing: -0.02em;
 }
 
 /* --- Conceptzilla Scroll-Linked Progress Spine & Slide-In Motion --- */

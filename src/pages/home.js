@@ -17,21 +17,21 @@ import { PRINCIPLE_GLYPHS } from "../components/glyphs.js";
 import { renderHeroFigmaStage, initHeroFigmaStage } from "../components/hero-figma-stage.js";
 
 const MARQUEE_BRANDS = [
-  { name: "Farano", tag: "GovTech" },
-  { name: "IranServer", tag: "Cloud & Hosting" },
-  { name: "Made In Iran", tag: "B2B Marketplace" },
-  { name: "Part Software Group", tag: "Enterprise" },
-  { name: "Signal", tag: "5M+ Fintech" },
-  { name: "Merat / Ara", tag: "Banking" },
-  { name: "Word+", tag: "EdTech" },
-  { name: "Kanon Ghazaei", tag: "Legal Portal" },
-  { name: "Dade Negar", tag: "Data SaaS" },
-  { name: "Bejatoo", tag: "Super App" },
-  { name: "Val-e-Asr", tag: "Mobile" },
-  { name: "Pulse", tag: "Sports" },
-  { name: "Avanegar & Avasho", tag: "AI APIs" },
-  { name: "Freedom Park", tag: "Game" },
-  { name: "Khiaar", tag: "Game" },
+  { name: "FARANO", slug: "farano", style: "tracked" },
+  { name: "IranServer", slug: "iranserver", style: "bold" },
+  { name: "MADE IN IRAN", slug: "made-in-iran", style: "editorial" },
+  { name: "PART SOFTWARE", slug: "part-design-system", style: "tracked" },
+  { name: "Signal", slug: "signal", style: "italic" },
+  { name: "MERAT · ARA", slug: "merat-ara", style: "tracked" },
+  { name: "Word+", slug: "word-plus", style: "bold" },
+  { name: "Kanon Ghazaei", slug: "kanon-ghazaei", style: "editorial" },
+  { name: "DadeNegar", slug: "dade-negar", style: "bold" },
+  { name: "Val-e-Asr", slug: "val-e-asr", style: "editorial" },
+  { name: "PULSE", slug: "pulse", style: "tracked" },
+  { name: "Avanegar", slug: "avanegar-avasho", style: "italic" },
+  { name: "Freedom Park", slug: "freedom-park", style: "editorial" },
+  { name: "Khiaar", slug: "khiaar", style: "bold" },
+  { name: "Nevise Negar", slug: "nevise-negar", style: "editorial" },
 ];
 
 function renderAudiencePanelContent(item, content) {
@@ -169,17 +169,16 @@ export function renderHomePage(content) {
       </div>
     </section>
 
-    <!-- Auto-Scrolling Companies & Products Marquee Strip -->
+    <!-- Bliss-Style Minimal Clickable Companies & Products Marquee -->
     <div class="brand-marquee-band" dir="ltr" aria-label="${isFa ? "شرکت‌ها و محصولاتی که روی آن‌ها کار کرده‌ام" : "Companies and products I have worked on"}">
       <div class="brand-marquee-track">
         ${[...MARQUEE_BRANDS, ...MARQUEE_BRANDS]
           .map(
             (b) => `
-          <div class="brand-pill">
-            <span class="brand-pill__dot" aria-hidden="true"></span>
-            <strong class="brand-pill__name">${b.name}</strong>
-            <span class="brand-pill__tag">${b.tag}</span>
-          </div>
+          <a class="brand-wordmark brand-wordmark--${b.style}" href="${prefix}/work/${b.slug}/">
+            <span class="brand-wordmark__glyph" aria-hidden="true"></span>
+            <span>${b.name}</span>
+          </a>
         `
           )
           .join("")}
