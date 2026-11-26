@@ -67,6 +67,35 @@
   transform: translateY(-2px);
 }
 
+.assistant-fab[aria-expanded="true"] {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.92);
+}
+
+@media (max-width: 640px) {
+  .assistant-fab {
+    bottom: 16px;
+    inset-inline-start: 14px;
+    padding: 9px 13px;
+    font-size: 0.8rem;
+  }
+
+  .scroll-top-btn {
+    bottom: 16px;
+    inset-inline-end: 14px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .assistant-drawer {
+    bottom: 16px;
+    inset-inline-start: 12px;
+    width: calc(100vw - 24px);
+    height: min(540px, calc(100dvh - 88px));
+  }
+}
+
 .assistant-fab__dot {
   width: 7px;
   height: 7px;

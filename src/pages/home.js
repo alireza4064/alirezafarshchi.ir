@@ -227,13 +227,23 @@ export function renderHomePage(content) {
             .join("")}
         </div>
 
-        <div class="orchid-stack reveal" id="orchid-stack">
-          <div class="orchid-stack__layer orchid-stack__layer--back2" aria-hidden="true"></div>
-          <div class="orchid-stack__layer orchid-stack__layer--back1" aria-hidden="true"></div>
-          <div class="audience-panel orchid-stack__front" id="audience-panel" aria-live="polite">
-            <div class="orchid-card-badge" id="orchid-card-num">01 · ${initialAudience.title}</div>
-            ${renderAudiencePanelContent(initialAudience, content)}
-          </div>
+        <div class="orchid-deck reveal" id="orchid-deck" data-active-index="0">
+          ${content.audience.items
+            .map(
+              (item, idx) => `
+            <article
+              class="audience-panel orchid-card ${idx === 0 ? "is-active" : "is-future"}"
+              data-orchid-card="${idx}"
+              aria-hidden="${idx === 0 ? "false" : "true"}"
+            >
+              <div class="orchid-card__head">
+                <span class="orchid-card-badge">0${idx + 1} · ${item.title}</span>
+              </div>
+              ${renderAudiencePanelContent(item, content)}
+            </article>
+          `
+            )
+            .join("")}
         </div>
       </div>
     </section>
@@ -344,62 +354,74 @@ export function renderHomePage(content) {
       </div>
     </section>
 
-    <!-- Section 07 — Elevated Bento About Me -->
+    <!-- Section 07 — Clean Swiss Editorial Bento About Me -->
     <section class="section section--bordered" id="about" aria-labelledby="about-heading">
-      <div class="container about-grid">
-        <div class="about-body reveal">
-          <div class="about-portrait-chip">
-            <img src="/assets/alireza-portrait.jpg" alt="${PROFILE.name}" width="48" height="48" loading="lazy" />
-            <div>
-              <div style="font-weight:700;font-size:0.92rem;color:var(--ink);">
-                ${isFa ? "علیرضا محمدزاده فرشچی" : PROFILE.name}
-              </div>
-              <div style="font-size:0.78rem;color:var(--ink-muted);">
-                ${isFa ? "طراح ارشد محصول در DeltaFX · +۵ سال تجربه" : "Senior Product Designer at DeltaFX · 5+ Years"}
-              </div>
-            </div>
-          </div>
-
+      <div class="container">
+        <div class="section-header reveal">
           <div class="eyebrow">${content.about.eyebrow}</div>
           <h2 class="section-title" id="about-heading">${content.about.heading}</h2>
-          <p>${content.about.paragraphs[0]}</p>
-          <p>${content.about.paragraphs[1]}</p>
-
-          <div class="about-bento-stats">
-            <div class="about-stat-card">
-              <strong>5+</strong>
-              <span>${isFa ? "سال تجربه طراحی محصول و سیستم" : "Years in Product & Systems"}</span>
-            </div>
-            <div class="about-stat-card">
-              <strong>20+</strong>
-              <span>${isFa ? "محصول منتشرشده در فینتک، ابر و بازی" : "Shipped Products & Systems"}</span>
-            </div>
-            <div class="about-stat-card">
-              <strong>IBM · Part</strong>
-              <span>${isFa ? "مدرس UI/UX و منتور طراحان" : "Certified & UI/UX Instructor"}</span>
-            </div>
-          </div>
-
-          <div style="margin-top:24px;">
-            <a class="btn btn--secondary" href="${prefix}/about/">
-              <span>${content.about.moreCta}</span>
-              <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
-            </a>
-          </div>
         </div>
 
-        <div class="reveal">
-          <div class="about-visual-card">
-            <div class="sculpture-frame sculpture-frame--landscape">
+        <div class="about-bento reveal">
+          <!-- Primary Editorial Story Card -->
+          <div class="about-bento__story">
+            <div class="about-role-bar">
+              <span class="about-role-dot" aria-hidden="true"></span>
+              <span>${isFa ? "طراح ارشد محصول در DeltaFX · +۵ سال تجربه" : "Senior Product Designer at DeltaFX · 5+ Years"}</span>
+            </div>
+
+            <p class="about-bento__lead">${content.about.paragraphs[0]}</p>
+            <p class="about-bento__copy">${content.about.paragraphs[1]}</p>
+
+            <div class="about-pillars">
+              <span>Design Systems</span>
+              <span>Product Architecture</span>
+              <span>User Research</span>
+              <span>AI-Assisted Workflows</span>
+            </div>
+
+            <div class="about-bento__actions">
+              <a class="btn btn--primary" href="${prefix}/about/">
+                <span>${content.about.moreCta}</span>
+                <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
+              </a>
+              <a class="btn btn--secondary" href="${PROFILE.resumeUrl}" target="_blank" rel="noopener noreferrer">
+                <span>${content.nav.resume} ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Visual + Metrics Column -->
+          <div class="about-bento__side">
+            <div class="about-bento__visual">
               <img
                 src="/assets/sculpture-about.jpg"
                 alt="${content.about.sculptureAlt}"
                 loading="lazy"
                 decoding="async"
               />
+              <div class="about-bento__visual-tag">
+                <img class="about-mini-avatar" src="/assets/alireza-portrait.jpg" alt="${PROFILE.name}" width="32" height="32" loading="lazy" />
+                <div>
+                  <strong>${isFa ? "علیرضا محمدزاده فرشچی" : "Alireza Farshchi"}</strong>
+                  <span>${isFa ? "مشهد / ریموت · طراحی محصول" : "Product & Systems · Remote"}</span>
+                </div>
+              </div>
             </div>
-            <div class="about-visual-caption">
-              <span>${isFa ? "تفکر سیستمی · تحقیق کاربر · گردش‌کار هوشمند AI" : "Systems Thinking · User Research · AI Workflows"}</span>
+
+            <div class="about-bento-stats">
+              <div class="about-stat-card">
+                <strong>5+</strong>
+                <span>${isFa ? "سال تجربه محصول" : "Years Experience"}</span>
+              </div>
+              <div class="about-stat-card">
+                <strong>20+</strong>
+                <span>${isFa ? "محصول و سیستم" : "Shipped Products"}</span>
+              </div>
+              <div class="about-stat-card">
+                <strong>IBM · Part</strong>
+                <span>${isFa ? "مدرس و منتور UI/UX" : "Certified & Mentor"}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -830,34 +852,49 @@ function initContactStarfieldCanvas() {
 }
 
 export function initHomePage(content) {
-  // 1. Orchid-Style Stacked Card Deck Audience Selector
+  // 1. True Progressive Orchid Stacked Card Deck (01 = 1 card, 02 = 1 behind, 03 = 2 behind, 04 = 3 behind!)
   const audienceTabs = document.querySelectorAll("[data-audience-id]");
-  const audiencePanel = document.getElementById("audience-panel");
-  const orchidStack = document.getElementById("orchid-stack");
-  if (audienceTabs.length && audiencePanel) {
-    let currentId = content.audience.items[0].id;
-    audienceTabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        const nextId = tab.getAttribute("data-audience-id");
-        const nextIdx = Number(tab.getAttribute("data-audience-index")) || 0;
-        if (!nextId || nextId === currentId) return;
-        const nextItem = content.audience.items.find((i) => i.id === nextId);
-        if (!nextItem) return;
+  const orchidDeck = document.getElementById("orchid-deck");
+  const orchidCards = orchidDeck?.querySelectorAll("[data-orchid-card]");
+  if (audienceTabs.length && orchidDeck && orchidCards?.length) {
+    let activeIdx = 0;
 
-        currentId = nextId;
-        audienceTabs.forEach((t) =>
-          t.setAttribute("aria-selected", String(t.getAttribute("data-audience-id") === nextId))
-        );
-        orchidStack?.classList.add("is-stacking");
-        window.setTimeout(() => {
-          audiencePanel.innerHTML = `
-            <div class="orchid-card-badge">0${nextIdx + 1} · ${nextItem.title}</div>
-            ${renderAudiencePanelContent(nextItem, content)}
-          `;
-          orchidStack?.classList.remove("is-stacking");
-        }, 180);
+    const applyDeckState = (nextIdx) => {
+      activeIdx = nextIdx;
+      orchidDeck.setAttribute("data-active-index", String(activeIdx));
+      audienceTabs.forEach((t, i) => t.setAttribute("aria-selected", String(i === activeIdx)));
+
+      orchidCards.forEach((card, idx) => {
+        card.classList.remove("is-active", "is-past-1", "is-past-2", "is-past-3", "is-future");
+        if (idx === activeIdx) {
+          card.classList.add("is-active");
+          card.setAttribute("aria-hidden", "false");
+        } else if (idx < activeIdx) {
+          const depth = activeIdx - idx; // 1 = directly behind, 2 = two behind, 3 = three behind
+          card.classList.add(`is-past-${Math.min(3, depth)}`);
+          card.setAttribute("aria-hidden", "true");
+        } else {
+          card.classList.add("is-future");
+          card.setAttribute("aria-hidden", "true");
+        }
+      });
+    };
+
+    audienceTabs.forEach((tab, idx) => {
+      tab.addEventListener("click", () => {
+        if (idx === activeIdx) return;
+        applyDeckState(idx);
       });
     });
+
+    // Clicking any peeking stacked card behind brings it back to front!
+    orchidCards.forEach((card, idx) => {
+      card.addEventListener("click", () => {
+        if (idx < activeIdx) applyDeckState(idx);
+      });
+    });
+
+    applyDeckState(0);
   }
 
   // 2. Interactive Categorized Experience Split View

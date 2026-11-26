@@ -15,9 +15,16 @@ html {
   background-color: var(--canvas);
   color: var(--ink);
   font-size: 16px;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+section[id],
+.proj-section[id],
+header[id] {
+  scroll-margin-top: 88px;
 }
 
 body {
@@ -25,7 +32,8 @@ body {
   background-color: var(--canvas);
   color: var(--ink);
   line-height: 1.65;
-  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100%;
   min-height: 100vh;
   transition: background-color 260ms var(--ease-out), color 260ms var(--ease-out);
   /* Subtle architectural dot-grid pattern (Taraznama-inspired) */

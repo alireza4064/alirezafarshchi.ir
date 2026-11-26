@@ -83,15 +83,6 @@ export function renderNavigation(content, activePage) {
               <span class="theme-icon-moon">${MOON_ICON}</span>
             </button>
 
-            <a
-              class="ss-mini-btn"
-              href="${altLangHref}"
-              aria-label="${isFa ? "Switch to English" : "تغییر زبان به فارسی"}"
-              title="${isFa ? "English" : "فارسی"}"
-            >
-              ${isFa ? FLAG_UK : FLAG_IR}
-            </a>
-
             <button
               class="nav-toggle"
               id="nav-toggle"

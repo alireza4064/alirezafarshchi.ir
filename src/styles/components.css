@@ -445,11 +445,13 @@ html[dir="rtl"] .ss-nav-root--compact .ss-morph-bar {
   transition: transform 240ms var(--ease-out);
 }
 
-.site-nav.is-expanded .nav-toggle__bars span:first-child {
+.site-nav.is-expanded .nav-toggle__bars span:first-child,
+.ss-morph-card.is-expanded .nav-toggle__bars span:first-child {
   transform: translateY(2.8px) rotate(45deg);
 }
 
-.site-nav.is-expanded .nav-toggle__bars span:last-child {
+.site-nav.is-expanded .nav-toggle__bars span:last-child,
+.ss-morph-card.is-expanded .nav-toggle__bars span:last-child {
   transform: translateY(-2.8px) rotate(-45deg);
 }
 
@@ -511,7 +513,8 @@ html[dir="rtl"] .site-nav.is-compact .site-nav__bar {
     opacity 240ms var(--ease-out);
 }
 
-.site-nav.is-expanded .site-nav__drawer-wrap {
+.site-nav.is-expanded .site-nav__drawer-wrap,
+.ss-morph-card.is-expanded .site-nav__drawer-wrap {
   grid-template-rows: 1fr;
   opacity: 1;
 }
@@ -529,9 +532,52 @@ html[dir="rtl"] .site-nav.is-compact .site-nav__bar {
     border-color var(--dur-nav-collapse) var(--ease-out);
 }
 
-.site-nav.is-expanded .site-nav__drawer {
-  padding: 14px 18px 18px;
-  border-top-color: var(--border);
+.site-nav.is-expanded .site-nav__drawer,
+.ss-morph-card.is-expanded .site-nav__drawer {
+  padding: 12px 14px 16px;
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 768px) {
+  .ss-links {
+    display: none;
+  }
+
+  .ss-morph-card {
+    width: auto !important;
+    min-width: 152px;
+    border-radius: 14px;
+  }
+
+  .ss-morph-card.is-expanded {
+    width: calc(100vw - 24px) !important;
+  }
+
+  .ss-morph-bar {
+    padding: 6px 8px;
+    justify-content: center;
+  }
+
+  .ss-controls {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    color: #f4f5f8;
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.08);
+    height: 30px;
+    padding: 0 11px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+  }
+
+  .site-footer {
+    padding-bottom: 92px;
+  }
 }
 
 /* --- Buttons --- */

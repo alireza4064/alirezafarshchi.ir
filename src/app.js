@@ -9,7 +9,7 @@ import { renderFooter } from "./components/footer.js";
 import { renderAssistantAndChat, initAssistantAndChat } from "./components/assistant.js";
 import { renderHomePage, initHomePage } from "./pages/home.js";
 import { renderWorkPage, initWorkPage } from "./pages/work.js";
-import { renderProjectOverviewPage } from "./pages/project-overview.js";
+import { renderProjectOverviewPage, initProjectOverviewPage } from "./pages/project-overview.js";
 import { renderCaseStudyPage, initCaseStudyPage } from "./pages/case-study.js";
 import { renderAboutPage } from "./pages/about.js";
 
@@ -78,6 +78,7 @@ function bootstrap() {
 
   if (page === "home") initHomePage(content);
   if (page === "work") initWorkPage(content);
+  if (page === "overview") initProjectOverviewPage();
   if (page === "case-study") initCaseStudyPage(content, slug);
 
   initRevealObserver();
