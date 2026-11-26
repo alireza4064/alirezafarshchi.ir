@@ -469,6 +469,237 @@ export const PROJECTS = [
       ],
     },
   },
+  {
+    slug: "val-e-asr",
+    featured: false,
+    cover: null,
+    categories: ["Product Design", "Design Systems"],
+    protectedCaseStudy: true,
+    liveLinks: [
+      { label: "Myket", url: "https://myket.ir/app/ir.valasr.android" },
+      { label: "Cafe Bazaar", url: "https://cafebazaar.ir/app/ir.valasr.android" },
+    ],
+    en: {
+      title: "Val-e-Asr",
+      domain: "Mobile Application · Lifestyle & Content",
+      role: "Product Designer",
+      timeline: "Part Software Group (Dec 2021 — Jan 2025)",
+      scope: "Nielsen 10-Heuristic Evaluation, Mobile App, Landing Page & UIKit Library",
+      shortDesc:
+        "Owned UI/UX for the mobile app and landing page, leading a Nielsen 10-heuristic evaluation, user surveys, and usability testing.",
+      problem:
+        "Core flows such as prayer-time/Azan playback, Quran reader, and settings suffered from missing playback feedback and inconsistent error states.",
+      contributions: [
+        "Led a Nielsen 10-heuristic usability evaluation across core app flows, identifying missing playback feedback and inconsistent error states.",
+        "Complemented heuristic findings with user surveys and usability tests focused on navigation and feature accessibility.",
+        "Integrated the app with a lightweight UIKit token-based component library and designed the marketing landing page.",
+      ],
+      outcomes: [
+        "Shipped live on Café Bazaar and Myket with clearer navigation and consistent audio/error feedback.",
+      ],
+    },
+    fa: {
+      title: "ولیعصر (Val-e-Asr)",
+      domain: "اپلیکیشن موبایل · سبک زندگی و محتوا",
+      role: "طراح محصول",
+      timeline: "گروه نرم‌افزاری پارت (۱۴۰۰ — ۱۴۰۳)",
+      scope: "ارزیابی ۱۰ اصل نیلسن، اپلیکیشن موبایل، لندینگ و کتابخانه UIKit",
+      shortDesc:
+        "طراحی UI/UX اپلیکیشن و صفحه فرود همراه با ارزیابی ۱۰ اصل نیلسن، نظرسنجی کاربران و تست کاربردپذیری.",
+      problem:
+        "جریان‌های اصلی مانند پخش اذان/اوقات شرعی، قرائت قرآن و تنظیمات دارای نبود بازخورد پخش و وضعیت‌های خطای ناهماهنگ بودند.",
+      contributions: [
+        "هدایت ارزیابی کاربردپذیری ۱۰ اصل نیلسن در جریان‌های کلیدی اپلیکیشن و ارائه راهکار برای بازخورد پخش و خطاها.",
+        "اجرای نظرسنجی کاربران و تست کاربردپذیری با تمرکز بر ناوبری و دسترس‌پذیری امکانات.",
+        "یکپارچه‌سازی با کتابخانه سبک UIKit و طراحی صفحه فرود محصول.",
+      ],
+      outcomes: [
+        "انتشار در کافه‌بازار و مایکت با ناوبری شفاف‌تر و بازخورد یکپارچه‌تر.",
+      ],
+    },
+  },
+  {
+    slug: "freedom-park",
+    featured: false,
+    cover: null,
+    categories: ["Product Design"],
+    protectedCaseStudy: true,
+    liveLinks: [
+      { label: "Myket", url: "https://myket.ir/app/com.peakypie.azadipark" },
+      { label: "Cafe Bazaar", url: "https://cafebazaar.ir/app/com.peakypie.azadipark" },
+    ],
+    en: {
+      title: "Freedom Park",
+      domain: "Mobile Game · Social & Entertainment",
+      role: "Product Design Lead",
+      timeline: "Part Software Group (Dec 2021 — Jan 2025)",
+      scope: "Map Layout, Visual Direction, MVP Scoping & Mentoring",
+      shortDesc:
+        "Led map layout, art direction sessions, MVP scoping, and mentored 2 junior designers for a shipped social mobile game.",
+      problem:
+        "Launching a social/entertainment mobile game in an unproven market required balancing visual personality with lean MVP scope.",
+      contributions: [
+        "Shaped the game's map layout and led cross-discipline art-direction sessions.",
+        "Applied an MVP approach to manage market uncertainty while maintaining UX/UI clarity.",
+        "Mentored 2 junior designers and ran refinement sessions keeping critiques focused on primary design goals.",
+      ],
+      outcomes: [
+        "Shipped live on Café Bazaar and Myket.",
+      ],
+    },
+    fa: {
+      title: "پارک آزادی (Freedom Park)",
+      domain: "بازی موبایل · اجتماعی و سرگرمی",
+      role: "لید طراحی محصول",
+      timeline: "گروه نرم‌افزاری پارت (۱۴۰۰ — ۱۴۰۳)",
+      scope: "طراحی نقشه، جهت‌گیری بصری، MVP و منتورینگ",
+      shortDesc:
+        "هدایت طراحی نقشه، جلسات هنری، تعریف MVP و منتورینگ ۲ طراح جونیور برای یک بازی موبایل منتشرشده.",
+      problem:
+        "ورود یک بازی اجتماعی به بازاری نامطمئن نیازمند توازن دقیق میان هویت بصری جذاب و دامنه چابک MVP بود.",
+      contributions: [
+        "طراحی چیدمان نقشه بازی و هدایت جلسات جهت‌گیری بصری با تیم هنری.",
+        "اجرای رویکرد MVP برای مدیریت عدم قطعیت بازار با حفظ استانداردهای UX/UI.",
+        "منتورینگ ۲ طراح جونیور و هدایت جلسات بازبینی طراحی.",
+      ],
+      outcomes: [
+        "انتشار موفق روی کافه‌بازار و مایکت.",
+      ],
+    },
+  },
+  {
+    slug: "khiaar",
+    featured: false,
+    cover: null,
+    categories: ["Product Design"],
+    protectedCaseStudy: true,
+    liveLinks: [
+      { label: "Myket", url: "https://myket.ir/app/com.peakypie.khiar" },
+      { label: "Cafe Bazaar", url: "https://cafebazaar.ir/app/com.peakypie.khiar" },
+    ],
+    en: {
+      title: "Khiaar",
+      domain: "Mobile Game · Word Puzzle",
+      role: "Product Designer",
+      timeline: "Part Software Group (Dec 2021 — Jan 2025)",
+      scope: "Gameplay UX, Playtesting & Visual Iteration",
+      shortDesc:
+        "Improved gameplay UX and visuals for a shipped word-puzzle mobile game through iterative playtesting and player feedback.",
+      problem:
+        "Word-puzzle engagement depends on intuitive board readability and frictionless interaction loops across varied mobile screen sizes.",
+      contributions: [
+        "Conducted playtesting sessions and gathered direct player feedback to iterate on mechanics and visuals.",
+        "Collaborated closely with developers to integrate gameplay UX improvements smoothly.",
+      ],
+      outcomes: [
+        "Shipped live on Café Bazaar and Myket.",
+      ],
+    },
+    fa: {
+      title: "خیار (Khiaar)",
+      domain: "بازی موبایل · معمای کلمات",
+      role: "طراح محصول",
+      timeline: "گروه نرم‌افزاری پارت (۱۴۰۰ — ۱۴۰۳)",
+      scope: "تجربه گیم‌پلی، پلی‌تست و بهینه‌سازی بصری",
+      shortDesc:
+        "بهبود تجربه کاربری گیم‌پلی و گرافیک بازی معمایی کلمات از طریق چرخه‌های مستمر پلی‌تست و بازخورد بازیکنان.",
+      problem:
+        "درگیری بازیکن در بازی‌های کلمات به خوانایی فوری صفحه و تعامل روان در نمایشگرهای متنوع موبایل وابسته است.",
+      contributions: [
+        "اجرای جلسات پلی‌تست، جمع‌آوری بازخورد بازیکنان و تکرار روی مکانیک و ظاهر بازی.",
+        "همکاری نزدیک با تیم توسعه برای پیاده‌سازی دقیق بهبودهای UX.",
+      ],
+      outcomes: [
+        "انتشار موفق روی کافه‌بازار و مایکت.",
+      ],
+    },
+  },
+  {
+    slug: "pulse",
+    featured: false,
+    cover: null,
+    categories: ["Product Design"],
+    protectedCaseStudy: true,
+    en: {
+      title: "Pulse",
+      domain: "Sports & Fitness · Responsive Website",
+      role: "Product Designer",
+      timeline: "Part Software Group (Dec 2021 — Jan 2025)",
+      scope: "End-to-End Responsive Website UI (Landing, Blog, FAQ, Download)",
+      shortDesc:
+        "Designed the responsive web experience end-to-end for a sports and fitness platform while maintaining brand consistency.",
+      problem:
+        "Creating a cohesive multi-page responsive web presence covering product landing, blog, FAQ, contact, and app download flows.",
+      contributions: [
+        "Designed the landing page and supporting web pages (Contact, Blog, FAQ, Download) in responsive variants.",
+        "Applied UI/UX best practices while maintaining strict brand consistency.",
+      ],
+      outcomes: [
+        "Delivered a complete responsive web UI suite for the Pulse sports platform.",
+      ],
+    },
+    fa: {
+      title: "پالس (Pulse)",
+      domain: "ورزش و تناسب اندام · وب‌سایت واکنش‌گرا",
+      role: "طراح محصول",
+      timeline: "گروه نرم‌افزاری پارت (۱۴۰۰ — ۱۴۰۳)",
+      scope: "طراحی سرتاسری وب‌سایت واکنش‌گرا (لندینگ، بلاگ، سوالات متداول، دانلود)",
+      shortDesc:
+        "طراحی سرتاسری رابط کاربری وب‌سایت پلتفرم ورزشی پالس با حفظ یکپارچگی برند در نسخه‌های واکنش‌گرا.",
+      problem:
+        "ایجاد حضور وب یکپارچه و واکنش‌گرا شامل صفحه فرود، بلاگ، سوالات متداول، تماس و دانلود اپلیکیشن.",
+      contributions: [
+        "طراحی صفحه اصلی و صفحات مکمل (تماس، بلاگ، سوالات متداول و دانلود) در ابعاد مختلف نمایشگر.",
+        "به‌کارگیری بهترین الگوهای UI/UX همراه با حفظ انسجام هویت بصری برند.",
+      ],
+      outcomes: [
+        "تحویل مجموعه کامل رابط کاربری وب‌سایت واکنش‌گرای پالس.",
+      ],
+    },
+  },
+  {
+    slug: "nevise-negar",
+    featured: false,
+    cover: null,
+    categories: ["AI", "B2B", "Product Design"],
+    protectedCaseStudy: true,
+    en: {
+      title: "Nevise Negar (OCR)",
+      domain: "AI · Optical Character Recognition (OCR)",
+      role: "UI/UX Designer",
+      timeline: "Part Software Group (Dec 2021 — Jan 2025)",
+      scope: "OCR Web Product Interface & Document Processing Flows",
+      shortDesc:
+        "Designed user-friendly web interfaces for an AI-powered Persian OCR product turning scanned documents into editable text.",
+      problem:
+        "Making document upload, recognition review, and export workflows effortless for everyday and enterprise users.",
+      contributions: [
+        "Collaborated on the UX/UI of the Nevise Negar OCR web platform.",
+        "Simplified upload, preview, and text-extraction interaction flows.",
+      ],
+      outcomes: [
+        "Delivered a clean web interface for AI-based OCR document conversion.",
+      ],
+    },
+    fa: {
+      title: "نویسه‌نگار (OCR)",
+      domain: "هوش مصنوعی · تبدیل تصویر به متن (OCR)",
+      role: "طراح UI/UX",
+      timeline: "گروه نرم‌افزاری پارت (۱۴۰۰ — ۱۴۰۳)",
+      scope: "رابط کاربری وب و جریان پردازش اسناد OCR",
+      shortDesc:
+        "طراحی رابط کاربری وب برای محصول هوشمند تبدیل اسناد و تصاویر فارسی به متن قابل ویرایش.",
+      problem:
+        "ساده‌سازی فرایند بارگذاری سند، بررسی خروجی تشخیص متن و دریافت فایل برای کاربران عمومی و سازمانی.",
+      contributions: [
+        "مشارکت در طراحی تجربه و رابط کاربری پلتفرم وب نویسه‌نگار.",
+        "بهینه‌سازی جریان‌های آپلود، پیش‌نمایش و استخراج متن.",
+      ],
+      outcomes: [
+        "ارائه رابط کاربری شفاف و کاربردی برای سرویس هوشمند OCR.",
+      ],
+    },
+  },
 ];
 
 export function getProjectBySlug(slug) {

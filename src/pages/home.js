@@ -1,6 +1,12 @@
 /* ==========================================================================
    Homepage Renderer — Exact 8-Section Architecture
-   Includes Hero Stagger & Pointer Parallax + Contact Sculpture Composition
+   - Centered Editorial Hero + Interactive Multi-Tab Figma UI3 Workspace
+   - Compact Tabbed Audience Selector + "Let's talk" CTA to #contact
+   - Uniform 2-Col Selected Work Grid
+   - Conceptzilla-Inspired Vertical Dotted Center Timeline (Design Approach)
+   - Interactive Categorized Experience Split View
+   - About with Abstract Sculpture
+   - Practical Contact with Subtle Mouse-Reactive Dot Field Canvas
    ========================================================================== */
 
 import { getFeaturedProjects } from "../data/projects.js";
@@ -42,6 +48,12 @@ function renderAudiencePanelContent(item, content) {
         <h3 class="audience-panel__headline">${item.headline}</h3>
         <p class="audience-panel__summary">${item.summary}</p>
         <ul class="audience-panel__points">${pointsHtml}</ul>
+        <div style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap;">
+          <a class="btn btn--primary btn--sm" href="#contact">
+            <span>${content.nav.cta}</span>
+            <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
+          </a>
+        </div>
       </div>
       <div class="audience-panel__aside">
         <div class="audience-panel__aside-label">${content.audience.recommendedLabel}</div>
@@ -51,47 +63,101 @@ function renderAudiencePanelContent(item, content) {
   `;
 }
 
-export function renderHomePage(content) {
-  const prefix = `/${content.lang}`;
-  const featured = getFeaturedProjects();
-  const initialAudience = content.audience.items[0];
+function renderExperienceDetail(item, isFreelanceGroup, content) {
+  if (isFreelanceGroup) {
+    return `
+      <div class="exp-detail__head">
+        <div>
+          <h3 class="exp-detail__company">${content.lang === "fa" ? "پروژه‌های فریلنسری و موازی" : "Freelance & Remote Engagements"}</h3>
+          <div class="exp-detail__role">${content.experience.additionalNote}</div>
+        </div>
+      </div>
+      <div class="exp-freelance-stack">
+        ${content.experience.freelanceEntries
+          .map(
+            (f) => `
+          <div class="exp-freelance-item">
+            <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:4px;">
+              <strong>${f.company}</strong>
+              <span style="font-size:0.82rem;color:var(--ink-subtle);">${f.period}</span>
+            </div>
+            <div style="font-size:0.84rem;color:var(--primary-text-on-soft);margin-bottom:6px;">${f.role} · ${f.domain}</div>
+            <p style="font-size:0.88rem;color:var(--ink-muted);margin-bottom:8px;">${f.summary}</p>
+            <span class="pill" style="font-size:0.75rem;">${f.overlapNote}</span>
+          </div>
+        `
+          )
+          .join("")}
+      </div>
+    `;
+  }
 
   return `
-    <!-- Section 02 — Hero -->
+    <div class="exp-detail__head">
+      <div>
+        <h3 class="exp-detail__company">${item.company}</h3>
+        <div class="exp-detail__role">${item.role}</div>
+      </div>
+      <div class="exp-detail__meta">
+        <span class="pill pill--blue">${item.period}</span>
+        <span class="exp-detail__loc">${item.domain} · ${item.location}</span>
+      </div>
+    </div>
+    <ul class="exp-detail__list">
+      ${item.highlights
+        .map(
+          (h) => `
+        <li>
+          <span class="audience-panel__bullet" aria-hidden="true"></span>
+          <span>${h}</span>
+        </li>
+      `
+        )
+        .join("")}
+    </ul>
+  `;
+}
+
+export function renderHomePage(content) {
+  const prefix = `/${content.lang}`;
+  const isFa = content.lang === "fa";
+  const featured = getFeaturedProjects();
+  const initialAudience = content.audience.items[0];
+  const initialExp = content.experience.entries[0];
+
+  return `
+    <!-- Section 02 — Centered Editorial Hero + Interactive Multi-Tab Figma UI3 Stage -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="container hero__grid">
-        <div class="hero__copy">
-          <div class="hero__copy-main">
-            <div class="eyebrow hero-stagger" style="--stagger-delay:50ms;margin-bottom:12px;">
-              <span class="eyebrow__dot" aria-hidden="true"></span>
-              <span>${content.hero.eyebrow}</span>
-            </div>
-            <h1 class="hero__title hero-stagger" id="hero-title" style="--stagger-delay:120ms;">
-              ${content.hero.headline}
-            </h1>
+        <div class="hero__copy hero__copy--centered">
+          <div class="eyebrow hero-stagger" style="--stagger-delay:40ms;">
+            <span class="eyebrow__dot" aria-hidden="true"></span>
+            <span>${content.hero.eyebrow}</span>
           </div>
-
-          <div class="hero__copy-aside hero-stagger" style="--stagger-delay:190ms;">
-            <p class="hero__intro">${content.hero.intro[0]}</p>
-            <div class="hero__actions">
-              <a class="btn btn--primary" href="#selected-work">
-                <span>${content.hero.primaryCta}</span>
-                <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
-              </a>
-              <a class="btn btn--secondary" href="${prefix}/about/">
-                <span>${content.hero.secondaryCta}</span>
-              </a>
-            </div>
+          <h1 class="hero__title hero-stagger" id="hero-title" style="--stagger-delay:110ms;">
+            ${content.hero.headline}
+          </h1>
+          <p class="hero__intro hero-stagger" style="--stagger-delay:180ms;">
+            ${content.hero.intro[0]}
+          </p>
+          <div class="hero__actions hero-stagger" style="--stagger-delay:240ms;">
+            <a class="btn btn--primary" href="#selected-work">
+              <span>${content.hero.primaryCta}</span>
+              <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
+            </a>
+            <a class="btn btn--secondary" href="#contact">
+              <span>${content.nav.cta}</span>
+            </a>
           </div>
         </div>
 
-        <div class="hero__visual hero-stagger" style="--stagger-delay:250ms;">
-          ${renderHeroFigmaStage()}
+        <div class="hero__visual hero-stagger" style="--stagger-delay:300ms;">
+          ${renderHeroFigmaStage(content.lang)}
         </div>
       </div>
     </section>
 
-    <!-- Section 03 — Audience Selector (Billy Sweeney-inspired) -->
+    <!-- Section 03 — Compact Tabbed Audience Selector (Billy Sweeney-inspired) -->
     <section class="section section--bordered" id="audience" aria-labelledby="audience-heading">
       <div class="container">
         <div class="section-header reveal">
@@ -100,21 +166,19 @@ export function renderHomePage(content) {
           <p class="section-desc">${content.audience.supporting}</p>
         </div>
 
-        <div class="audience-grid reveal" role="group" aria-label="${content.audience.heading}">
+        <div class="audience-tabs reveal" role="tablist" aria-label="${content.audience.heading}">
           ${content.audience.items
             .map(
               (item, idx) => `
             <button
               type="button"
-              class="audience-card"
+              role="tab"
+              class="audience-tab"
               data-audience-id="${item.id}"
-              aria-pressed="${idx === 0 ? "true" : "false"}"
+              aria-selected="${idx === 0 ? "true" : "false"}"
             >
-              <div class="audience-card__top">
-                <span class="audience-card__title">${item.title}</span>
-                <span class="audience-card__indicator" aria-hidden="true"></span>
-              </div>
-              <p class="audience-card__desc">${item.shortDesc}</p>
+              <span class="audience-tab__dot" aria-hidden="true"></span>
+              <span>${item.title}</span>
             </button>
           `
             )
@@ -149,27 +213,29 @@ export function renderHomePage(content) {
       </div>
     </section>
 
-    <!-- Section 05 — Design Approach -->
+    <!-- Section 05 — Design Approach (Conceptzilla Vertical Dotted Center Timeline) -->
     <section class="section section--bordered" id="approach" aria-labelledby="approach-heading">
       <div class="container">
-        <div class="section-header reveal">
+        <div class="section-header section-header--center reveal">
           <div class="eyebrow">${content.approach.eyebrow}</div>
           <h2 class="section-title" id="approach-heading">${content.approach.heading}</h2>
           <p class="section-desc">${content.approach.description}</p>
         </div>
 
-        <div class="principles-list">
+        <div class="cz-timeline">
+          <div class="cz-timeline__spine" aria-hidden="true"></div>
           ${content.approach.principles
             .map(
               (p, i) => `
-            <article class="principle-card reveal" style="--reveal-delay:${i * 65}ms;">
-              <div style="display:flex;align-items:center;justify-content:space-between;">
-                <div class="principle-card__glyph">${PRINCIPLE_GLYPHS[i]}</div>
-                <span class="principle-card__num">${p.num}</span>
-              </div>
-              <h3 class="principle-card__title">${p.title}</h3>
-              <p class="principle-card__desc">${p.description}</p>
-            </article>
+            <div class="cz-step ${i % 2 === 0 ? "cz-step--right" : "cz-step--left"} reveal" style="--reveal-delay:${i * 75}ms;">
+              <span class="cz-step__dot" aria-hidden="true"></span>
+              <article class="cz-card">
+                <div class="cz-card__icon" aria-hidden="true">${PRINCIPLE_GLYPHS[i]}</div>
+                <p class="cz-card__body">
+                  <strong>${p.title}.</strong> ${p.description}
+                </p>
+              </article>
+            </div>
           `
             )
             .join("")}
@@ -177,7 +243,7 @@ export function renderHomePage(content) {
       </div>
     </section>
 
-    <!-- Section 06 — Experience -->
+    <!-- Section 06 — Interactive Categorized Experience Split View -->
     <section class="section section--bordered" id="experience" aria-labelledby="experience-heading">
       <div class="container">
         <div class="section-header reveal">
@@ -186,26 +252,39 @@ export function renderHomePage(content) {
           <p class="section-desc">${content.experience.description}</p>
         </div>
 
-        <div class="exp-list">
-          ${content.experience.entries
-            .map(
-              (entry, i) => `
-            <div class="exp-row reveal" style="--reveal-delay:${i * 55}ms;">
-              <div>
-                <div class="exp-row__company">${entry.company}</div>
-                <div class="exp-row__domain">${entry.domain}</div>
-              </div>
-              <div class="exp-row__role">${entry.role}</div>
-              <div class="exp-row__period">${entry.period}</div>
-            </div>
-          `
-            )
-            .join("")}
-        </div>
+        <div class="exp-split reveal">
+          <div class="exp-nav" role="tablist" aria-label="${content.experience.heading}">
+            ${content.experience.entries
+              .map(
+                (entry, idx) => `
+              <button
+                type="button"
+                role="tab"
+                class="exp-nav__item"
+                data-exp-index="${idx}"
+                aria-selected="${idx === 0 ? "true" : "false"}"
+              >
+                <span class="exp-nav__company">${entry.company}</span>
+                <span class="exp-nav__meta">${entry.role} · ${entry.period}</span>
+              </button>
+            `
+              )
+              .join("")}
+            <button
+              type="button"
+              role="tab"
+              class="exp-nav__item"
+              data-exp-index="freelance"
+              aria-selected="false"
+            >
+              <span class="exp-nav__company">${isFa ? "فریلنسری و موازی" : "Freelance & Remote"}</span>
+              <span class="exp-nav__meta">${isFa ? "کانون قضایی · هلو و پارمیس · بجاتو" : "Kanon Ghazaei · Accounting · Bejatoo"}</span>
+            </button>
+          </div>
 
-        <div class="exp-additional reveal">
-          <strong>${content.experience.additionalLabel}</strong>
-          ${content.experience.additionalNote}
+          <div class="exp-detail" id="exp-detail-panel" aria-live="polite">
+            ${renderExperienceDetail(initialExp, false, content)}
+          </div>
         </div>
 
         <div class="section-footer-cta reveal">
@@ -245,36 +324,31 @@ export function renderHomePage(content) {
       </div>
     </section>
 
-    <!-- Section 08 — Contact (with Abstract Sculpture) -->
+    <!-- Section 08 — Contact (Practical Layout + Subtle Mouse-Reactive Dot Field Canvas) -->
     <section class="section section--bordered" id="contact" aria-labelledby="contact-heading">
       <div class="container">
-        <div class="contact-box reveal">
-          <div style="position:relative;z-index:1;">
+        <div class="contact-box contact-box--dots reveal" id="contact-box">
+          <canvas class="contact-dots-canvas" id="contact-dots-canvas" aria-hidden="true"></canvas>
+
+          <div class="contact-copy">
             <div class="eyebrow">${content.contact.eyebrow}</div>
             <h2 class="section-title" id="contact-heading">${content.contact.heading}</h2>
-            <p class="section-desc" style="margin-bottom:28px;">${content.contact.body}</p>
-            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-              <button type="button" class="btn btn--primary btn--lg" data-open-chat="chat">
-                <span>${content.contact.cta}</span>
+            <p class="section-desc" style="margin-bottom:26px;">${content.contact.body}</p>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <button type="button" class="btn btn--primary" data-open-chat="chat">
+                <span>${isFa ? "شروع چت زنده (تلگرام)" : "Start Live Chat (Telegram)"}</span>
                 <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
               </button>
-              <button type="button" class="btn btn--secondary btn--lg" data-open-chat="ai">
-                <span>${content.lang === "fa" ? "سوال از دستیار هوشمند" : "Ask AI Assistant"}</span>
+              <button type="button" class="btn btn--secondary" id="copy-email-btn" data-email="${PROFILE.email}">
+                <span id="copy-email-label">${isFa ? "کپی کردن ایمیل" : "Copy Email"}</span>
+              </button>
+              <button type="button" class="btn btn--secondary" data-open-chat="ai">
+                <span>✦ ${isFa ? "سوال از هوش مصنوعی" : "Ask AI"}</span>
               </button>
             </div>
           </div>
 
           <div class="contact-right">
-            <div style="display:flex;justify-content:center;">
-              <div class="sculpture-frame sculpture-frame--contact">
-                <img
-                  src="/assets/sculpture-contact.jpg"
-                  alt="${content.hero.sculptureAlt}"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-            </div>
             <div class="contact-links">
               ${content.contact.links
                 .map(
@@ -298,35 +372,173 @@ export function renderHomePage(content) {
   `;
 }
 
+function initContactDotCanvas() {
+  const box = document.getElementById("contact-box");
+  const canvas = document.getElementById("contact-dots-canvas");
+  if (!box || !canvas) return;
+
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  let width = 0;
+  let height = 0;
+  let dots = [];
+  const mouse = { x: -9999, y: -9999, active: false };
+
+  function buildGrid() {
+    const rect = box.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = rect.width;
+    height = rect.height;
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const gap = 26;
+    dots = [];
+    for (let y = 16; y < height; y += gap) {
+      for (let x = 16; x < width; x += gap) {
+        dots.push({ ox: x, oy: y, x, y, vx: 0, vy: 0 });
+      }
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    const baseRgb = isDark ? "255, 255, 255" : "24, 25, 23";
+    const radius = 125;
+
+    for (let i = 0; i < dots.length; i++) {
+      const d = dots[i];
+      let influence = 0;
+
+      if (!prefersReduced && mouse.active) {
+        const dx = d.ox - mouse.x;
+        const dy = d.oy - mouse.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < radius && dist > 0.1) {
+          influence = 1 - dist / radius;
+          const push = influence * 14;
+          d.vx += ((d.ox + (dx / dist) * push) - d.x) * 0.16;
+          d.vy += ((d.oy + (dy / dist) * push) - d.y) * 0.16;
+        } else {
+          d.vx += (d.ox - d.x) * 0.1;
+          d.vy += (d.oy - d.y) * 0.1;
+        }
+      } else {
+        d.vx += (d.ox - d.x) * 0.12;
+        d.vy += (d.oy - d.y) * 0.12;
+      }
+
+      d.vx *= 0.78;
+      d.vy *= 0.78;
+      d.x += d.vx;
+      d.y += d.vy;
+
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, 1.35 + influence * 0.9, 0, Math.PI * 2);
+      if (influence > 0.15) {
+        ctx.fillStyle = `rgba(22, 94, 246, ${(0.12 + influence * 0.24).toFixed(3)})`;
+      } else {
+        ctx.fillStyle = `rgba(${baseRgb}, ${isDark ? "0.11" : "0.09"})`;
+      }
+      ctx.fill();
+    }
+
+    if (!prefersReduced) {
+      requestAnimationFrame(draw);
+    }
+  }
+
+  box.addEventListener("pointermove", (e) => {
+    const rect = box.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+    mouse.active = true;
+  });
+
+  box.addEventListener("pointerleave", () => {
+    mouse.active = false;
+  });
+
+  window.addEventListener("resize", buildGrid, { passive: true });
+  buildGrid();
+  draw();
+}
+
 export function initHomePage(content) {
-  // 1. Audience Selector Interaction
-  const buttons = document.querySelectorAll("[data-audience-id]");
-  const panel = document.getElementById("audience-panel");
-  if (buttons.length && panel) {
+  // 1. Compact Tabbed Audience Selector
+  const audienceTabs = document.querySelectorAll("[data-audience-id]");
+  const audiencePanel = document.getElementById("audience-panel");
+  if (audienceTabs.length && audiencePanel) {
     let currentId = content.audience.items[0].id;
-
-    buttons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const nextId = btn.getAttribute("data-audience-id");
+    audienceTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const nextId = tab.getAttribute("data-audience-id");
         if (!nextId || nextId === currentId) return;
-
         const nextItem = content.audience.items.find((i) => i.id === nextId);
         if (!nextItem) return;
 
         currentId = nextId;
-        buttons.forEach((b) =>
-          b.setAttribute("aria-pressed", String(b.getAttribute("data-audience-id") === nextId))
+        audienceTabs.forEach((t) =>
+          t.setAttribute("aria-selected", String(t.getAttribute("data-audience-id") === nextId))
         );
-
-        panel.classList.add("is-switching");
+        audiencePanel.classList.add("is-switching");
         window.setTimeout(() => {
-          panel.innerHTML = renderAudiencePanelContent(nextItem, content);
-          panel.classList.remove("is-switching");
-        }, 160);
+          audiencePanel.innerHTML = renderAudiencePanelContent(nextItem, content);
+          audiencePanel.classList.remove("is-switching");
+        }, 150);
       });
     });
   }
 
-  // 2. Initialize Authentic Figma UI3 Live Canvas (Human Bezier Cursor + Guest Multiplayer)
+  // 2. Interactive Categorized Experience Split View
+  const expTabs = document.querySelectorAll("[data-exp-index]");
+  const expPanel = document.getElementById("exp-detail-panel");
+  if (expTabs.length && expPanel) {
+    expTabs.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const key = btn.getAttribute("data-exp-index");
+        expTabs.forEach((b) =>
+          b.setAttribute("aria-selected", String(b.getAttribute("data-exp-index") === key))
+        );
+
+        expPanel.classList.add("is-switching");
+        window.setTimeout(() => {
+          if (key === "freelance") {
+            expPanel.innerHTML = renderExperienceDetail(null, true, content);
+          } else {
+            const entry = content.experience.entries[Number(key)];
+            if (entry) expPanel.innerHTML = renderExperienceDetail(entry, false, content);
+          }
+          expPanel.classList.remove("is-switching");
+        }, 140);
+      });
+    });
+  }
+
+  // 3. Copy Email Button
+  const copyBtn = document.getElementById("copy-email-btn");
+  const copyLabel = document.getElementById("copy-email-label");
+  if (copyBtn && copyLabel) {
+    copyBtn.addEventListener("click", async () => {
+      const email = copyBtn.getAttribute("data-email") || PROFILE.email;
+      const orig = copyLabel.textContent;
+      try {
+        await navigator.clipboard.writeText(email);
+        copyLabel.textContent = content.lang === "fa" ? "کپی شد ✓" : "Copied ✓";
+        window.setTimeout(() => {
+          copyLabel.textContent = orig;
+        }, 2000);
+      } catch {
+        window.location.href = `mailto:${email}`;
+      }
+    });
+  }
+
+  // 4. Interactive Figma UI3 Multi-Tab Workspace + Contact Mouse-Reactive Dot Field
   initHeroFigmaStage();
+  initContactDotCanvas();
 }

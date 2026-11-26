@@ -77,12 +77,36 @@
   color: #a3a3a3;
   font-size: 11px;
   white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.fg-tab:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e5e5e5;
 }
 
 .fg-tab--active {
   background: #383838;
   color: #ffffff;
   font-weight: 500;
+}
+
+.fg-open-project-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 6px;
+  background: #165ef6;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 600;
+  transition: background-color 160ms ease;
+}
+
+.fg-open-project-btn:hover {
+  background: #2b6ff8;
 }
 
 .fg-tab-dot {
