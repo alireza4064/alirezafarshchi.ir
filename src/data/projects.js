@@ -341,8 +341,8 @@ export const PROJECTS = [
   },
   {
     slug: "signal",
-    featured: false,
-    cover: null,
+    featured: true,
+    cover: "/assets/project-signal.jpg",
     categories: ["Fintech", "Product Design"],
     protectedCaseStudy: true,
     en: {

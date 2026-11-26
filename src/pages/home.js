@@ -9,7 +9,7 @@
    - Practical Contact with Subtle Mouse-Reactive Dot Field Canvas
    ========================================================================== */
 
-import { getFeaturedProjects } from "../data/projects.js";
+import { getFeaturedProjects, getProjectBySlug } from "../data/projects.js";
 import { PROFILE } from "../data/content-en.js";
 import { SITE_CONFIG } from "../config.js";
 import { renderProjectCard } from "../components/project-card.js";
@@ -158,7 +158,11 @@ function renderExperienceDetail(item, isFreelanceGroup, content) {
 export function renderHomePage(content) {
   const prefix = `/${content.lang}`;
   const isFa = content.lang === "fa";
-  const featured = getFeaturedProjects();
+  // Top 5 Flagship Sticky Cards + 5 Additional Flagship Showcase Cards = All 10 Crown-Jewel Projects!
+  const flagshipPrimarySlugs = ["iranserver", "signal", "farano", "made-in-iran", "deltafx"];
+  const flagshipSecondarySlugs = ["merat-ara", "part-design-system", "dade-negar", "freedom-park", "word-plus"];
+  const flagshipPrimary = flagshipPrimarySlugs.map((s) => getProjectBySlug(s)).filter(Boolean);
+  const flagshipSecondary = flagshipSecondarySlugs.map((s) => getProjectBySlug(s)).filter(Boolean);
   const initialAudience = content.audience.items[0];
   const initialExp = content.experience.entries[0];
 
@@ -305,17 +309,18 @@ export function renderHomePage(content) {
         </div>
 
         <div class="work-showcase" id="work-showcase">
-          ${featured
+          ${flagshipPrimary
             .map((proj, idx) => {
               const d = proj[content.lang];
               const href = `${prefix}/work/${proj.slug}/`;
-              const tags = (proj.tags || []).slice(0, 3);
+              const tags = (proj.tags || proj.categories || []).slice(0, 3);
+              const coverSrc = proj.cover || "/assets/sculpture-hero.jpg";
               return `
                 <article class="work-stack-card" style="--card-i:${idx};" data-work-stack="${idx}">
                   <a class="work-stack-card__link" href="${href}">
                     <div class="work-stack-card__media">
-                      <img src="${proj.cover}" alt="${d.title} — ${d.domain}" loading="lazy" decoding="async" />
-                      <span class="work-stack-card__num">0${idx + 1} / 0${featured.length}</span>
+                      <img src="${coverSrc}" alt="${d.title} — ${d.domain}" loading="lazy" decoding="async" />
+                      <span class="work-stack-card__num">0${idx + 1} / 10</span>
                     </div>
                     <div class="work-stack-card__body">
                       <div class="work-stack-card__top">
@@ -337,6 +342,31 @@ export function renderHomePage(content) {
                     </div>
                   </a>
                 </article>
+              `;
+            })
+            .join("")}
+        </div>
+
+        <!-- Flagship Projects 06–10 Compact Editorial Showcase Grid -->
+        <div class="work-flagship-more reveal">
+          ${flagshipSecondary
+            .map((proj, idx) => {
+              const d = proj[content.lang];
+              const href = `${prefix}/work/${proj.slug}/`;
+              const num = String(idx + 6).padStart(2, "0");
+              return `
+                <a class="work-mini-card" href="${href}">
+                  <div class="work-mini-card__top">
+                    <span class="work-mini-card__num">${num}</span>
+                    <span class="work-mini-card__domain">${d.domain}</span>
+                  </div>
+                  <h3 class="work-mini-card__title">${d.title}</h3>
+                  <p class="work-mini-card__desc">${d.shortDesc}</p>
+                  <span class="work-mini-card__cta">
+                    <span>${content.selectedWork.cardCta}</span>
+                    <span aria-hidden="true">${content.arrow}</span>
+                  </span>
+                </a>
               `;
             })
             .join("")}
@@ -875,82 +905,204 @@ function initContactStarfieldCanvas() {
   if (!box || !canvas) return;
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
+  const gl = canvas.getContext("webgl", {
+    alpha: false,
+    antialias: false,
+    depth: false,
+    stencil: false,
+    powerPreference: "high-performance",
+  });
+  if (!gl) return;
 
-  let width = 0;
-  let height = 0;
-  let particles = [];
-  const mouse = { x: -9999, y: -9999, active: false };
+  const vsSource = `
+    attribute vec2 a_pos;
+    void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }
+  `;
 
-  function buildField() {
-    const rect = box.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    width = rect.width;
-    height = rect.height;
-    canvas.width = Math.floor(width * dpr);
-    canvas.height = Math.floor(height * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  // Mouse-Reactive Bliss Blue Silk + Micro-Dot Halftone Shader tailored for Contact Box
+  const fsSource = `
+    precision highp float;
+    uniform vec2 u_res;
+    uniform float u_time;
+    uniform float u_dpr;
+    uniform vec2 u_mouse;
+    uniform float u_hover;
 
-    const count = Math.min(110, Math.max(48, Math.floor((width * height) / 7200)));
-    particles = Array.from({ length: count }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.22,
-      vy: (Math.random() - 0.5) * 0.22,
-      r: 0.9 + Math.random() * 1.2,
-      alpha: 0.14 + Math.random() * 0.26,
-    }));
-  }
-
-  function tick() {
-    ctx.clearRect(0, 0, width, height);
-    const baseRgb = "235, 240, 255";
-
-    for (let i = 0; i < particles.length; i++) {
-      const p = particles[i];
-      if (!prefersReduced) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
-
-        if (mouse.active) {
-          const dx = p.x - mouse.x;
-          const dy = p.y - mouse.y;
-          const d = Math.hypot(dx, dy);
-          if (d < 120 && d > 0.1) {
-            const f = (1 - d / 120) * 1.3;
-            p.x += (dx / d) * f;
-            p.y += (dy / d) * f;
-          }
-        }
-      }
-
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${baseRgb}, ${p.alpha.toFixed(3)})`;
-      ctx.fill();
+    float hash(vec2 p) {
+      p = fract(p * vec2(123.34, 456.21));
+      p += dot(p, p + 45.32);
+      return fract(p.x * p.y);
     }
 
-    if (!prefersReduced) requestAnimationFrame(tick);
+    float noise(vec2 p) {
+      vec2 i = floor(p);
+      vec2 f = fract(p);
+      f = f * f * (3.0 - 2.0 * f);
+      return mix(
+        mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),
+        mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x),
+        f.y
+      );
+    }
+
+    float fbm(vec2 p) {
+      float v = 0.0;
+      float a = 0.55;
+      mat2 rot = mat2(0.8, -0.6, 0.6, 0.8);
+      for (int i = 0; i < 3; i++) {
+        v += a * noise(p);
+        p = rot * p * 1.9;
+        a *= 0.48;
+      }
+      return v;
+    }
+
+    void main() {
+      vec2 uv = gl_FragCoord.xy / u_res;
+      vec2 p = (gl_FragCoord.xy - 0.5 * u_res) / min(u_res.x, u_res.y);
+      vec2 mp = (u_mouse - 0.5 * u_res) / min(u_res.x, u_res.y);
+
+      float t = u_time;
+
+      // Subtle cursor pull warping the silk flow toward mouse hover
+      vec2 toMouse = p - mp;
+      float mDist = length(toMouse);
+      vec2 mouseWarp = -toMouse * exp(-mDist * 2.2) * 0.22 * u_hover;
+
+      vec2 q = mat2(0.84, -0.54, 0.54, 0.84) * (p + mouseWarp - vec2(-0.18, 0.12));
+      float w1 = fbm(q * 1.25 + vec2(t * 0.18, -t * 0.14));
+      float w2 = fbm(q * 1.65 - vec2(t * 0.12, t * 0.20) + w1 * 0.7);
+
+      float d1 = q.y + 0.18 * sin(q.x * 2.0 - t * 0.52) + (w1 - 0.5) * 0.68;
+      float ribbon1 = exp(-abs(d1) * 2.2);
+      float crest1  = exp(-abs(d1) * 5.2);
+
+      float d2 = (q.x - 0.2) + 0.20 * cos(q.y * 1.8 + t * 0.42) + (w2 - 0.5) * 0.72;
+      float ribbon2 = exp(-abs(d2) * 1.9) * 0.65;
+
+      // Soft interactive spotlight following mouse hover
+      float mouseGlow = exp(-mDist * 2.6) * 0.55 * u_hover;
+
+      vec3 cBase     = vec3(0.031, 0.035, 0.047); // #08090C
+      vec3 cSapphire = vec3(0.045, 0.160, 0.460);
+      vec3 cCobalt   = vec3(0.086, 0.369, 0.965);
+      vec3 cSky      = vec3(0.341, 0.757, 1.000);
+
+      vec3 col = cBase;
+      col += cSapphire * (ribbon1 * 0.62 + ribbon2 * 0.48);
+      col += cCobalt   * (crest1 * 0.52 + mouseGlow * 0.85);
+      col += cSky      * (pow(crest1, 2.2) * 0.38 + pow(mouseGlow, 1.8) * 0.55);
+
+      // Subtle Bliss diagonal micro-dot halftone texture
+      float s = 0.70710678;
+      vec2 rc = vec2(gl_FragCoord.x * s - gl_FragCoord.y * s, gl_FragCoord.x * s + gl_FragCoord.y * s);
+      vec2 cell = fract(rc / (2.7 * u_dpr)) - 0.5;
+      float dotMask = smoothstep(0.46, 0.15, length(cell));
+      float lum = dot(col, vec3(0.299, 0.587, 0.114));
+      col *= mix(1.0, mix(0.78, 1.16, dotMask), smoothstep(0.03, 0.22, lum) * 0.52);
+
+      gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
+    }
+  `;
+
+  function compile(type, src) {
+    const sh = gl.createShader(type);
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    return gl.getShaderParameter(sh, gl.COMPILE_STATUS) ? sh : null;
+  }
+
+  const vs = compile(gl.VERTEX_SHADER, vsSource);
+  const fs = compile(gl.FRAGMENT_SHADER, fsSource);
+  if (!vs || !fs) return;
+
+  const prog = gl.createProgram();
+  gl.attachShader(prog, vs);
+  gl.attachShader(prog, fs);
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, "a_pos");
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+  const uRes = gl.getUniformLocation(prog, "u_res");
+  const uTime = gl.getUniformLocation(prog, "u_time");
+  const uDpr = gl.getUniformLocation(prog, "u_dpr");
+  const uMouse = gl.getUniformLocation(prog, "u_mouse");
+  const uHover = gl.getUniformLocation(prog, "u_hover");
+
+  let dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  let targetMX = 0;
+  let targetMY = 0;
+  let curMX = 0;
+  let curMY = 0;
+  let hoverTarget = 0;
+  let hoverCur = 0;
+  let isVisible = true;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const rect = box.getBoundingClientRect();
+    const w = Math.max(1, Math.floor(rect.width * dpr));
+    const h = Math.max(1, Math.floor(rect.height * dpr));
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w;
+      canvas.height = h;
+      gl.viewport(0, 0, w, h);
+      if (curMX === 0 && curMY === 0) {
+        curMX = targetMX = w * 0.35;
+        curMY = targetMY = h * 0.55;
+      }
+    }
   }
 
   box.addEventListener("pointermove", (e) => {
     const rect = box.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-    mouse.active = true;
-  });
-  box.addEventListener("pointerleave", () => {
-    mouse.active = false;
+    targetMX = (e.clientX - rect.left) * dpr;
+    targetMY = (rect.height - (e.clientY - rect.top)) * dpr;
+    hoverTarget = 1;
   });
 
-  window.addEventListener("resize", buildField, { passive: true });
-  buildField();
-  tick();
+  box.addEventListener("pointerleave", () => {
+    hoverTarget = 0;
+  });
+
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0]?.isIntersecting ?? true;
+      },
+      { rootMargin: "120px" }
+    );
+    io.observe(box);
+  }
+
+  resize();
+  window.addEventListener("resize", resize, { passive: true });
+
+  const start = performance.now();
+  function render(now) {
+    if (isVisible && !document.hidden) {
+      curMX += (targetMX - curMX) * 0.08;
+      curMY += (targetMY - curMY) * 0.08;
+      hoverCur += (hoverTarget - hoverCur) * 0.07;
+      const elapsed = prefersReduced ? 2.5 : (now - start) * 0.001 + 2.5;
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform1f(uTime, elapsed);
+      gl.uniform1f(uDpr, dpr);
+      gl.uniform2f(uMouse, curMX, curMY);
+      gl.uniform1f(uHover, hoverCur);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+    if (!prefersReduced) requestAnimationFrame(render);
+  }
+
+  render(start);
 }
 
 export function initHomePage(content) {
@@ -1175,8 +1327,12 @@ function initAboutDotPortrait() {
   let dpr = 1;
   let cols = 0;
   let rows = 0;
-  let cell = 5.4;
+  let cell = 5.6;
   let lumGrid = null;
+  let dxGrid = null;
+  let dyGrid = null;
+  let vxGrid = null;
+  let vyGrid = null;
   let streams = [];
   let isVisible = true;
   let speedScale = 1;
@@ -1184,7 +1340,7 @@ function initAboutDotPortrait() {
   let lastScrollY = window.scrollY || 0;
   let tick = 0;
   let colorMode = "blue"; // "blue" | "green" | "mono"
-  const mouse = { x: -9999, y: -9999, active: false };
+  const mouse = { x: -9999, y: -9999, vx: 0, vy: 0, active: false, dragging: false };
 
   stage.querySelectorAll("[data-matrix-color]").forEach((btn) => {
     btn.addEventListener("click", (e) => {
@@ -1232,7 +1388,12 @@ function initAboutDotPortrait() {
     cell = width < 340 ? 5.2 : 5.6;
     cols = Math.ceil(width / cell);
     rows = Math.ceil(height / cell);
-    lumGrid = new Float32Array(cols * rows);
+    const total = cols * rows;
+    lumGrid = new Float32Array(total);
+    dxGrid = new Float32Array(total);
+    dyGrid = new Float32Array(total);
+    vxGrid = new Float32Array(total);
+    vyGrid = new Float32Array(total);
 
     for (let r = 0; r < rows; r++) {
       const py = Math.min(height - 1, Math.floor(r * cell + cell * 0.5));
@@ -1244,15 +1405,20 @@ function initAboutDotPortrait() {
       }
     }
 
-    // Dynamic multi-speed streams: mix of fast comets, medium waves, and slow deep layers
+    // Silky, unhurried multi-tier falling speeds (smooth fractional progression)
     streams = Array.from({ length: cols }, (_, c) => {
       const tier = c % 3;
-      const baseSpeed = tier === 0 ? 0.65 + Math.random() * 0.65 : tier === 1 ? 0.36 + Math.random() * 0.34 : 0.18 + Math.random() * 0.22;
+      const baseSpeed =
+        tier === 0
+          ? 0.21 + Math.random() * 0.12
+          : tier === 1
+            ? 0.13 + Math.random() * 0.09
+            : 0.07 + Math.random() * 0.07;
       return {
         offset: Math.random() * rows,
         offset2: Math.random() * rows,
         speed: baseSpeed,
-        trailLen: 14 + Math.floor(Math.random() * 18),
+        trailLen: 16 + Math.floor(Math.random() * 14),
         seed: (c * 19 + Math.floor(Math.random() * 60)) % CODE_CHARS.length,
       };
     });
@@ -1263,10 +1429,12 @@ function initAboutDotPortrait() {
       tick++;
       const isDark = document.documentElement.getAttribute("data-theme") === "dark";
 
-      // Smoothly slow down to calm inspection speed on hover; lively fast code rain otherwise
-      const targetSpeed = mouse.active ? 0.12 : 1.0;
-      speedScale += (targetSpeed - speedScale) * 0.08;
+      // Smoothly slow falling speed on hover/drag; calm silky glide otherwise
+      const targetSpeed = mouse.dragging ? 0.06 : mouse.active ? 0.22 : 1.0;
+      speedScale += (targetSpeed - speedScale) * 0.06;
       scrollBoost *= 0.9;
+      mouse.vx *= 0.82;
+      mouse.vy *= 0.82;
 
       ctx.fillStyle = isDark ? "#060910" : "#eef2f8";
       ctx.fillRect(0, 0, width, height);
@@ -1275,57 +1443,89 @@ function initAboutDotPortrait() {
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
+      const rad = mouse.dragging ? 132 : 92;
+      const radSq = rad * rad;
+
       for (let c = 0; c < cols; c++) {
         const st = streams[c];
         if (!prefersReduced) {
-          const step = st.speed * speedScale + scrollBoost * 0.09;
+          const step = st.speed * speedScale + scrollBoost * 0.04;
           st.offset = (st.offset + step) % rows;
-          st.offset2 = (st.offset2 + step * 0.62) % rows;
+          st.offset2 = (st.offset2 + step * 0.58) % rows;
         }
         const baseX = c * cell + cell * 0.5;
-        const head1 = Math.floor(st.offset);
-        const head2 = Math.floor(st.offset2);
 
         for (let r = 0; r < rows; r++) {
-          const lum = lumGrid[r * cols + c];
-          const d1 = (head1 - r + rows) % rows;
-          const d2 = (head2 - r + rows) % rows;
+          const idx = r * cols + c;
+          const lum = lumGrid[idx];
+
+          // Continuous fractional trail distance -> ultra-smooth silky motion!
+          const d1 = (st.offset - r + rows) % rows;
+          const d2 = (st.offset2 - r + rows) % rows;
           const t1 = d1 < st.trailLen ? 1 - d1 / st.trailLen : 0;
           const t2 = d2 < st.trailLen * 0.75 ? 1 - d2 / (st.trailLen * 0.75) : 0;
-          const trail = Math.max(t1, t2 * 0.75);
-          const isHead = d1 === 0 || d2 === 0;
+          const trail = Math.max(t1, t2 * 0.72);
+          const isHead = d1 < 1.15 || d2 < 1.05;
 
-          let drawX = baseX;
-          let drawY = r * cell + cell * 0.5;
-          let mouseInfluence = 0;
+          const baseY = r * cell + cell * 0.5;
 
-          if (mouse.active && !prefersReduced) {
-            const dx = drawX - mouse.x;
-            const dy = drawY - mouse.y;
-            const d2m = dx * dx + dy * dy;
-            const rad = 115;
-            if (d2m < rad * rad && d2m > 0.1) {
-              const dist = Math.sqrt(d2m);
-              const f = 1 - dist / rad;
-              mouseInfluence = f;
-              const wave = Math.sin(tick * 0.14 - dist * 0.08) * 3.4;
-              drawX += (dx / dist) * f * 13 + wave * f;
-              drawY += (dy / dist) * f * 13 + Math.cos(tick * 0.12 + c * 0.3) * 2.6 * f;
+          // Velocity-driven Gravity + Elastic Spring Physics on hover & drag!
+          if (!prefersReduced) {
+            let vx = vxGrid[idx];
+            let vy = vyGrid[idx];
+            let ox = dxGrid[idx];
+            let oy = dyGrid[idx];
+
+            if (mouse.active) {
+              const ex = baseX + ox - mouse.x;
+              const ey = baseY + oy - mouse.y;
+              const distSq = ex * ex + ey * ey;
+              if (distSq < radSq && distSq > 0.25) {
+                const dist = Math.sqrt(distSq);
+                const f = 1 - dist / rad;
+                if (mouse.dragging) {
+                  // Dragging throws digits off-balance along swipe velocity + subtle downward gravity
+                  vx += (mouse.vx * 0.52 + (ex / dist) * 2.4) * f;
+                  vy += (mouse.vy * 0.52 + (ey / dist) * 2.4 + 1.35) * f;
+                } else {
+                  // Gentle hover swirl & subtle velocity wake
+                  vx += (mouse.vx * 0.16 + (ex / dist) * 0.85) * f;
+                  vy += (mouse.vy * 0.16 + (ey / dist) * 0.85 + 0.25) * f;
+                }
+              }
             }
+
+            // Spring back cleanly to exact portrait alignment after brief gravity drift
+            vx += -ox * 0.088;
+            vy += -oy * 0.088;
+            vx *= 0.83;
+            vy *= 0.83;
+            ox += vx;
+            oy += vy;
+
+            vxGrid[idx] = vx;
+            vyGrid[idx] = vy;
+            dxGrid[idx] = ox;
+            dyGrid[idx] = oy;
           }
 
-          // Dynamic character stream cycling vertically
-          const charIdx = Math.abs(Math.floor(r - st.offset) + st.seed + (isHead ? tick : 0)) % CODE_CHARS.length;
+          const ox = dxGrid[idx];
+          const oy = dyGrid[idx];
+          const disp = Math.abs(ox) + Math.abs(oy);
+          const drawX = baseX + ox;
+          const drawY = baseY + oy;
+
+          // Slow, calm character evolution
+          const charIdx = Math.abs(Math.floor(r - st.offset * 0.75) + st.seed + (disp > 6 ? Math.floor(tick / 4) : 0)) % CODE_CHARS.length;
           const ch = CODE_CHARS[charIdx];
 
           if (lum > 0) {
-            // Portrait region: dense, bright, unmistakable face sculpted by falling code
-            const alpha = Math.min(1, 0.34 + lum * 0.66 + trail * 0.25);
-            if (isHead && lum > 0.35) {
+            const alpha = Math.min(1, 0.36 + lum * 0.64 + trail * 0.22);
+            if ((isHead && lum > 0.35) || disp > 9) {
               ctx.fillStyle = isDark ? "#ffffff" : "#0b1222";
             } else if (colorMode === "green") {
               if (isDark) {
-                const g = Math.min(255, Math.round(130 + lum * 125 + trail * 35));
+                const g = Math.min(255, Math.round(130 + lum * 125 + trail * 32));
                 const rC = Math.round(lum > 0.72 ? (lum - 0.72) * 380 : 12);
                 ctx.fillStyle = `rgba(${rC},${g},${Math.round(g * 0.55)},${alpha.toFixed(2)})`;
               } else {
@@ -1333,12 +1533,11 @@ function initAboutDotPortrait() {
               }
             } else if (colorMode === "mono") {
               const v = isDark
-                ? Math.min(255, Math.round(105 + lum * 150 + trail * 30))
+                ? Math.min(255, Math.round(108 + lum * 147 + trail * 28))
                 : Math.max(10, Math.round(150 - lum * 140));
               ctx.fillStyle = `rgba(${v},${v},${v},${alpha.toFixed(2)})`;
             } else {
-              // Signature Cobalt & Sky Blue mode
-              if (mouseInfluence > 0.35 || (lum > 0.78 && trail > 0.4)) {
+              if (disp > 3.5 || (lum > 0.78 && trail > 0.45)) {
                 ctx.fillStyle = isDark ? `rgba(215, 240, 255, ${alpha.toFixed(2)})` : `rgba(14, 62, 184, ${alpha.toFixed(2)})`;
               } else if (isDark) {
                 const b = Math.min(255, Math.round(155 + lum * 100));
@@ -1353,8 +1552,7 @@ function initAboutDotPortrait() {
               }
             }
           } else {
-            // Full-frame surrounding code rain (visible everywhere, dynamically layered!)
-            const bgAlpha = (0.055 + trail * (isDark ? 0.24 : 0.19)) * (isHead ? 1.45 : 1);
+            const bgAlpha = (0.055 + trail * (isDark ? 0.22 : 0.17)) * (isHead ? 1.35 : 1);
             if (colorMode === "green") {
               ctx.fillStyle = isDark
                 ? `rgba(0, 230, 118, ${bgAlpha.toFixed(3)})`
@@ -1380,15 +1578,36 @@ function initAboutDotPortrait() {
     }
   }
 
-  stage.addEventListener("pointermove", (e) => {
+  stage.addEventListener("pointerdown", (e) => {
+    if (e.target.closest("[data-matrix-color]")) return;
     const rect = stage.getBoundingClientRect();
     mouse.x = e.clientX - rect.left;
     mouse.y = e.clientY - rect.top;
     mouse.active = true;
+    mouse.dragging = true;
+    stage.setPointerCapture?.(e.pointerId);
+  });
+
+  stage.addEventListener("pointermove", (e) => {
+    const rect = stage.getBoundingClientRect();
+    const nx = e.clientX - rect.left;
+    const ny = e.clientY - rect.top;
+    if (mouse.active) {
+      mouse.vx = Math.max(-24, Math.min(24, nx - mouse.x));
+      mouse.vy = Math.max(-24, Math.min(24, ny - mouse.y));
+    }
+    mouse.x = nx;
+    mouse.y = ny;
+    mouse.active = true;
+  });
+
+  stage.addEventListener("pointerup", () => {
+    mouse.dragging = false;
   });
 
   stage.addEventListener("pointerleave", () => {
     mouse.active = false;
+    mouse.dragging = false;
   });
 
   window.addEventListener(
