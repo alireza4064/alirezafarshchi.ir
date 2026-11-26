@@ -153,23 +153,23 @@ a {
   background: linear-gradient(
     180deg,
     transparent 0%,
-    var(--surface-band) 8%,
-    var(--surface-band) 92%,
+    var(--surface-band) 24%,
+    var(--surface-band) 76%,
     transparent 100%
   );
 }
 
 .section--ambient-band {
   background: radial-gradient(
-      ellipse 72% 48% at 50% 0%,
+      ellipse 68% 42% at 50% 34%,
       var(--primary-soft) 0%,
-      transparent 72%
+      transparent 70%
     ),
     linear-gradient(
       180deg,
       transparent 0%,
-      var(--surface-band) 14%,
-      var(--surface-band) 86%,
+      var(--surface-band) 24%,
+      var(--surface-band) 76%,
       transparent 100%
     );
 }

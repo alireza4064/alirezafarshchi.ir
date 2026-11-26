@@ -137,6 +137,15 @@
   );
 }
 
+[data-theme="dark"] .hero-bliss-veil {
+  background: linear-gradient(
+    0deg,
+    var(--canvas) 0%,
+    rgba(10, 11, 15, 0.72) 20%,
+    rgba(2, 4, 10, 0) 50%
+  );
+}
+
 .hero__stage-wrap {
   position: relative;
   z-index: 1;

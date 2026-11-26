@@ -795,9 +795,9 @@ html[dir="rtl"] .project-card:hover .project-card__cta-arrow {
 
 /* --- Footer --- */
 .site-footer {
-  border-top: 1px solid var(--border);
-  padding-block: 36px 48px;
-  background: var(--canvas);
+  border-top: none;
+  padding-block: 44px 52px;
+  background: linear-gradient(180deg, transparent 0%, var(--surface-band) 100%);
 }
 
 .site-footer__inner {
