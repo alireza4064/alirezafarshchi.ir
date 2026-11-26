@@ -208,9 +208,6 @@ export function renderHomePage(content) {
             <span class="eyebrow__dot" aria-hidden="true"></span>
             <span>${isFa ? "فایل زنده فیگما · قابل تعامل با موس شما" : "LIVE FIGMA WORKSPACE · INTERACTIVE MULTIPLAYER"}</span>
           </div>
-          <p class="figma-showcase-hint">
-            ${isFa ? "موس را روی بوم ببرید، بین تب‌ها جابه‌جا شوید، با دست (H) بوم را بکشید، کامنت (C) بگذارید یا Dev Mode (&lt;/&gt;) را فعال کنید." : "Switch tabs, drag with Hand (H), zoom 75–125%, drop a Comment (C), or toggle Dev Mode (&lt;/&gt;) to inspect CSS tokens."}
-          </p>
         </div>
         <div class="hero__visual reveal">
           ${renderHeroFigmaStage(content.lang)}
@@ -284,7 +281,7 @@ export function renderHomePage(content) {
       </div>
     </section>
 
-    <!-- Section 04 — Selected Work (Editorial Staggered Grid + Scroll-Linked Motion) -->
+    <!-- Section 04 — Creative Selected Work (Sticky Stacking Editorial Showcase) -->
     <section class="section section--ambient-band" id="selected-work" aria-labelledby="work-heading">
       <div class="container">
         <div class="section-header reveal">
@@ -293,8 +290,42 @@ export function renderHomePage(content) {
           <p class="section-desc">${content.selectedWork.description}</p>
         </div>
 
-        <div class="projects-grid">
-          ${featured.map((proj, idx) => renderProjectCard(proj, content, idx)).join("")}
+        <div class="work-showcase" id="work-showcase">
+          ${featured
+            .map((proj, idx) => {
+              const d = proj[content.lang];
+              const href = `${prefix}/work/${proj.slug}/`;
+              const tags = (proj.tags || []).slice(0, 3);
+              return `
+                <article class="work-stack-card" style="--card-i:${idx};" data-work-stack="${idx}">
+                  <a class="work-stack-card__link" href="${href}">
+                    <div class="work-stack-card__media">
+                      <img src="${proj.cover}" alt="${d.title} — ${d.domain}" loading="lazy" decoding="async" />
+                      <span class="work-stack-card__num">0${idx + 1} / 0${featured.length}</span>
+                    </div>
+                    <div class="work-stack-card__body">
+                      <div class="work-stack-card__top">
+                        <span class="work-stack-card__domain">${d.domain}</span>
+                        <span class="work-stack-card__timeline">${d.timeline}</span>
+                      </div>
+                      <h3 class="work-stack-card__title">${d.title}</h3>
+                      <p class="work-stack-card__desc">${d.shortDesc}</p>
+                      <div class="work-stack-card__tags">
+                        ${tags.map((t) => `<span>${t}</span>`).join("")}
+                      </div>
+                      <div class="work-stack-card__foot">
+                        <span class="work-stack-card__role">${d.role}</span>
+                        <span class="work-stack-card__cta">
+                          <span>${content.selectedWork.cardCta}</span>
+                          <span class="work-stack-card__arrow" aria-hidden="true">${content.arrow}</span>
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                </article>
+              `;
+            })
+            .join("")}
         </div>
 
         <div class="section-footer-cta reveal">
@@ -427,20 +458,15 @@ export function renderHomePage(content) {
             </div>
           </div>
 
-          <!-- Right Visual + Metrics Column -->
+          <!-- Right Interactive Dot-Matrix Portrait + Metrics Column -->
           <div class="about-bento__side">
-            <div class="about-bento__visual">
-              <img
-                src="/assets/sculpture-about.jpg"
-                alt="${content.about.sculptureAlt}"
-                loading="lazy"
-                decoding="async"
-              />
+            <div class="about-portrait-stage" id="about-portrait-stage" aria-label="${PROFILE.name} interactive halftone portrait">
+              <canvas class="about-portrait-canvas" id="about-portrait-canvas"></canvas>
               <div class="about-bento__visual-tag">
                 <img class="about-mini-avatar" src="/assets/alireza-portrait.jpg" alt="${PROFILE.name}" width="32" height="32" loading="lazy" />
                 <div>
                   <strong>${isFa ? "علیرضا محمدزاده فرشچی" : "Alireza Farshchi"}</strong>
-                  <span>${isFa ? "مشهد / ریموت · طراحی محصول" : "Product & Systems · Remote"}</span>
+                  <span>${isFa ? "مشهد / ریموت · طراحی محصول" : "Product & Systems · Interactive Portrait"}</span>
                 </div>
               </div>
             </div>
@@ -1030,16 +1056,17 @@ export function initHomePage(content) {
     });
   }
 
-  // 5. Initialize Bliss Fluid Hero Canvas, Figma UI3 Workspace, Conceptzilla Timeline, Selected Work Parallax & Contact Starfield
+  // 5. Initialize Bliss Fluid Hero Canvas, Figma UI3 Workspace, Conceptzilla Timeline, Selected Work Stack, Interactive Dot Portrait & Contact Starfield
   initHeroBlissCanvas();
   initHeroFigmaStage();
   initConceptzillaTimeline();
   initSelectedWorkScrollMotion();
+  initAboutDotPortrait();
   initContactStarfieldCanvas();
 }
 
 function initSelectedWorkScrollMotion() {
-  const cards = document.querySelectorAll("[data-parallax-card]");
+  const cards = Array.from(document.querySelectorAll("[data-work-stack]"));
   if (!cards.length) return;
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (prefersReduced) return;
@@ -1048,17 +1075,33 @@ function initSelectedWorkScrollMotion() {
   const update = () => {
     ticking = false;
     const vh = window.innerHeight || 800;
-    cards.forEach((card) => {
+
+    cards.forEach((card, idx) => {
       const rect = card.getBoundingClientRect();
-      if (rect.bottom < -80 || rect.top > vh + 80) return;
-      // Normalized progress from -1 (below viewport) to +1 (above viewport)
-      const progress = Math.max(-1, Math.min(1, (rect.top + rect.height * 0.5 - vh * 0.5) / (vh * 0.75)));
-      const img = card.querySelector(".project-card__media img");
-      if (img) {
-        img.style.transform = `translate3d(0, ${(progress * -16).toFixed(1)}px, 0) scale(1.08)`;
+      const nextCard = cards[idx + 1];
+
+      // Subtle inner cover parallax
+      const img = card.querySelector(".work-stack-card__media img");
+      if (img && rect.bottom > -80 && rect.top < vh + 80) {
+        const p = Math.max(-1, Math.min(1, (rect.top + rect.height * 0.5 - vh * 0.5) / (vh * 0.85)));
+        img.style.transform = `translate3d(0, ${(p * -14).toFixed(1)}px, 0) scale(1.07)`;
       }
-      const depth = Math.abs(progress);
-      card.style.setProperty("--card-scroll-scale", (1 - depth * 0.018).toFixed(4));
+
+      // Depth scale-down as the NEXT card glides up over this sticky card
+      if (nextCard && window.innerWidth > 860) {
+        const nextRect = nextCard.getBoundingClientRect();
+        const overlapStart = vh * 0.78;
+        const overlapEnd = 120;
+        const raw = (overlapStart - nextRect.top) / Math.max(1, overlapStart - overlapEnd);
+        const progress = Math.max(0, Math.min(1, raw));
+        const scale = 1 - progress * 0.045;
+        const brightness = 1 - progress * 0.16;
+        card.style.transform = `scale(${scale.toFixed(4)})`;
+        card.style.filter = `brightness(${brightness.toFixed(3)})`;
+      } else {
+        card.style.transform = "";
+        card.style.filter = "";
+      }
     });
   };
 
@@ -1070,5 +1113,198 @@ function initSelectedWorkScrollMotion() {
   };
 
   window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
   update();
+}
+
+function initAboutDotPortrait() {
+  const stage = document.getElementById("about-portrait-stage");
+  const canvas = document.getElementById("about-portrait-canvas");
+  if (!stage || !canvas) return;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const img = new Image();
+  img.src = "/assets/alireza-portrait.jpg";
+
+  let dots = [];
+  let width = 0;
+  let height = 0;
+  let dpr = 1;
+  let isVisible = true;
+  let lastScrollY = window.scrollY || 0;
+  let scrollVelocity = 0;
+  const mouse = { x: -9999, y: -9999, active: false };
+
+  function samplePortrait() {
+    const rect = stage.getBoundingClientRect();
+    if (rect.width < 20 || rect.height < 20 || !img.naturalWidth) return;
+
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = Math.floor(rect.width);
+    height = Math.floor(rect.height);
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    // Draw portrait onto offscreen canvas with cover framing focused on face
+    const off = document.createElement("canvas");
+    off.width = width;
+    off.height = height;
+    const octx = off.getContext("2d");
+    const imgRatio = img.naturalWidth / img.naturalHeight;
+    const boxRatio = width / height;
+    let dw = width;
+    let dh = height;
+    let dx = 0;
+    let dy = 0;
+    if (imgRatio > boxRatio) {
+      dh = height;
+      dw = dh * imgRatio;
+      dx = (width - dw) * 0.5;
+    } else {
+      dw = width;
+      dh = dw / imgRatio;
+      dy = (height - dh) * 0.22;
+    }
+    octx.drawImage(img, dx, dy, dw, dh);
+    const pixels = octx.getImageData(0, 0, width, height).data;
+
+    const gap = width < 340 ? 6 : 7;
+    dots = [];
+
+    for (let y = Math.floor(gap * 0.5); y < height; y += gap) {
+      for (let x = Math.floor(gap * 0.5); x < width; x += gap) {
+        const i = (y * width + x) * 4;
+        const r = pixels[i];
+        const g = pixels[i + 1];
+        const b = pixels[i + 2];
+        const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+        if (lum < 0.09) continue;
+
+        const baseRadius = 0.75 + Math.pow(lum, 0.85) * (gap * 0.36);
+        // Blend authentic portrait luminance with subtle signature Cobalt/Sky highlight tint
+        const cr = Math.min(255, Math.round(r * 0.72 + 45 * lum + 18));
+        const cg = Math.min(255, Math.round(g * 0.76 + 75 * lum + 24));
+        const cb = Math.min(255, Math.round(b * 0.88 + 115 * lum + 38));
+
+        dots.push({
+          ox: x,
+          oy: y,
+          x,
+          y,
+          vx: 0,
+          vy: 0,
+          r: baseRadius,
+          phase: (x * 0.03 + y * 0.025),
+          color: `rgb(${cr},${cg},${cb})`,
+        });
+      }
+    }
+  }
+
+  function renderFrame() {
+    if (isVisible && dots.length) {
+      ctx.fillStyle = "#080b14";
+      ctx.fillRect(0, 0, width, height);
+
+      // Decay scroll wave velocity smoothly
+      scrollVelocity *= 0.88;
+
+      for (let i = 0; i < dots.length; i++) {
+        const d = dots[i];
+        if (!prefersReduced) {
+          // Scroll-reactive organic wave impulse
+          if (Math.abs(scrollVelocity) > 0.08) {
+            d.vx += Math.sin(d.phase + d.oy * 0.02) * scrollVelocity * 0.14;
+            d.vy += Math.cos(d.phase + d.ox * 0.02) * scrollVelocity * 0.18;
+          }
+
+          // Mouse repulsion ripple
+          if (mouse.active) {
+            const dx = d.x - mouse.x;
+            const dy = d.y - mouse.y;
+            const distSq = dx * dx + dy * dy;
+            const radius = 84;
+            if (distSq < radius * radius && distSq > 0.1) {
+              const dist = Math.sqrt(distSq);
+              const force = (1 - dist / radius) * 5.2;
+              d.vx += (dx / dist) * force;
+              d.vy += (dy / dist) * force;
+            }
+          }
+
+          // Spring back to original portrait pixel coordinate
+          d.vx += (d.ox - d.x) * 0.11;
+          d.vy += (d.oy - d.y) * 0.11;
+          d.vx *= 0.78;
+          d.vy *= 0.78;
+          d.x += d.vx;
+          d.y += d.vy;
+        }
+
+        const disp = Math.abs(d.x - d.ox) + Math.abs(d.y - d.oy);
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r + Math.min(1.1, disp * 0.04), 0, Math.PI * 2);
+        ctx.fillStyle = disp > 4 ? "#57c1ff" : d.color;
+        ctx.fill();
+      }
+    }
+
+    if (!prefersReduced) {
+      requestAnimationFrame(renderFrame);
+    }
+  }
+
+  stage.addEventListener("pointermove", (e) => {
+    const rect = stage.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+    mouse.active = true;
+  });
+
+  stage.addEventListener("pointerleave", () => {
+    mouse.active = false;
+  });
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      const y = window.scrollY || 0;
+      const delta = Math.max(-28, Math.min(28, y - lastScrollY));
+      lastScrollY = y;
+      if (isVisible) scrollVelocity = delta * 0.35;
+    },
+    { passive: true }
+  );
+
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0]?.isIntersecting ?? true;
+      },
+      { rootMargin: "120px" }
+    );
+    io.observe(stage);
+  }
+
+  img.onload = () => {
+    samplePortrait();
+    renderFrame();
+  };
+
+  if (img.complete && img.naturalWidth) {
+    samplePortrait();
+    renderFrame();
+  }
+
+  window.addEventListener(
+    "resize",
+    () => {
+      if (img.naturalWidth) samplePortrait();
+    },
+    { passive: true }
+  );
 }

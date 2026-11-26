@@ -319,6 +319,15 @@ export function initAssistantAndChat(content) {
     if (e.key === "Escape" && isOpen) setOpen(false);
   });
 
+  // Auto-close drawer when clicking/tapping anywhere outside the drawer or launcher
+  document.addEventListener("pointerdown", (e) => {
+    if (!isOpen) return;
+    if (drawer.contains(e.target) || fab.contains(e.target) || e.target.closest("[data-open-chat]")) {
+      return;
+    }
+    setOpen(false);
+  });
+
   // Any element with [data-open-chat] opens the live Telegram chat tab
   document.querySelectorAll("[data-open-chat]").forEach((el) => {
     el.addEventListener("click", (e) => {
