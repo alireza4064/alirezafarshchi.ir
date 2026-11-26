@@ -468,6 +468,11 @@ export function renderHomePage(content) {
           <!-- Right Interactive Falling Code Portrait + Metrics Column -->
           <div class="about-bento__side">
             <div class="about-portrait-stage" id="about-portrait-stage" aria-label="${PROFILE.name} interactive code portrait">
+              <div class="about-matrix-modes" role="group" aria-label="Portrait code color mode">
+                <button type="button" class="about-matrix-dot about-matrix-dot--blue is-active" data-matrix-color="blue" title="Cobalt Blue"></button>
+                <button type="button" class="about-matrix-dot about-matrix-dot--green" data-matrix-color="green" title="Matrix Green"></button>
+                <button type="button" class="about-matrix-dot about-matrix-dot--mono" data-matrix-color="mono" title="Monochrome"></button>
+              </div>
               <canvas class="about-portrait-canvas" id="about-portrait-canvas"></canvas>
               <div class="about-bento__visual-tag">
                 <img class="about-mini-avatar" src="/assets/alireza-portrait.jpg" alt="${PROFILE.name}" width="32" height="32" loading="lazy" />
@@ -1163,7 +1168,7 @@ function initAboutDotPortrait() {
   const img = new Image();
   img.src = "/assets/alireza-portrait-cutout.jpg";
 
-  const CODE_CHARS = "0101100123456789ABCDEF";
+  const CODE_CHARS = "0123456789ABCDEF<>/{}[]=+-";
 
   let width = 0;
   let height = 0;
@@ -1178,7 +1183,18 @@ function initAboutDotPortrait() {
   let scrollBoost = 0;
   let lastScrollY = window.scrollY || 0;
   let tick = 0;
+  let colorMode = "blue"; // "blue" | "green" | "mono"
   const mouse = { x: -9999, y: -9999, active: false };
+
+  stage.querySelectorAll("[data-matrix-color]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      colorMode = btn.getAttribute("data-matrix-color") || "blue";
+      stage.querySelectorAll("[data-matrix-color]").forEach((b) =>
+        b.classList.toggle("is-active", b === btn)
+      );
+    });
+  });
 
   function buildPortraitMatrix() {
     const rect = stage.getBoundingClientRect();
@@ -1228,11 +1244,18 @@ function initAboutDotPortrait() {
       }
     }
 
-    streams = Array.from({ length: cols }, (_, c) => ({
-      offset: Math.random() * rows,
-      speed: 0.38 + Math.random() * 0.52,
-      seed: (c * 17 + Math.floor(Math.random() * 50)) % CODE_CHARS.length,
-    }));
+    // Dynamic multi-speed streams: mix of fast comets, medium waves, and slow deep layers
+    streams = Array.from({ length: cols }, (_, c) => {
+      const tier = c % 3;
+      const baseSpeed = tier === 0 ? 0.65 + Math.random() * 0.65 : tier === 1 ? 0.36 + Math.random() * 0.34 : 0.18 + Math.random() * 0.22;
+      return {
+        offset: Math.random() * rows,
+        offset2: Math.random() * rows,
+        speed: baseSpeed,
+        trailLen: 14 + Math.floor(Math.random() * 18),
+        seed: (c * 19 + Math.floor(Math.random() * 60)) % CODE_CHARS.length,
+      };
+    });
   }
 
   function renderFrame() {
@@ -1240,12 +1263,12 @@ function initAboutDotPortrait() {
       tick++;
       const isDark = document.documentElement.getAttribute("data-theme") === "dark";
 
-      // Smoothly slow falling speed when mouse hovers inside; fast stream otherwise!
+      // Smoothly slow down to calm inspection speed on hover; lively fast code rain otherwise
       const targetSpeed = mouse.active ? 0.12 : 1.0;
       speedScale += (targetSpeed - speedScale) * 0.08;
       scrollBoost *= 0.9;
 
-      ctx.fillStyle = isDark ? "#080b12" : "#f2f4f8";
+      ctx.fillStyle = isDark ? "#060910" : "#eef2f8";
       ctx.fillRect(0, 0, width, height);
 
       ctx.font = `600 ${Math.round(cell + 0.8)}px ui-monospace, SFMono-Regular, Menlo, monospace`;
@@ -1255,65 +1278,96 @@ function initAboutDotPortrait() {
       for (let c = 0; c < cols; c++) {
         const st = streams[c];
         if (!prefersReduced) {
-          st.offset = (st.offset + st.speed * speedScale + scrollBoost * 0.08) % rows;
+          const step = st.speed * speedScale + scrollBoost * 0.09;
+          st.offset = (st.offset + step) % rows;
+          st.offset2 = (st.offset2 + step * 0.62) % rows;
         }
         const baseX = c * cell + cell * 0.5;
-        const headRow = Math.floor(st.offset);
+        const head1 = Math.floor(st.offset);
+        const head2 = Math.floor(st.offset2);
 
         for (let r = 0; r < rows; r++) {
           const lum = lumGrid[r * cols + c];
-          // Distance behind this column's falling stream head (0..rows)
-          const distFromHead = (headRow - r + rows) % rows;
-          const trail = distFromHead < 18 ? 1 - distFromHead / 18 : 0;
-
-          // Skip empty background except faint fast-falling code trails
-          if (lum === 0 && trail < 0.15) continue;
+          const d1 = (head1 - r + rows) % rows;
+          const d2 = (head2 - r + rows) % rows;
+          const t1 = d1 < st.trailLen ? 1 - d1 / st.trailLen : 0;
+          const t2 = d2 < st.trailLen * 0.75 ? 1 - d2 / (st.trailLen * 0.75) : 0;
+          const trail = Math.max(t1, t2 * 0.75);
+          const isHead = d1 === 0 || d2 === 0;
 
           let drawX = baseX;
           let drawY = r * cell + cell * 0.5;
           let mouseInfluence = 0;
 
-          // When mouse is inside, ALL nearby code digits ripple & shift gently!
           if (mouse.active && !prefersReduced) {
             const dx = drawX - mouse.x;
             const dy = drawY - mouse.y;
-            const d2 = dx * dx + dy * dy;
-            const rad = 110;
-            if (d2 < rad * rad && d2 > 0.1) {
-              const d = Math.sqrt(d2);
-              const f = 1 - d / rad;
+            const d2m = dx * dx + dy * dy;
+            const rad = 115;
+            if (d2m < rad * rad && d2m > 0.1) {
+              const dist = Math.sqrt(d2m);
+              const f = 1 - dist / rad;
               mouseInfluence = f;
-              const wave = Math.sin(tick * 0.14 - d * 0.08) * 3.2;
-              drawX += (dx / d) * f * 12 + wave * f;
-              drawY += (dy / d) * f * 12 + Math.cos(tick * 0.12 + c * 0.3) * 2.5 * f;
+              const wave = Math.sin(tick * 0.14 - dist * 0.08) * 3.4;
+              drawX += (dx / dist) * f * 13 + wave * f;
+              drawY += (dy / dist) * f * 13 + Math.cos(tick * 0.12 + c * 0.3) * 2.6 * f;
             }
           }
 
-          // Character cycles vertically with the falling stream
-          const charIdx = Math.abs(Math.floor(r - st.offset) + st.seed) % CODE_CHARS.length;
+          // Dynamic character stream cycling vertically
+          const charIdx = Math.abs(Math.floor(r - st.offset) + st.seed + (isHead ? tick : 0)) % CODE_CHARS.length;
           const ch = CODE_CHARS[charIdx];
 
           if (lum > 0) {
-            // Portrait region: crisp monochrome digits illuminated by falling code stream
-            const boost = trail * 0.34;
-            const alpha = Math.min(1, 0.36 + lum * 0.64 + boost * 0.25);
-            if (mouseInfluence > 0.38) {
-              ctx.fillStyle = isDark
-                ? `rgba(87, 193, 255, ${alpha.toFixed(2)})`
-                : `rgba(22, 94, 246, ${alpha.toFixed(2)})`;
-            } else if (isDark) {
-              const v = Math.min(255, Math.round(118 + lum * 137 + boost * 40));
+            // Portrait region: dense, bright, unmistakable face sculpted by falling code
+            const alpha = Math.min(1, 0.34 + lum * 0.66 + trail * 0.25);
+            if (isHead && lum > 0.35) {
+              ctx.fillStyle = isDark ? "#ffffff" : "#0b1222";
+            } else if (colorMode === "green") {
+              if (isDark) {
+                const g = Math.min(255, Math.round(130 + lum * 125 + trail * 35));
+                const rC = Math.round(lum > 0.72 ? (lum - 0.72) * 380 : 12);
+                ctx.fillStyle = `rgba(${rC},${g},${Math.round(g * 0.55)},${alpha.toFixed(2)})`;
+              } else {
+                ctx.fillStyle = `rgba(10,${Math.round(120 + (1 - lum) * 30)},68,${alpha.toFixed(2)})`;
+              }
+            } else if (colorMode === "mono") {
+              const v = isDark
+                ? Math.min(255, Math.round(105 + lum * 150 + trail * 30))
+                : Math.max(10, Math.round(150 - lum * 140));
               ctx.fillStyle = `rgba(${v},${v},${v},${alpha.toFixed(2)})`;
             } else {
-              const v = Math.max(8, Math.round(145 - lum * 135));
-              ctx.fillStyle = `rgba(${v},${v},${v},${alpha.toFixed(2)})`;
+              // Signature Cobalt & Sky Blue mode
+              if (mouseInfluence > 0.35 || (lum > 0.78 && trail > 0.4)) {
+                ctx.fillStyle = isDark ? `rgba(215, 240, 255, ${alpha.toFixed(2)})` : `rgba(14, 62, 184, ${alpha.toFixed(2)})`;
+              } else if (isDark) {
+                const b = Math.min(255, Math.round(155 + lum * 100));
+                const g = Math.min(255, Math.round(92 + lum * 148));
+                const rC = Math.min(255, Math.round(36 + lum * 145));
+                ctx.fillStyle = `rgba(${rC},${g},${b},${alpha.toFixed(2)})`;
+              } else {
+                const rC = Math.round(16 + (1 - lum) * 45);
+                const gC = Math.round(52 + (1 - lum) * 70);
+                const bC = Math.round(168 + (1 - lum) * 75);
+                ctx.fillStyle = `rgba(${rC},${gC},${bC},${alpha.toFixed(2)})`;
+              }
             }
           } else {
-            // Subtle fast-falling background code rain (very clean, never noisy)
-            const bgAlpha = trail * (isDark ? 0.14 : 0.11);
-            ctx.fillStyle = isDark
-              ? `rgba(140, 165, 210, ${bgAlpha.toFixed(3)})`
-              : `rgba(22, 94, 246, ${bgAlpha.toFixed(3)})`;
+            // Full-frame surrounding code rain (visible everywhere, dynamically layered!)
+            const bgAlpha = (0.055 + trail * (isDark ? 0.24 : 0.19)) * (isHead ? 1.45 : 1);
+            if (colorMode === "green") {
+              ctx.fillStyle = isDark
+                ? `rgba(0, 230, 118, ${bgAlpha.toFixed(3)})`
+                : `rgba(14, 138, 76, ${bgAlpha.toFixed(3)})`;
+            } else if (colorMode === "mono") {
+              ctx.fillStyle = isDark
+                ? `rgba(170, 182, 204, ${bgAlpha.toFixed(3)})`
+                : `rgba(60, 70, 90, ${bgAlpha.toFixed(3)})`;
+            } else {
+              ctx.fillStyle = isDark
+                ? `rgba(87, 193, 255, ${bgAlpha.toFixed(3)})`
+                : `rgba(22, 94, 246, ${bgAlpha.toFixed(3)})`;
+            }
           }
 
           ctx.fillText(ch, drawX, drawY);
