@@ -1659,16 +1659,46 @@ html[dir="rtl"] .bliss-field select {
 .about-portrait-stage {
   position: relative;
   flex: 1;
-  min-height: 310px;
+  min-height: 320px;
   border-radius: 24px;
   overflow: hidden;
   border: 1px solid var(--border);
-  background: #f3f5fa;
+  background: #eef2f9;
   cursor: crosshair;
 }
 
 [data-theme="dark"] .about-portrait-stage {
-  background: #0d1018;
+  background: #070a12;
+  border-color: rgba(87, 193, 255, 0.18);
+}
+
+.about-code-hud {
+  position: absolute;
+  top: 12px;
+  inset-inline-start: 14px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(10, 14, 24, 0.72);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(87, 193, 255, 0.22);
+  color: #cfe4ff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+}
+
+.about-code-hud__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #165ef6;
+  box-shadow: 0 0 8px #57c1ff;
 }
 
 .about-portrait-canvas {

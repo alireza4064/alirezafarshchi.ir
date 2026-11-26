@@ -451,15 +451,19 @@ export function renderHomePage(content) {
             </div>
           </div>
 
-          <!-- Right Interactive Dot-Matrix Portrait + Metrics Column -->
+          <!-- Right Interactive Code/Binary ASCII Portrait + Metrics Column -->
           <div class="about-bento__side">
-            <div class="about-portrait-stage" id="about-portrait-stage" aria-label="${PROFILE.name} interactive halftone portrait">
+            <div class="about-portrait-stage" id="about-portrait-stage" aria-label="${PROFILE.name} interactive code portrait">
+              <div class="about-code-hud" aria-hidden="true">
+                <span class="about-code-hud__dot"></span>
+                <span>PORTRAIT.tsx · 01_MATRIX</span>
+              </div>
               <canvas class="about-portrait-canvas" id="about-portrait-canvas"></canvas>
               <div class="about-bento__visual-tag">
                 <img class="about-mini-avatar" src="/assets/alireza-portrait.jpg" alt="${PROFILE.name}" width="32" height="32" loading="lazy" />
                 <div>
                   <strong>${isFa ? "علیرضا محمدزاده فرشچی" : "Alireza Farshchi"}</strong>
-                  <span>${isFa ? "مشهد / ریموت · طراحی محصول" : "Product & Systems · Interactive Portrait"}</span>
+                  <span>${isFa ? "مشهد / ریموت · طراحی محصول" : "Design Systems · Code & AI"}</span>
                 </div>
               </div>
             </div>
@@ -1125,13 +1129,20 @@ function initAboutDotPortrait() {
   const img = new Image();
   img.src = "/assets/alireza-portrait-cutout.jpg";
 
-  let dots = [];
+  // Monospace code & binary glyph ramp ordered from sparse to dense
+  const PORTRAIT_GLYPHS = [".", ":", "-", "=", "+", "/", "0", "1", "{", "}", "#", "@"];
+  const BG_BITS = ["0", "1", "0", "1", "<", ">", "/", ";"];
+
+  let cells = [];
+  let bgColumns = [];
   let width = 0;
   let height = 0;
   let dpr = 1;
+  let cellSize = 7;
   let isVisible = true;
   let lastScrollY = window.scrollY || 0;
   let scrollVelocity = 0;
+  let frameCount = 0;
   const mouse = { x: -9999, y: -9999, active: false };
 
   function samplePortrait() {
@@ -1162,66 +1173,140 @@ function initAboutDotPortrait() {
     } else {
       dw = width;
       dh = dw / imgRatio;
-      dy = (height - dh) * 0.18;
+      dy = (height - dh) * 0.16;
     }
     octx.drawImage(img, dx, dy, dw, dh);
     const pixels = octx.getImageData(0, 0, width, height).data;
 
-    const gap = width < 340 ? 4 : 4.2;
-    dots = [];
+    cellSize = width < 340 ? 6.5 : 7.2;
+    cells = [];
 
-    for (let y = Math.floor(gap * 0.5); y < height; y += gap) {
-      for (let x = Math.floor(gap * 0.5); x < width; x += gap) {
+    for (let y = Math.floor(cellSize * 0.6); y < height; y += cellSize) {
+      for (let x = Math.floor(cellSize * 0.5); x < width; x += cellSize) {
         const i = (Math.floor(y) * width + Math.floor(x)) * 4;
         const r = pixels[i];
         const g = pixels[i + 1];
         const b = pixels[i + 2];
         const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 
-        // Pure black background cutout is skipped -> ONLY Alireza is rendered!
-        if (lum < 0.07) continue;
+        // Pure black cutout background stays clean so subtle 0/1 code stream shines behind!
+        if (lum < 0.08) continue;
 
-        const baseRadius = 0.52 + Math.pow(lum, 0.88) * (gap * 0.38);
+        const gIdx = Math.min(
+          PORTRAIT_GLYPHS.length - 1,
+          Math.floor(Math.pow(lum, 0.85) * PORTRAIT_GLYPHS.length)
+        );
 
-        dots.push({
+        cells.push({
           ox: x,
           oy: y,
           x,
           y,
           vx: 0,
           vy: 0,
-          r: baseRadius,
           lum,
+          glyph: PORTRAIT_GLYPHS[gIdx],
           phase: x * 0.03 + y * 0.025,
         });
       }
     }
+
+    // Build subtle drifting binary/code background columns
+    const colGap = 18;
+    const cols = Math.ceil(width / colGap);
+    bgColumns = Array.from({ length: cols }, (_, c) => ({
+      x: c * colGap + 8,
+      y: Math.random() * height,
+      speed: 0.32 + Math.random() * 0.55,
+      len: 5 + Math.floor(Math.random() * 7),
+      seed: Math.floor(Math.random() * 100),
+    }));
   }
 
   function renderFrame() {
-    if (isVisible && dots.length) {
+    if (isVisible && cells.length) {
+      frameCount++;
       const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-      ctx.fillStyle = isDark ? "#0d1018" : "#f4f5f7";
+
+      // 1. Deep Terminal / Blueprint Background
+      ctx.fillStyle = isDark ? "#070a12" : "#eef2f9";
       ctx.fillRect(0, 0, width, height);
 
+      // Subtle radial cobalt terminal aura behind portrait
+      const aura = ctx.createRadialGradient(
+        width * 0.5,
+        height * 0.42,
+        12,
+        width * 0.5,
+        height * 0.45,
+        Math.max(width, height) * 0.62
+      );
+      if (isDark) {
+        aura.addColorStop(0, "rgba(22, 94, 246, 0.22)");
+        aura.addColorStop(0.55, "rgba(22, 94, 246, 0.06)");
+        aura.addColorStop(1, "rgba(7, 10, 18, 0)");
+      } else {
+        aura.addColorStop(0, "rgba(22, 94, 246, 0.12)");
+        aura.addColorStop(0.6, "rgba(22, 94, 246, 0.03)");
+        aura.addColorStop(1, "rgba(238, 242, 249, 0)");
+      }
+      ctx.fillStyle = aura;
+      ctx.fillRect(0, 0, width, height);
+
+      // 2. Subtle Drifting 0/1 Binary Code Rain in Background
+      ctx.font = `600 9.5px ui-monospace, SFMono-Regular, Menlo, monospace`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      for (let c = 0; c < bgColumns.length; c++) {
+        const col = bgColumns[c];
+        if (!prefersReduced) {
+          col.y += col.speed;
+          if (col.y - col.len * 14 > height) col.y = -12;
+        }
+        for (let k = 0; k < col.len; k++) {
+          const by = col.y - k * 14;
+          if (by < -10 || by > height + 10) continue;
+          const alpha = (1 - k / col.len) * (isDark ? 0.19 : 0.14);
+          const bit = BG_BITS[(col.seed + k + Math.floor(frameCount / 22)) % BG_BITS.length];
+          ctx.fillStyle = isDark
+            ? `rgba(87, 193, 255, ${alpha.toFixed(3)})`
+            : `rgba(22, 94, 246, ${alpha.toFixed(3)})`;
+          ctx.fillText(bit, col.x, by);
+        }
+      }
+
+      // 3. Soft Terminal Scanline Sweep
+      if (!prefersReduced) {
+        const scanY = ((frameCount * 1.1) % (height + 80)) - 40;
+        const scanGrad = ctx.createLinearGradient(0, scanY - 26, 0, scanY + 26);
+        scanGrad.addColorStop(0, "rgba(22, 94, 246, 0)");
+        scanGrad.addColorStop(0.5, isDark ? "rgba(87, 193, 255, 0.07)" : "rgba(22, 94, 246, 0.06)");
+        scanGrad.addColorStop(1, "rgba(22, 94, 246, 0)");
+        ctx.fillStyle = scanGrad;
+        ctx.fillRect(0, scanY - 26, width, 52);
+      }
+
+      // 4. Crisp Interactive ASCII / Binary Code Portrait (Alireza ONLY!)
+      ctx.font = `700 ${Math.round(cellSize + 1.2)}px ui-monospace, SFMono-Regular, Menlo, monospace`;
       scrollVelocity *= 0.88;
 
-      for (let i = 0; i < dots.length; i++) {
-        const d = dots[i];
+      for (let i = 0; i < cells.length; i++) {
+        const d = cells[i];
         if (!prefersReduced) {
           if (Math.abs(scrollVelocity) > 0.08) {
-            d.vx += Math.sin(d.phase + d.oy * 0.02) * scrollVelocity * 0.14;
-            d.vy += Math.cos(d.phase + d.ox * 0.02) * scrollVelocity * 0.18;
+            d.vx += Math.sin(d.phase + d.oy * 0.02) * scrollVelocity * 0.16;
+            d.vy += Math.cos(d.phase + d.ox * 0.02) * scrollVelocity * 0.2;
           }
 
           if (mouse.active) {
             const dx = d.x - mouse.x;
             const dy = d.y - mouse.y;
             const distSq = dx * dx + dy * dy;
-            const radius = 82;
+            const radius = 84;
             if (distSq < radius * radius && distSq > 0.1) {
               const dist = Math.sqrt(distSq);
-              const force = (1 - dist / radius) * 5.0;
+              const force = (1 - dist / radius) * 5.2;
               d.vx += (dx / dist) * force;
               d.vy += (dy / dist) * force;
             }
@@ -1236,19 +1321,20 @@ function initAboutDotPortrait() {
         }
 
         const disp = Math.abs(d.x - d.ox) + Math.abs(d.y - d.oy);
-        const radius = d.r + Math.min(0.85, disp * 0.035);
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, radius, 0, Math.PI * 2);
+        const isGlitched = disp > 3.6;
+        const ch = isGlitched ? ((frameCount + i) % 2 === 0 ? "1" : "0") : d.glyph;
 
-        // Pure High-Definition Black & White Monochrome Halftone Dots
-        if (isDark) {
-          const v = disp > 4.2 ? 255 : Math.round(78 + d.lum * 177);
-          ctx.fillStyle = `rgb(${v},${v},${v})`;
+        if (isGlitched) {
+          ctx.fillStyle = isDark ? "#57c1ff" : "#165ef6";
+        } else if (isDark) {
+          const v = Math.round(92 + d.lum * 163);
+          ctx.fillStyle = `rgb(${v},${v},${Math.min(255, v + 8)})`;
         } else {
-          const v = disp > 4.2 ? 12 : Math.round(175 - d.lum * 158);
-          ctx.fillStyle = `rgb(${v},${v},${v})`;
+          const v = Math.round(168 - d.lum * 154);
+          ctx.fillStyle = `rgb(${v},${v},${Math.min(255, v + 12)})`;
         }
-        ctx.fill();
+
+        ctx.fillText(ch, d.x, d.y);
       }
     }
 
