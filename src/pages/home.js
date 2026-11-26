@@ -7,7 +7,7 @@ import { getFeaturedProjects } from "../data/projects.js";
 import { PROFILE } from "../data/content-en.js";
 import { renderProjectCard } from "../components/project-card.js";
 import { PRINCIPLE_GLYPHS } from "../components/glyphs.js";
-import { renderHeroFigmaStage } from "../components/hero-figma-stage.js";
+import { renderHeroFigmaStage, initHeroFigmaStage } from "../components/hero-figma-stage.js";
 
 function renderAudiencePanelContent(item, content) {
   const linksHtml = item.links
@@ -327,38 +327,6 @@ export function initHomePage(content) {
     });
   }
 
-  // 2. Interactive Figma Multiplayer "Guest" Cursor on Hero Canvas (desktop fine pointer)
-  const figmaCanvas = document.getElementById("figma-canvas");
-  const guestCursor = document.getElementById("figma-guest-cursor");
-  const figmaStage = figmaCanvas?.closest(".figma-stage");
-  const finePointer = window.matchMedia("(pointer: fine)").matches;
-
-  if (figmaCanvas && guestCursor && finePointer) {
-    figmaCanvas.addEventListener("pointerenter", () => {
-      figmaCanvas.classList.add("is-guest-hover");
-      figmaStage?.classList.add("is-guest-active");
-    });
-
-    figmaCanvas.addEventListener("pointermove", (e) => {
-      const rect = figmaCanvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      guestCursor.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
-    });
-
-    figmaCanvas.addEventListener("pointerleave", () => {
-      figmaCanvas.classList.remove("is-guest-hover");
-      figmaStage?.classList.remove("is-guest-active");
-    });
-
-    figmaCanvas.addEventListener("pointerdown", (e) => {
-      const rect = figmaCanvas.getBoundingClientRect();
-      const ping = document.createElement("span");
-      ping.className = "figma-click-ping";
-      ping.style.left = `${(e.clientX - rect.left).toFixed(1)}px`;
-      ping.style.top = `${(e.clientY - rect.top).toFixed(1)}px`;
-      figmaCanvas.appendChild(ping);
-      window.setTimeout(() => ping.remove(), 550);
-    });
-  }
+  // 2. Initialize Authentic Figma UI3 Live Canvas (Human Bezier Cursor + Guest Multiplayer)
+  initHeroFigmaStage();
 }
