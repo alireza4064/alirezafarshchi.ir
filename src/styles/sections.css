@@ -1019,24 +1019,24 @@ html[dir="rtl"] .cz-step--left .cz-card {
   box-shadow: 0 0 0 5px var(--primary-soft), 0 0 12px var(--primary-glow);
 }
 
-/* --- Bliss Agency-Style Contact Section --- */
+/* --- Bliss Agency-Style Contact Section (Exact Figma 7:101 Palette: #08090C / #111217) --- */
 .bliss-contact {
   position: relative;
   overflow: hidden;
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  padding: clamp(32px, 5vw, 60px);
+  border-radius: 28px;
+  border: 1px solid #23252c;
+  background: #08090c;
+  color: #ededeb;
+  padding: clamp(32px, 5vw, 56px);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  gap: clamp(32px, 5vw, 60px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.06fr);
+  gap: clamp(32px, 5vw, 56px);
   align-items: center;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 24px 64px rgba(8, 10, 18, 0.24);
 }
 
-[data-theme="dark"] .bliss-contact {
-  background: #08090c;
-  border-color: #23252c;
+.bliss-contact .eyebrow {
+  color: #57c1ff;
 }
 
 .bliss-contact__left,
@@ -1046,11 +1046,11 @@ html[dir="rtl"] .cz-step--left .cz-card {
 }
 
 .bliss-contact__title {
-  font-size: clamp(1.9rem, 3.2vw, 2.75rem);
+  font-size: clamp(1.9rem, 3.1vw, 2.65rem);
   font-weight: 600;
   line-height: 1.15;
   letter-spacing: -0.03em;
-  color: var(--ink);
+  color: #ffffff;
   margin-bottom: 14px;
 }
 
@@ -1061,7 +1061,7 @@ html[dir="rtl"] .bliss-contact__title {
 }
 
 .bliss-contact__desc {
-  color: var(--ink-muted);
+  color: #a3a29d;
   font-size: var(--text-lead);
   margin-bottom: 28px;
   max-width: 460px;
@@ -1069,13 +1069,13 @@ html[dir="rtl"] .bliss-contact__title {
 
 .bliss-contact__meta {
   padding-top: 20px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid #23252c;
   margin-bottom: 24px;
 }
 
 .bliss-contact__label {
   font-size: 0.76rem;
-  color: var(--ink-subtle);
+  color: #86857f;
   margin-bottom: 10px;
 }
 
@@ -1083,9 +1083,9 @@ html[dir="rtl"] .bliss-contact__title {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 16px;
-  font-size: 0.86rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  color: var(--ink-muted);
+  color: #b7b9c2;
 }
 
 .bliss-contact__direct {
@@ -1094,76 +1094,116 @@ html[dir="rtl"] .bliss-contact__title {
   gap: 8px;
 }
 
+.bliss-contact__direct .btn--secondary {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #ededeb;
+}
+
+.bliss-contact__direct .btn--secondary:hover {
+  background: rgba(22, 94, 246, 0.24);
+  border-color: rgba(87, 193, 255, 0.45);
+  color: #ffffff;
+}
+
 .bliss-form-card {
-  background: var(--canvas);
-  border: 1px solid var(--border-strong);
+  background: #111217;
+  border: 1px solid #292b33;
   border-radius: 22px;
   padding: clamp(22px, 3vw, 30px);
   display: grid;
-  gap: 14px;
-}
-
-[data-theme="dark"] .bliss-form-card {
-  background: rgba(15, 16, 20, 0.86);
-  border-color: #292b33;
+  gap: 16px;
 }
 
 .bliss-form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 14px;
 }
 
 .bliss-field {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 6px;
+  min-width: 0;
 }
 
 .bliss-field label {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 500;
-  color: var(--ink-muted);
+  color: #a3a29d;
 }
 
 .bliss-field input,
 .bliss-field select,
 .bliss-field textarea {
   width: 100%;
-  padding: 11px 14px;
+  padding: 12px 14px;
   border-radius: 11px;
-  border: 1px solid var(--border-strong);
-  background: var(--surface);
-  color: var(--ink);
+  border: 1px solid #2d3039;
+  background: #181a20;
+  color: #ffffff;
   font-size: 0.9rem;
+  line-height: 1.45;
   transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.bliss-field input::placeholder,
+.bliss-field textarea::placeholder {
+  color: #6f727d;
+}
+
+.bliss-field select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239aa0ad' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+html[dir="rtl"] .bliss-field select {
+  background-position: left 14px center;
+  padding-right: 14px;
+  padding-left: 36px;
+}
+
+.bliss-field select option {
+  background: #14161d;
+  color: #ffffff;
+}
+
+.bliss-field textarea {
+  resize: vertical;
+  min-height: 104px;
 }
 
 .bliss-field input:focus,
 .bliss-field select:focus,
 .bliss-field textarea:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-soft);
+  border-color: #165ef6;
+  box-shadow: 0 0 0 3px rgba(22, 94, 246, 0.24);
 }
 
 .bliss-form-status {
   font-size: 0.82rem;
-  border-radius: 8px;
+  border-radius: 10px;
   display: none;
 }
 
 .bliss-form-status.is-info {
   display: block;
-  padding: 8px 12px;
-  background: var(--primary-soft);
-  color: var(--primary-text-on-soft);
+  padding: 10px 14px;
+  background: rgba(22, 94, 246, 0.16);
+  color: #dbe8ff;
 }
 
 .bliss-form-status.is-ok {
   display: block;
-  padding: 10px 12px;
-  background: var(--success-bg);
-  color: var(--success);
+  padding: 10px 14px;
+  background: #12291c;
+  color: #3ccb7f;
 }
 
 .bliss-submit-btn {
@@ -1171,23 +1211,23 @@ html[dir="rtl"] .bliss-contact__title {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 8px 8px 8px 20px;
+  padding: 7px 7px 7px 20px;
   border-radius: var(--radius-pill);
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
-  color: var(--ink);
+  background: #181a20;
+  border: 1px solid #2d3039;
+  color: #ffffff;
   font-weight: 600;
   font-size: 0.92rem;
   transition: border-color 200ms ease, transform 180ms ease, box-shadow 200ms ease;
 }
 
 html[dir="rtl"] .bliss-submit-btn {
-  padding: 8px 20px 8px 8px;
+  padding: 7px 20px 7px 7px;
 }
 
 .bliss-submit-btn:hover {
-  border-color: var(--primary);
-  box-shadow: var(--shadow-sm);
+  border-color: #165ef6;
+  box-shadow: 0 8px 24px rgba(22, 94, 246, 0.26);
   transform: translateY(-1px);
 }
 
@@ -1195,7 +1235,7 @@ html[dir="rtl"] .bliss-submit-btn {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: var(--primary);
+  background: #165ef6;
   color: #ffffff;
   display: grid;
   place-items: center;
@@ -1204,7 +1244,7 @@ html[dir="rtl"] .bliss-submit-btn {
 }
 
 .bliss-submit-btn:hover .bliss-submit-circle {
-  background: var(--primary-hover);
+  background: #2b6ff8;
 }
 
 @media (max-width: 900px) {

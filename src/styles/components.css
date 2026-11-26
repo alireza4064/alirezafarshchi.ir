@@ -31,7 +31,26 @@
   inset-inline-end: 24px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  padding: 5px;
+  border-radius: 13px;
+  background: #0d0e12;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 32px rgba(8, 12, 24, 0.28);
+}
+
+.ss-corner-actions .icon-btn,
+.ss-corner-actions .lang-switch {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #f4f5f8;
+}
+
+.ss-corner-actions .icon-btn:hover,
+.ss-corner-actions .lang-switch:hover {
+  background: rgba(22, 94, 246, 0.28);
+  border-color: rgba(87, 193, 255, 0.5);
+  color: #ffffff;
 }
 
 .ss-nav-root.is-compact .ss-corner-brand,
@@ -40,7 +59,7 @@
 .ss-nav-root--compact .ss-corner-actions {
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-8px) scale(0.94);
+  transform: translateY(-6px) scale(0.95);
 }
 
 .ss-morph-card {
@@ -82,10 +101,34 @@
 
 .ss-inline-brand,
 .ss-inline-actions {
-  display: none;
+  display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-shrink: 0;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transform: scale(0.92);
+  transition: max-width 480ms cubic-bezier(0.45, 0, 0.2, 1),
+    opacity 260ms var(--ease-out),
+    transform 380ms cubic-bezier(0.45, 0, 0.2, 1);
+}
+
+.ss-nav-root.is-compact .ss-inline-brand,
+.ss-nav-root--compact .ss-inline-brand {
+  max-width: 40px;
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.ss-nav-root.is-compact .ss-inline-actions,
+.ss-nav-root--compact .ss-inline-actions {
+  max-width: 340px;
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
 }
 
 .ss-links {
@@ -243,13 +286,6 @@ html[dir="rtl"] .ss-expanded-title {
 html[dir="rtl"] .ss-nav-root.is-compact .ss-morph-bar,
 html[dir="rtl"] .ss-nav-root--compact .ss-morph-bar {
   padding: 5px 10px 5px 6px;
-}
-
-.ss-nav-root.is-compact .ss-inline-brand,
-.ss-nav-root.is-compact .ss-inline-actions,
-.ss-nav-root--compact .ss-inline-brand,
-.ss-nav-root--compact .ss-inline-actions {
-  display: flex;
 }
 
 .ss-nav-root.is-compact .ss-expanded-body,

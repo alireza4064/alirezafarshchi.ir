@@ -412,19 +412,19 @@ export function renderHomePage(content) {
                 <input id="bf-name" type="text" required placeholder="${isFa ? "نام شما" : "Your name"}" />
               </div>
               <div class="bliss-field">
-                <label for="bf-role">${isFa ? "موضوع همکاری" : "What brings you here?"}</label>
-                <select id="bf-role">
-                  <option value="Hiring / Product Role">${isFa ? "فرصت شغلی / استخدام" : "Hiring / Product Role"}</option>
-                  <option value="Design Systems / Consulting">${isFa ? "سیستم طراحی / مشاوره" : "Design Systems / Consulting"}</option>
-                  <option value="Freelance Project">${isFa ? "پروژه فریلنسری" : "Freelance Project"}</option>
-                  <option value="General Chat">${isFa ? "گفت‌وگو و شبکه‌سازی" : "General Conversation"}</option>
-                </select>
+                <label for="bf-contact">${isFa ? "ایمیل یا آیدی تلگرام" : "Work email or Telegram"}</label>
+                <input id="bf-contact" type="text" required placeholder="${isFa ? "name@company.com یا @username" : "name@company.com or @username"}" />
               </div>
             </div>
 
             <div class="bliss-field">
-              <label for="bf-contact">${isFa ? "ایمیل یا آیدی تلگرام" : "Work email or Telegram"}</label>
-              <input id="bf-contact" type="text" required placeholder="${isFa ? "name@company.com یا @username" : "name@company.com or @username"}" />
+              <label for="bf-role">${isFa ? "موضوع همکاری" : "What brings you here?"}</label>
+              <select id="bf-role">
+                <option value="Hiring / Product Role">${isFa ? "فرصت شغلی / استخدام" : "Hiring / Product Role"}</option>
+                <option value="Design Systems / Consulting">${isFa ? "سیستم طراحی / مشاوره" : "Design Systems / Consulting"}</option>
+                <option value="Freelance Project">${isFa ? "پروژه فریلنسری" : "Freelance Project"}</option>
+                <option value="General Chat">${isFa ? "گفت‌وگو و شبکه‌سازی" : "General Conversation"}</option>
+              </select>
             </div>
 
             <div class="bliss-field">
@@ -504,8 +504,7 @@ function initContactStarfieldCanvas() {
 
   function tick() {
     ctx.clearRect(0, 0, width, height);
-    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-    const baseRgb = isDark ? "235, 240, 255" : "24, 25, 23";
+    const baseRgb = "235, 240, 255";
 
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
@@ -531,7 +530,7 @@ function initContactStarfieldCanvas() {
 
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${baseRgb}, ${(isDark ? p.alpha : p.alpha * 0.55).toFixed(3)})`;
+      ctx.fillStyle = `rgba(${baseRgb}, ${p.alpha.toFixed(3)})`;
       ctx.fill();
     }
 
