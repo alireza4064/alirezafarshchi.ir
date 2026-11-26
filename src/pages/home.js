@@ -1312,7 +1312,7 @@ function initSelectedWorkScrollMotion() {
   update();
 }
 
-function initAboutDotPortrait() {
+export function initAboutDotPortrait() {
   const stage = document.getElementById("about-portrait-stage");
   const canvas = document.getElementById("about-portrait-canvas");
   if (!stage || !canvas) return;

@@ -2,10 +2,11 @@
    AI Assistant, Live Telegram Chat Drawer & TopFast Scroll-to-Top Styles
    ========================================================================== */
 
+/* Scroll-to-Top Button — Positioned Bottom-Left so Bottom-Right hosts the expanded AI Card! */
 .scroll-top-btn {
   position: fixed;
   bottom: 24px;
-  inset-inline-end: 24px;
+  inset-inline-start: 24px;
   z-index: 90;
   width: 44px;
   height: 44px;
@@ -40,11 +41,137 @@
   box-shadow: var(--shadow-primary);
 }
 
-/* Floating Assistant Launcher (Swapped to Bottom-Start) */
+/* Hostinger-Pattern Bottom-Center Floating Rotating Prompt Bar (Our Cobalt Blue Design System) */
+.assistant-bar {
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  z-index: 96;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100vw - 140px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 280ms var(--ease-out), transform 340ms var(--ease-out);
+}
+
+.assistant-bar.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.assistant-bar__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: min(468px, calc(100vw - 190px));
+  height: 50px;
+  padding: 5px 6px 5px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(22, 94, 246, 0.34);
+  box-shadow: 0 14px 36px rgba(14, 24, 52, 0.14), 0 0 0 1px rgba(87, 193, 255, 0.18);
+  color: #1c2230;
+  cursor: pointer;
+  transition: border-color 180ms ease, box-shadow 200ms ease, transform 180ms ease;
+}
+
+[data-theme="dark"] .assistant-bar__pill {
+  background: rgba(16, 19, 28, 0.92);
+  border-color: rgba(87, 193, 255, 0.32);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.52), 0 0 24px rgba(22, 94, 246, 0.16);
+  color: #edf1f8;
+}
+
+.assistant-bar__pill:hover {
+  border-color: #165ef6;
+  box-shadow: 0 18px 42px rgba(22, 94, 246, 0.22);
+  transform: translateY(-2px);
+}
+
+.assistant-bar__sparkle {
+  color: #165ef6;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .assistant-bar__sparkle {
+  color: #57c1ff;
+}
+
+.assistant-bar__prompt {
+  flex: 1;
+  min-width: 0;
+  text-align: start;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #4b5264;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+[data-theme="dark"] .assistant-bar__prompt {
+  color: #bcc3d4;
+}
+
+.assistant-bar__prompt.is-fading {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+.assistant-bar__send {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #165ef6;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(22, 94, 246, 0.34);
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.assistant-bar__pill:hover .assistant-bar__send {
+  background: #2b6ff8;
+  transform: scale(1.05);
+}
+
+.assistant-bar__dismiss {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(16, 18, 24, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #e5e8f0;
+  font-size: 0.82rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.assistant-bar__dismiss:hover {
+  background: #165ef6;
+  color: #ffffff;
+  transform: scale(1.06);
+}
+
+/* Compact Launcher Pill (Bottom-Right — shown on mobile, hero top, or after dismissing bar) */
 .assistant-fab {
   position: fixed;
   bottom: 24px;
-  inset-inline-start: 24px;
+  inset-inline-end: 24px;
   z-index: 95;
   display: inline-flex;
   align-items: center;
@@ -57,9 +184,19 @@
   font-weight: 600;
   box-shadow: var(--shadow-primary);
   border: 1px solid rgba(255, 255, 255, 0.16);
-  transition: transform 180ms var(--ease-out),
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px) scale(0.95);
+  transition: transform 200ms var(--ease-out),
+    opacity 200ms var(--ease-out),
     background-color 180ms var(--ease-out),
     box-shadow 180ms var(--ease-out);
+}
+
+.assistant-fab.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
 }
 
 .assistant-fab:hover {
@@ -73,29 +210,6 @@
   transform: scale(0.92);
 }
 
-@media (max-width: 768px) {
-  .assistant-fab {
-    bottom: 76px;
-    inset-inline-start: 14px;
-    padding: 8px 13px;
-    font-size: 0.78rem;
-  }
-
-  .scroll-top-btn {
-    bottom: 76px;
-    inset-inline-end: 14px;
-    width: 38px;
-    height: 38px;
-  }
-
-  .assistant-drawer {
-    bottom: 74px;
-    inset-inline-start: 12px;
-    width: calc(100vw - 24px);
-    height: min(500px, calc(100dvh - 104px));
-  }
-}
-
 .assistant-fab__dot {
   width: 7px;
   height: 7px;
@@ -104,14 +218,14 @@
   box-shadow: 0 0 0 4px rgba(87, 193, 255, 0.28);
 }
 
-/* Slide-Over Drawer (Refined Light & Dark Contrast Palettes) */
+/* Bottom-Right Floating Chat Card (Exact Hostinger Expanded Placement!) */
 .assistant-drawer {
   position: fixed;
-  bottom: 80px;
-  inset-inline-start: 24px;
+  bottom: 20px;
+  inset-inline-end: 20px;
   z-index: 120;
-  width: min(410px, calc(100vw - 24px));
-  height: min(580px, calc(100vh - 120px));
+  width: min(404px, calc(100vw - 24px));
+  height: min(620px, calc(100vh - 104px));
   background: #ffffff;
   border: 1px solid #dfe2eb;
   border-radius: 22px;
@@ -368,23 +482,27 @@
 }
 
 @media (max-width: 960px) {
-  .assistant-fab {
-    bottom: 76px;
-    inset-inline-start: 14px;
-    padding: 8px 13px;
-    font-size: 0.78rem;
+  .assistant-bar {
+    display: none;
   }
 
   .scroll-top-btn {
     bottom: 76px;
-    inset-inline-end: 14px;
+    inset-inline-start: 14px;
     width: 38px;
     height: 38px;
   }
 
+  .assistant-fab {
+    bottom: 76px;
+    inset-inline-end: 14px;
+    padding: 8px 13px;
+    font-size: 0.78rem;
+  }
+
   .assistant-drawer {
     bottom: 76px;
-    inset-inline-start: 12px;
+    inset-inline-end: 12px;
     width: calc(100vw - 24px);
     height: min(500px, calc(100dvh - 104px));
   }

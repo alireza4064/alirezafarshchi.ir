@@ -8,7 +8,8 @@ import { renderNavigation, initNavigation } from "./components/nav.js";
 import { renderFooter } from "./components/footer.js";
 import { renderAssistantAndChat, initAssistantAndChat } from "./components/assistant.js";
 import { renderResumeModal, initResumeModal } from "./components/resume-modal.js";
-import { renderHomePage, initHomePage } from "./pages/home.js";
+import { renderContactPopup, initContactPopup } from "./components/contact-popup.js";
+import { renderHomePage, initHomePage, initAboutDotPortrait } from "./pages/home.js";
 import { renderWorkPage, initWorkPage } from "./pages/work.js";
 import { renderProjectOverviewPage, initProjectOverviewPage } from "./pages/project-overview.js";
 import { renderCaseStudyPage, initCaseStudyPage } from "./pages/case-study.js";
@@ -73,16 +74,19 @@ function bootstrap() {
     ${renderFooter(content)}
     ${renderAssistantAndChat(content)}
     ${renderResumeModal(content)}
+    ${renderContactPopup(content)}
   `;
 
   initNavigation(content);
   initAssistantAndChat(content);
   initResumeModal();
+  initContactPopup(content);
 
   if (page === "home") initHomePage(content);
   if (page === "work") initWorkPage(content);
   if (page === "overview") initProjectOverviewPage();
   if (page === "case-study") initCaseStudyPage(content, slug);
+  if (page === "about") initAboutDotPortrait();
 
   initRevealObserver();
 }

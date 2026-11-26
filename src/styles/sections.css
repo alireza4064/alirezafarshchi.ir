@@ -2669,12 +2669,16 @@ html[dir="rtl"] .about-portrait-chip {
   display: grid;
   grid-template-columns: 236px minmax(0, 1fr);
   gap: clamp(28px, 4vw, 56px);
-  align-items: start;
+  align-items: stretch;
+}
+
+.proj-sidebar {
+  height: 100%;
 }
 
 .proj-sidebar__sticky {
   position: sticky;
-  top: 86px;
+  top: 88px;
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -3261,4 +3265,47 @@ html[dir="rtl"] .about-portrait-chip {
     width: 36px;
     height: 36px;
   }
+}
+
+/* ==========================================================================
+   Dedicated About Page Full-Width Interactive Falling-Code Portrait Hero
+   ========================================================================== */
+.about-page-hero {
+  position: relative;
+  padding-bottom: clamp(44px, 6vw, 72px);
+}
+
+.about-page-hero__canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: clamp(340px, 48vh, 460px);
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  background: #eef2f8;
+}
+
+[data-theme="dark"] .about-page-hero__canvas-wrap {
+  background: #060910;
+}
+
+.about-page-hero__canvas-wrap:active {
+  cursor: grabbing;
+}
+
+.about-page-hero__veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 52%,
+    var(--canvas) 100%
+  );
+}
+
+.about-page-hero__content {
+  position: relative;
+  z-index: 2;
+  margin-top: -54px;
 }

@@ -162,7 +162,27 @@ export function renderAssistantAndChat(content) {
       </svg>
     </button>
 
-    <!-- Floating Assistant Launcher (Concise Microcopy) -->
+    <!-- Hostinger-Pattern Floating Bottom-Center Prompt Bar (Desktop, appears on scroll) -->
+    <div class="assistant-bar" id="assistant-bar" aria-hidden="true">
+      <button type="button" class="assistant-bar__pill" id="assistant-bar-open" aria-controls="assistant-drawer">
+        <span class="assistant-bar__sparkle" aria-hidden="true">✦</span>
+        <span class="assistant-bar__prompt" id="assistant-bar-prompt">
+          ${isFa ? "درباره تجربه علیرضا در DeltaFX و ایران‌سرور بپرسید..." : "Ask about Alireza's work at DeltaFX & IranServer..."}
+        </span>
+        <span class="assistant-bar__send" aria-hidden="true">↑</span>
+      </button>
+      <button
+        type="button"
+        class="assistant-bar__dismiss"
+        id="assistant-bar-dismiss"
+        aria-label="${isFa ? "مخفی کردن نوار دستیار" : "Hide assistant bar"}"
+        title="${isFa ? "مخفی کردن" : "Hide for this visit"}"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- Compact Fallback Launcher (Mobile + Desktop when bar is dismissed) -->
     <button
       type="button"
       class="assistant-fab"
@@ -281,52 +301,126 @@ export function renderAssistantAndChat(content) {
 export function initAssistantAndChat(content) {
   const isFa = content.lang === "fa";
   const fab = document.getElementById("assistant-fab");
+  const bar = document.getElementById("assistant-bar");
+  const barOpenBtn = document.getElementById("assistant-bar-open");
+  const barDismissBtn = document.getElementById("assistant-bar-dismiss");
+  const barPromptEl = document.getElementById("assistant-bar-prompt");
   const drawer = document.getElementById("assistant-drawer");
   const closeBtn = document.getElementById("assistant-close");
   const scrollTopBtn = document.getElementById("scroll-top-btn");
 
-  // Scroll-to-Top button (TopFast Reports style)
-  if (scrollTopBtn) {
-    const toggleScrollTop = () => {
+  const rotatingPrompts = isFa
+    ? [
+        "درباره تجربه علیرضا در DeltaFX و ایران‌سرور بپرسید...",
+        "سیستم طراحی Made In Iran چطور از صفر ساخته شد؟",
+        "می‌خواهید مستقیم در تلگرام با علیرضا چت کنید؟",
+        "بیش از ۵ سال تجربه در فینتک، GovTech و سیستم‌های طراحی",
+      ]
+    : [
+        "Ask about Alireza's work at DeltaFX & IranServer...",
+        "How did he build Made In Iran's 0-to-1 design system?",
+        "Want to chat directly with Alireza on Telegram?",
+        "Explore his 5+ years across Fintech, GovTech & AI...",
+      ];
+
+  let promptIdx = 0;
+  let barDismissed = false;
+  let isOpen = false;
+  let pollTimer = null;
+
+  const syncFloatingChrome = () => {
+    const scrolled = window.scrollY > 240;
+    const isDesktop = window.innerWidth > 960;
+
+    if (scrollTopBtn) {
       scrollTopBtn.classList.toggle("is-visible", window.scrollY > 420);
-    };
-    window.addEventListener("scroll", toggleScrollTop, { passive: true });
-    toggleScrollTop();
+    }
+
+    if (bar) {
+      const showBar = isDesktop && scrolled && !barDismissed && !isOpen;
+      bar.classList.toggle("is-visible", showBar);
+      bar.setAttribute("aria-hidden", String(!showBar));
+    }
+
+    if (fab) {
+      const showCompactFab = !isOpen && (!isDesktop || barDismissed || !scrolled);
+      fab.classList.toggle("is-visible", showCompactFab);
+    }
+  };
+
+  if (scrollTopBtn) {
     scrollTopBtn.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
 
+  window.addEventListener("scroll", syncFloatingChrome, { passive: true });
+  window.addEventListener("resize", syncFloatingChrome, { passive: true });
+
   if (!fab || !drawer) return;
 
-  let isOpen = false;
-  let pollTimer = null;
-
-  const setOpen = (next, tabToFocus = null) => {
+  const setOpen = (next, tabToFocus = null, prefillText = "") => {
     isOpen = next;
     drawer.classList.toggle("is-open", isOpen);
     drawer.setAttribute("aria-hidden", String(!isOpen));
     fab.setAttribute("aria-expanded", String(isOpen));
     if (tabToFocus) activateTab(tabToFocus);
+    if (isOpen && prefillText) {
+      const inputEl = document.getElementById("ai-input");
+      if (inputEl && !inputEl.value.trim()) {
+        inputEl.value = prefillText;
+        window.setTimeout(() => inputEl.focus(), 120);
+      }
+    }
+    syncFloatingChrome();
   };
 
   // Expose helper so "Let's talk" buttons can open the Live Chat directly!
   window.openPortfolioChat = (tab = "chat") => setOpen(true, tab);
 
   fab.addEventListener("click", () => setOpen(!isOpen));
+  barOpenBtn?.addEventListener("click", () => {
+    const activePrompt = rotatingPrompts[promptIdx];
+    const isTgPrompt = activePrompt.toLowerCase().includes("telegram") || activePrompt.includes("تلگرام");
+    setOpen(true, isTgPrompt ? "chat" : "ai", isTgPrompt ? "" : activePrompt);
+  });
+  barDismissBtn?.addEventListener("click", () => {
+    barDismissed = true;
+    syncFloatingChrome();
+  });
   closeBtn?.addEventListener("click", () => setOpen(false));
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && isOpen) setOpen(false);
   });
 
+  // Rotate prompt suggestions inside the Hostinger-style bottom-center bar
+  if (barPromptEl) {
+    window.setInterval(() => {
+      if (isOpen || barDismissed || document.hidden) return;
+      barPromptEl.classList.add("is-fading");
+      window.setTimeout(() => {
+        promptIdx = (promptIdx + 1) % rotatingPrompts.length;
+        barPromptEl.textContent = rotatingPrompts[promptIdx];
+        barPromptEl.classList.remove("is-fading");
+      }, 220);
+    }, 4200);
+  }
+
   // Auto-close drawer when clicking/tapping anywhere outside the drawer or launcher
   document.addEventListener("pointerdown", (e) => {
     if (!isOpen) return;
-    if (drawer.contains(e.target) || fab.contains(e.target) || e.target.closest("[data-open-chat]")) {
+    if (
+      drawer.contains(e.target) ||
+      fab.contains(e.target) ||
+      bar?.contains(e.target) ||
+      e.target.closest("[data-open-chat]")
+    ) {
       return;
     }
     setOpen(false);
   });
+
+  syncFloatingChrome();
 
   // Any element with [data-open-chat] opens the live Telegram chat tab
   document.querySelectorAll("[data-open-chat]").forEach((el) => {

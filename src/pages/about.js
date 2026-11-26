@@ -10,46 +10,36 @@ export function renderAboutPage(content) {
   const a = content.aboutPage;
 
   return `
-    <!-- Intro -->
-    <section class="section" style="padding-top:clamp(44px,6vw,76px);">
-      <div class="container about-grid">
-        <div>
-          <div class="about-portrait-chip">
-            <img src="/assets/alireza-portrait.jpg" alt="${PROFILE.name}" width="48" height="48" />
-            <div>
-              <div style="font-weight:700;font-size:0.95rem;color:var(--ink);">
-                ${content.lang === "fa" ? "علیرضا محمدزاده فرشچی" : PROFILE.name}
-              </div>
-              <div style="font-size:0.8rem;color:var(--ink-muted);">
-                ${content.lang === "fa" ? "طراح محصول · +۴ سال تجربه" : "Product Designer · 5+ years Experience"}
-              </div>
-            </div>
-          </div>
-
-          <div class="eyebrow">
-            <span class="eyebrow__dot" aria-hidden="true"></span>
-            <span>${a.eyebrow}</span>
-          </div>
-          <h1 class="section-title" style="font-size:clamp(2.2rem,4.2vw,3.5rem);">${a.heading}</h1>
-          <p class="section-desc" style="margin-bottom:24px;">${a.lead}</p>
-          <div class="about-body">
-            ${content.about.paragraphs.map((p) => `<p>${p}</p>`).join("")}
-          </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;">
-            <a class="btn btn--primary" href="${PROFILE.resumeUrl}" target="_blank" rel="noopener noreferrer">
-              <span>${content.experience.cta}</span>
-              <span aria-hidden="true">↗</span>
-            </a>
-            <a class="btn btn--secondary" href="mailto:${PROFILE.email}">
-              <span>${PROFILE.email}</span>
-            </a>
-          </div>
+    <!-- Full-Width Interactive Falling-Code Portrait Hero Banner -->
+    <section class="about-page-hero">
+      <div class="about-page-hero__canvas-wrap" id="about-portrait-stage" aria-label="${PROFILE.name} interactive code portrait">
+        <div class="about-matrix-modes" role="group" aria-label="Portrait code color mode">
+          <button type="button" class="about-matrix-dot about-matrix-dot--blue is-active" data-matrix-color="blue" title="Cobalt Blue"></button>
+          <button type="button" class="about-matrix-dot about-matrix-dot--green" data-matrix-color="green" title="Matrix Green"></button>
+          <button type="button" class="about-matrix-dot about-matrix-dot--mono" data-matrix-color="mono" title="Monochrome"></button>
         </div>
+        <canvas class="about-portrait-canvas" id="about-portrait-canvas"></canvas>
+        <div class="about-page-hero__veil" aria-hidden="true"></div>
+      </div>
 
-        <div>
-          <div class="sculpture-frame sculpture-frame--landscape">
-            <img src="/assets/sculpture-about.jpg" alt="${content.about.sculptureAlt}" />
-          </div>
+      <div class="container container--narrow about-page-hero__content">
+        <div class="eyebrow">
+          <span class="eyebrow__dot" aria-hidden="true"></span>
+          <span>${a.eyebrow}</span>
+        </div>
+        <h1 class="section-title" style="font-size:clamp(2.2rem,4.4vw,3.5rem);">${a.heading}</h1>
+        <p class="section-desc" style="margin-bottom:20px;">${a.lead}</p>
+        <div class="about-body">
+          ${content.about.paragraphs.map((p) => `<p>${p}</p>`).join("")}
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;">
+          <a class="btn btn--primary" href="${PROFILE.resumeUrl}" data-open-resume="true">
+            <span>${content.experience.cta}</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+          <button type="button" class="btn btn--secondary" data-open-contact="true">
+            <span>${content.nav.cta}</span>
+          </button>
         </div>
       </div>
     </section>
