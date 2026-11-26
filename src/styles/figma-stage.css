@@ -1,8 +1,9 @@
 /* ==========================================================================
-   Authentic Figma UI3 Workspace (Hero Centerpiece)
-   Matches real Figma UI3: Top file tabs, Left Pages+Layers, Flat #1E1E1E
-   canvas with Top & Left Pixel Rulers, Floating Bottom Tool Dock, and
-   Live-Updating Right Design Inspector.
+   Authentic Figma UI3 Workspace (True Detached Floating Islands Architecture)
+   - Flat #1E1E1E full-bleed fixed-height canvas (zero jump on tab switch!)
+   - Floating rounded Left Island (File/Assets + Pages + Interactive Layers)
+   - Floating rounded Right Island (Design / Inspect + Zoom Dropdown + CSS Tokens)
+   - Floating UI3 Bottom Toolbar (Move V, Hand H, Comment C, Zoom, Dev Mode Switch)
    ========================================================================== */
 
 .figma-ui3 {
@@ -22,49 +23,43 @@
   box-shadow: 0 36px 96px rgba(0, 0, 0, 0.72), 0 0 42px rgba(22, 94, 246, 0.16);
 }
 
-/* --- Top Figma App Tab Bar --- */
+/* Guarantee [hidden] always hides elements cleanly even when display:flex/grid is set */
+.figma-ui3 [hidden] {
+  display: none !important;
+}
+
+/* --- Top Figma File Tab Bar --- */
 .fg-tabbar {
   display: flex;
   align-items: center;
-  gap: 14px;
-  height: 36px;
+  height: 38px;
   padding: 0 12px;
   background: #2c2c2c;
   border-bottom: 1px solid #3c3c3c;
   font-size: 11px;
 }
 
-.fg-traffic {
-  display: flex;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.fg-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-.fg-dot--red { background: #ff5f56; }
-.fg-dot--yellow { background: #ffbd2e; }
-.fg-dot--green { background: #27c93f; }
-
 .fg-tabs {
   display: flex;
   align-items: center;
   gap: 4px;
   height: 100%;
-  overflow: hidden;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
-.fg-home-ico {
+.fg-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.fg-figma-mark {
   width: 26px;
   height: 26px;
   border-radius: 6px;
   display: grid;
   place-items: center;
-  color: #b3b3b3;
-  font-size: 13px;
+  margin-right: 4px;
+  flex-shrink: 0;
 }
 
 .fg-tab {
@@ -78,7 +73,8 @@
   font-size: 11px;
   white-space: nowrap;
   cursor: pointer;
-  transition: background-color 160ms ease, color 160ms ease;
+  flex-shrink: 0;
+  transition: background-color 150ms ease, color 150ms ease;
 }
 
 .fg-tab:hover {
@@ -92,190 +88,31 @@
   font-weight: 500;
 }
 
-.fg-open-project-btn {
-  display: block;
-  width: 100%;
-  text-align: center;
-  padding: 7px 10px;
-  border-radius: 6px;
-  background: #165ef6;
-  color: #ffffff;
-  font-size: 10px;
-  font-weight: 600;
-  transition: background-color 160ms ease;
-}
-
-.fg-open-project-btn:hover {
-  background: #2b6ff8;
-}
-
 .fg-tab-dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 2px;
   background: #0d99ff;
 }
 
-.fg-tab em {
-  font-style: normal;
-  color: #8c8c8c;
-  margin-left: 2px;
-}
-
-.fg-tab-add {
-  width: 24px;
-  height: 24px;
-  display: grid;
-  place-items: center;
-  color: #9a9a9a;
-  font-size: 14px;
-}
-
-/* --- 3-Column Figma UI3 Body --- */
-.fg-body {
-  display: grid;
-  grid-template-columns: 186px minmax(0, 1fr) 196px;
-  background: #1e1e1e;
-}
-
-/* Left Panel */
-.fg-left {
-  background: #2c2c2c;
-  border-right: 1px solid #3c3c3c;
-  padding: 10px 9px;
-  font-size: 10.5px;
-  color: #cccccc;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.fg-file-head {
-  padding: 2px 4px 10px;
-  margin-bottom: 6px;
-  border-bottom: 1px solid #3c3c3c;
-}
-
-.fg-file-name {
-  font-size: 11px;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.fg-file-sub {
-  font-size: 9.5px;
-  color: #9a9a9a;
-  margin-top: 2px;
-}
-
-.fg-section-head {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 5px;
-  font-size: 10px;
-  font-weight: 600;
-  color: #e5e5e5;
-}
-
-.fg-page {
-  padding: 4px 8px;
-  border-radius: 5px;
-  font-size: 10.5px;
-  color: #b5b5b5;
-}
-
-.fg-page--active {
-  background: #383838;
-  color: #ffffff;
-  font-weight: 500;
-}
-
-.fg-layer {
-  padding: 4.5px 7px;
-  border-radius: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 10px;
-  transition: background-color 180ms ease, color 180ms ease;
-}
-
-.fg-layer--frame {
-  color: #ffffff;
-  font-weight: 500;
-}
-
-.fg-layer--child {
-  padding-left: 15px;
-  color: #b3b3b3;
-}
-
-.fg-layer--comp {
-  padding-left: 15px;
-  color: #b89aff;
-}
-
-.fg-layer--comp.is-selected {
-  background: #38557a;
-  color: #ffffff;
-}
-
-/* --- Center Flat #1E1E1E Canvas + Pixel Rulers --- */
-.fg-canvas-shell {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  background: #1e1e1e;
-}
-
-.fg-ruler-top {
-  height: 18px;
-  padding-left: 18px;
-  background: #252525;
-  border-bottom: 1px solid #343434;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-right: 16px;
-  font-size: 8.5px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  color: #7c7c7c;
-}
-
-.fg-canvas-row {
-  display: flex;
-  flex: 1;
-  min-width: 0;
-}
-
-.fg-ruler-left {
-  width: 18px;
-  background: #252525;
-  border-right: 1px solid #343434;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  font-size: 8px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  color: #7c7c7c;
-}
-
-.fg-ruler-left span {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-}
-
-.fg-canvas {
+/* --- True Figma UI3 Full-Bleed Workspace (Fixed Height = Zero Tab Jump!) --- */
+.fg-workspace {
   position: relative;
-  flex: 1;
-  min-width: 0;
-  padding: 18px 20px 58px;
+  width: 100%;
+  height: 572px;
+  background: #1e1e1e;
+  overflow: hidden;
+}
+
+/* Full-Bleed Flat #1E1E1E Infinite Canvas */
+.fg-canvas {
+  position: absolute;
+  inset: 0;
   background: #1e1e1e;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 24px 248px 72px 220px;
   overflow: hidden;
 }
 
@@ -302,60 +139,22 @@
   cursor: crosshair;
 }
 
-/* Floating Zoom Controls (75% / 100% / 125% + Reset) */
-.fg-zoom-bar {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  z-index: 22;
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  padding: 3px;
-  border-radius: 8px;
-  background: rgba(44, 44, 44, 0.92);
-  backdrop-filter: blur(8px);
-  border: 1px solid #444444;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
-}
-
-.fg-zoom-pill,
-.fg-zoom-reset {
-  padding: 3px 7px;
-  border-radius: 5px;
-  font-size: 9.5px;
-  font-weight: 600;
-  color: #b5b5b5;
-  cursor: pointer;
-  transition: background-color 140ms ease, color 140ms ease;
-}
-
-.fg-zoom-pill:hover,
-.fg-zoom-reset:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-}
-
-.fg-zoom-pill.is-active {
-  background: #0d99ff;
-  color: #ffffff;
-}
-
 .fg-tool-toast {
   position: absolute;
-  top: 10px;
+  top: 14px;
   left: 50%;
   transform: translateX(-50%) translateY(-6px);
-  z-index: 24;
-  padding: 5px 11px;
+  z-index: 35;
+  padding: 5px 12px;
   border-radius: 999px;
-  background: rgba(22, 24, 30, 0.94);
+  background: rgba(24, 26, 32, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.14);
   color: #f4f5f8;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 500;
   pointer-events: none;
   opacity: 0;
+  white-space: nowrap;
   transition: opacity 180ms ease, transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -364,27 +163,35 @@
   transform: translateX(-50%) translateY(0);
 }
 
+/* Centered Artboard Container (Fits cleanly inside fixed canvas for EVERY tab!) */
 .fg-artboard-block {
   width: 100%;
-  max-width: 780px;
+  max-width: 680px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   transform-origin: center center;
   will-change: transform;
 }
 
 .fg-artboard-label {
+  width: 100%;
   font-size: 10px;
   color: #7cc4fa;
   margin-bottom: 6px;
   font-weight: 500;
+  text-align: left;
 }
 
 .fg-artboard {
   position: relative;
   width: 100%;
+  max-height: 410px;
   aspect-ratio: 889 / 502;
   border-radius: 6px;
   overflow: visible;
-  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 20px 52px rgba(0, 0, 0, 0.58);
 }
 
 .fg-artboard-img {
@@ -395,14 +202,476 @@
   object-fit: cover;
 }
 
-/* Interactive Hit Targets */
+/* --- Floating UI3 Detached Rounded Islands --- */
+.fg-island {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  z-index: 30;
+  background: rgba(44, 44, 44, 0.96);
+  backdrop-filter: blur(12px);
+  border: 1px solid #3f3f44;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* Left Floating Island */
+.fg-left {
+  left: 12px;
+  width: 196px;
+  padding: 11px 10px;
+  font-size: 10.5px;
+  color: #cccccc;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fg-file-head {
+  padding: 2px 4px 9px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #3c3c3c;
+}
+
+.fg-file-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.fg-file-sub {
+  font-size: 9.5px;
+  color: #9a9a9a;
+  margin-top: 2px;
+}
+
+.fg-left-tabs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 3px 5px 8px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #383838;
+  font-size: 10px;
+  color: #8f8f8f;
+}
+
+.fg-left-tabs .is-active {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.fg-section-head {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 5px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #e5e5e5;
+}
+
+.fg-page {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 10.5px;
+  color: #b5b5b5;
+}
+
+.fg-page--active {
+  background: #383838;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.fg-layer {
+  width: 100%;
+  text-align: left;
+  padding: 5px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.fg-layer--frame {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.fg-layer--comp {
+  padding-left: 14px;
+  color: #b89aff;
+  cursor: pointer;
+}
+
+.fg-layer--comp:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.fg-layer--comp.is-selected {
+  background: #38557a;
+  color: #ffffff;
+}
+
+.figma-ui3.is-dev-mode .fg-layer--comp.is-selected {
+  background: rgba(20, 174, 92, 0.28);
+  color: #ffffff;
+}
+
+/* Right Floating Island */
+.fg-right {
+  right: 12px;
+  width: 222px;
+  padding: 11px 12px;
+  font-size: 10px;
+  color: #cccccc;
+}
+
+.fg-right-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 9px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #3c3c3c;
+}
+
+.fg-avatars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fg-av {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+
+.fg-av--owner {
+  background: #0d99ff;
+  color: #ffffff;
+}
+
+.fg-av--guest {
+  background: #0acf83;
+  color: #052619;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 180ms ease, transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.figma-ui3.is-guest-active .fg-av--guest {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.fg-share-btn {
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #0d99ff;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.fg-right-tabs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 9px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #3c3c3c;
+}
+
+.fg-rtab {
+  color: #8f8f8f;
+  font-size: 10.5px;
+  cursor: pointer;
+  padding: 2px 0;
+  transition: color 140ms ease;
+}
+
+.fg-rtab:hover {
+  color: #e0e0e0;
+}
+
+.fg-rtab.is-active {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Native UI3 Zoom Dropdown in Right Island */
+.fg-zoom-wrap {
+  position: relative;
+  margin-left: auto;
+}
+
+.fg-zoom-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 6px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #d4d4d4;
+  cursor: pointer;
+  transition: background-color 140ms ease;
+}
+
+.fg-zoom-trigger:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.fg-zoom-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 128px;
+  padding: 4px;
+  border-radius: 8px;
+  background: #222327;
+  border: 1px solid #444752;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fg-zoom-opt {
+  width: 100%;
+  text-align: left;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 10px;
+  color: #d4d4d4;
+  cursor: pointer;
+}
+
+.fg-zoom-opt:hover {
+  background: #0d99ff;
+  color: #ffffff;
+}
+
+.fg-zoom-opt.is-active {
+  color: #57c1ff;
+  font-weight: 600;
+}
+
+.fg-zoom-divider {
+  height: 1px;
+  background: #3c3e46;
+  margin: 2px 4px;
+}
+
+/* Inspector Blocks */
+.fg-insp-block {
+  padding-bottom: 11px;
+  margin-bottom: 11px;
+  border-bottom: 1px solid #383838;
+}
+
+.fg-insp-block:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.fg-insp-title {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 7px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fg-insp-label {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #b5b5b5;
+  margin-bottom: 6px;
+}
+
+.fg-insp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.fg-insp-grid span {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 6px;
+  border-radius: 5px;
+  background: #383838;
+  color: #9a9a9a;
+  font-size: 9.5px;
+}
+
+.fg-insp-grid em {
+  font-style: normal;
+  color: #ffffff;
+}
+
+.fg-fill-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 7px;
+  border-radius: 5px;
+  background: #383838;
+  font-size: 9.5px;
+  color: #ffffff;
+}
+
+.fg-fill-row em {
+  margin-left: auto;
+  font-style: normal;
+  color: #9c9c9c;
+  font-size: 8.5px;
+}
+
+.fg-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.fg-al-row {
+  display: flex;
+  gap: 5px;
+}
+
+.fg-al-row span {
+  flex: 1;
+  text-align: center;
+  padding: 4px;
+  border-radius: 5px;
+  background: #383838;
+  color: #d6d6d6;
+  font-size: 9.5px;
+}
+
+.fg-open-project-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 7px 10px;
+  border-radius: 6px;
+  background: #165ef6;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 600;
+  transition: background-color 150ms ease;
+}
+
+.fg-open-project-btn:hover {
+  background: #2b6ff8;
+}
+
+/* Dev Mode Inspector */
+.fg-dev-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(20, 174, 92, 0.16);
+  border: 1px solid rgba(20, 174, 92, 0.4);
+  color: #5be89d;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+.fg-dev-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #14ae5c;
+}
+
+.fg-token-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.fg-token-chips span {
+  padding: 2.5px 6px;
+  border-radius: 4px;
+  background: #363942;
+  color: #9ed4ff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 8.5px;
+}
+
+.fg-dev-code-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.fg-copy-css-btn {
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: #383838;
+  color: #e5e5e5;
+  font-size: 9px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 140ms ease;
+}
+
+.fg-copy-css-btn:hover {
+  background: #14ae5c;
+  color: #ffffff;
+}
+
+.fg-dev-code {
+  margin: 0;
+  padding: 8px 9px;
+  border-radius: 7px;
+  background: #1b1d22;
+  border: 1px solid #353842;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  line-height: 1.55;
+  color: #d6d9e2;
+  overflow-x: auto;
+  user-select: text;
+}
+
+.fg-tok-var { color: #5be89d; }
+.fg-tok-prop { color: #8ec5ff; }
+.fg-tok-num { color: #f6b779; }
+.fg-tok-val { color: #d6b6ff; }
+.fg-tok-fn { color: #7cc4fa; }
+
+/* --- Interactive Hit Targets, Hover, Selection & Smart Guides --- */
 .fg-hotspot {
   position: absolute;
   z-index: 4;
   border-radius: 8px;
 }
 
-/* Thin Figma Hover Box (no handles) */
 .fg-hover-box {
   position: absolute;
   z-index: 6;
@@ -417,7 +686,6 @@
   opacity: 0.75;
 }
 
-/* Active Figma Selection Bounding Box */
 .fg-select-box {
   position: absolute;
   z-index: 8;
@@ -463,7 +731,6 @@
   white-space: nowrap;
 }
 
-/* Red Alt-Measure Smart Guide between KPI 1 & KPI 2 */
 .fg-smart-guide {
   position: absolute;
   top: 25%;
@@ -498,7 +765,18 @@
   font-weight: 700;
 }
 
-/* Alireza's Human-Physics Cursor */
+/* Dev Mode Emerald Accent Overrides */
+.figma-ui3.is-dev-mode .fg-select-box,
+.figma-ui3.is-dev-mode .fg-hover-box,
+.figma-ui3.is-dev-mode .fg-h {
+  border-color: #14ae5c;
+}
+
+.figma-ui3.is-dev-mode .fg-dim-pill {
+  background: #14ae5c;
+}
+
+/* --- Cursors --- */
 .fg-alireza-cursor {
   position: absolute;
   z-index: 15;
@@ -524,7 +802,6 @@
   font-weight: 600;
 }
 
-/* Visitor Multiplayer "Guest" Cursor */
 .fg-guest-cursor {
   position: absolute;
   top: 0;
@@ -574,98 +851,7 @@
   }
 }
 
-/* --- Real Figma UI3 Floating Bottom Tool Dock --- */
-.fg-bottom-dock {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 18;
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  padding: 4px 6px;
-  border-radius: 12px;
-  background: #2c2c2c;
-  border: 1px solid #444444;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
-}
-
-.fg-dock-btn {
-  width: 28px;
-  height: 28px;
-  border-radius: 7px;
-  display: grid;
-  place-items: center;
-  font-size: 12px;
-  color: #cccccc;
-  cursor: pointer;
-  transition: background-color 140ms ease, color 140ms ease;
-}
-
-.fg-dock-btn:hover:not(.fg-dock-btn--passive):not(.fg-dock-btn--active) {
-  background: rgba(255, 255, 255, 0.09);
-  color: #ffffff;
-}
-
-.fg-dock-btn--passive {
-  opacity: 0.45;
-  cursor: default;
-}
-
-.fg-dock-btn--active {
-  background: #0d99ff;
-  color: #ffffff;
-}
-
-.fg-dock-sep {
-  width: 1px;
-  height: 18px;
-  background: #444444;
-  margin: 0 3px;
-}
-
-.fg-dock-dev {
-  padding: 4px 8px;
-  border-radius: 7px;
-  background: #383838;
-  color: #b3b3b3;
-  font-size: 10px;
-  font-weight: 600;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
-}
-
-.fg-dock-dev:hover {
-  background: #444444;
-  color: #ffffff;
-}
-
-.fg-dock-dev.is-active {
-  background: #14ae5c;
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 14px rgba(20, 174, 92, 0.45);
-}
-
-/* Dev Mode Emerald Accent Overrides */
-.figma-ui3.is-dev-mode .fg-select-box,
-.figma-ui3.is-dev-mode .fg-hover-box,
-.figma-ui3.is-dev-mode .fg-h {
-  border-color: #14ae5c;
-}
-
-.figma-ui3.is-dev-mode .fg-dim-pill {
-  background: #14ae5c;
-}
-
-.figma-ui3.is-dev-mode .fg-zoom-pill.is-active {
-  background: #14ae5c;
-}
-
-/* Interactive Comment Pins & Popover */
+/* --- Edge-Aware Comment Pins & Composer --- */
 .fg-comments-layer {
   position: absolute;
   inset: 0;
@@ -723,6 +909,16 @@
   text-align: left;
 }
 
+.fg-comment-pin.flip-x .fg-pin-card {
+  left: auto;
+  right: 0;
+}
+
+.fg-comment-pin.flip-y .fg-pin-card {
+  top: auto;
+  bottom: 28px;
+}
+
 .fg-pin-card__head {
   display: flex;
   align-items: center;
@@ -762,12 +958,24 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  width: 210px;
+  width: 204px;
   padding: 5px 6px;
   border-radius: 10px;
   background: #25262b;
   border: 1px solid #0d99ff;
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.62);
+}
+
+.fg-comment-composer.flip-x {
+  transform: translateX(-100%);
+}
+
+.fg-comment-composer.flip-y {
+  transform: translateY(-100%);
+}
+
+.fg-comment-composer.flip-x.flip-y {
+  transform: translate(-100%, -100%);
 }
 
 .fg-comment-composer input {
@@ -799,322 +1007,155 @@
   flex-shrink: 0;
 }
 
-/* Right Panel Tabs + Dev Mode Inspect / CSS Tokens */
-.fg-rtab {
-  color: #8f8f8f;
-  font-size: 10px;
-  cursor: pointer;
-  padding: 2px 0;
-  transition: color 140ms ease;
-}
-
-.fg-rtab:hover {
-  color: #e0e0e0;
-}
-
-.fg-rtab.is-active {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.fg-dev-badge {
+/* --- Authentic Figma UI3 Floating Bottom Toolbar + Pill Dev Mode Switch --- */
+.fg-bottom-dock {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 32;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 8px;
-  border-radius: 6px;
-  background: rgba(20, 174, 92, 0.16);
-  border: 1px solid rgba(20, 174, 92, 0.4);
-  color: #5be89d;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  margin-bottom: 10px;
-}
-
-.fg-dev-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #14ae5c;
-}
-
-.fg-token-chips {
-  display: flex;
-  flex-wrap: wrap;
   gap: 4px;
+  padding: 5px 7px;
+  border-radius: 13px;
+  background: rgba(44, 44, 44, 0.96);
+  backdrop-filter: blur(12px);
+  border: 1px solid #444448;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
 }
 
-.fg-token-chips span {
-  padding: 2.5px 6px;
-  border-radius: 4px;
-  background: #363942;
-  color: #9ed4ff;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 8.5px;
-}
-
-.fg-dev-code-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 6px;
-}
-
-.fg-copy-css-btn {
-  padding: 2px 7px;
-  border-radius: 4px;
-  background: #383838;
-  color: #e5e5e5;
-  font-size: 9px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 140ms ease;
-}
-
-.fg-copy-css-btn:hover {
-  background: #14ae5c;
-  color: #ffffff;
-}
-
-.fg-dev-code {
-  margin: 0;
-  padding: 8px;
-  border-radius: 6px;
-  background: #1b1d22;
-  border: 1px solid #353842;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 8.8px;
-  line-height: 1.55;
-  color: #d6d9e2;
-  overflow-x: auto;
-  user-select: text;
-}
-
-.fg-tok-var { color: #5be89d; }
-.fg-tok-prop { color: #8ec5ff; }
-.fg-tok-num { color: #f6b779; }
-.fg-tok-val { color: #d6b6ff; }
-.fg-tok-fn { color: #7cc4fa; }
-
-/* --- Right Design Inspector --- */
-.fg-right {
-  background: #2c2c2c;
-  border-left: 1px solid #3c3c3c;
-  padding: 10px 11px;
-  font-size: 10px;
-  color: #cccccc;
-}
-
-.fg-right-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 10px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid #3c3c3c;
-}
-
-.fg-avatars {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.fg-av {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  font-size: 9px;
-  font-weight: 700;
+.fg-dock-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
   display: grid;
   place-items: center;
-}
-
-.fg-av--owner {
-  background: #0d99ff;
-  color: #ffffff;
-}
-
-.fg-av--guest {
-  background: #0acf83;
-  color: #052619;
-  opacity: 0;
-  transform: scale(0.7);
-  transition: opacity 180ms ease, transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.figma-ui3.is-guest-active .fg-av--guest {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.fg-right-actions {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.fg-play-btn {
-  color: #d4d4d4;
-  font-size: 11px;
-}
-
-.fg-share-btn {
-  padding: 4px 10px;
-  border-radius: 6px;
-  background: #0d99ff;
-  color: #ffffff;
-  font-size: 10px;
-  font-weight: 600;
-}
-
-.fg-right-tabs {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-bottom: 9px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #3c3c3c;
-  font-size: 10px;
-  color: #8f8f8f;
-}
-
-.fg-right-tabs .is-active {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.fg-zoom-val {
-  margin-left: auto;
-  color: #c2c2c2;
-}
-
-.fg-insp-block {
-  padding-bottom: 11px;
-  margin-bottom: 11px;
-  border-bottom: 1px solid #383838;
-}
-
-.fg-insp-block:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
-.fg-insp-title {
-  font-size: 10px;
-  font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 7px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.fg-insp-label {
-  font-size: 9.5px;
-  font-weight: 600;
-  color: #e0e0e0;
-  margin-bottom: 6px;
-}
-
-.fg-insp-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px;
-}
-
-.fg-insp-grid span {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 6px;
-  border-radius: 4px;
-  background: #383838;
-  color: #9a9a9a;
-  font-size: 9.5px;
-}
-
-.fg-insp-grid em {
-  font-style: normal;
-  color: #ffffff;
-}
-
-.fg-fill-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 6px;
-  border-radius: 4px;
-  background: #383838;
-  font-size: 9.5px;
-  color: #ffffff;
-}
-
-.fg-fill-row em {
-  margin-left: auto;
-  font-style: normal;
-  color: #9c9c9c;
-  font-size: 8.5px;
-}
-
-.fg-swatch {
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  flex-shrink: 0;
-}
-
-.fg-al-row {
-  display: flex;
-  gap: 5px;
-}
-
-.fg-al-row span {
-  flex: 1;
-  text-align: center;
-  padding: 4px;
-  border-radius: 4px;
-  background: #383838;
-  color: #d6d6d6;
-  font-size: 9.5px;
-}
-
-.fg-export-row {
-  padding: 5px 7px;
-  border-radius: 4px;
-  background: #383838;
+  font-size: 12px;
   color: #cccccc;
-  font-size: 9.5px;
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease;
 }
 
-/* Responsive */
-@media (max-width: 1020px) {
-  .fg-body {
-    grid-template-columns: minmax(0, 1fr);
-  }
+.fg-dock-btn:hover:not(.fg-dock-btn--active) {
+  background: rgba(255, 255, 255, 0.09);
+  color: #ffffff;
+}
 
-  .fg-left,
-  .fg-right,
-  .fg-ruler-top,
-  .fg-ruler-left {
+.fg-dock-btn--active {
+  background: #0d99ff;
+  color: #ffffff;
+}
+
+.fg-dock-sep {
+  width: 1px;
+  height: 18px;
+  background: #444448;
+  margin: 0 2px;
+}
+
+.fg-dock-zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 7px;
+  background: #222327;
+}
+
+.fg-dz-btn {
+  padding: 3px 6px;
+  border-radius: 5px;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #a6a6a6;
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.fg-dz-btn:hover {
+  color: #ffffff;
+}
+
+.fg-dz-btn.is-active {
+  background: #38383d;
+  color: #ffffff;
+}
+
+.figma-ui3.is-dev-mode .fg-dz-btn.is-active {
+  background: rgba(20, 174, 92, 0.28);
+  color: #5be89d;
+}
+
+/* True Figma UI3 Pill-Shaped Dev Mode Switch */
+.fg-dev-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 8px;
+  background: #222327;
+  border: 1px solid #3c3e46;
+  cursor: pointer;
+  transition: border-color 160ms ease;
+}
+
+.fg-dev-switch__opt {
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9.5px;
+  font-weight: 700;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #8f93a0;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.fg-dev-switch__opt--design {
+  background: #38383d;
+  color: #ffffff;
+}
+
+.fg-dev-switch.is-active {
+  border-color: rgba(20, 174, 92, 0.55);
+}
+
+.fg-dev-switch.is-active .fg-dev-switch__opt--design {
+  background: transparent;
+  color: #8f93a0;
+}
+
+.fg-dev-switch.is-active .fg-dev-switch__opt--code {
+  background: #14ae5c;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(20, 174, 92, 0.45);
+}
+
+/* --- Responsive --- */
+@media (max-width: 1080px) {
+  .fg-island {
     display: none;
   }
 
+  .fg-workspace {
+    height: 440px;
+  }
+
   .fg-canvas {
-    padding: 12px 12px 54px;
+    padding: 18px 18px 66px;
   }
 }
 
 @media (max-width: 580px) {
-  .fg-tabs .fg-tab:not(.fg-tab--active),
-  .fg-tab-add {
-    display: none;
+  .fg-workspace {
+    height: 360px;
   }
 
   .fg-bottom-dock {
-    transform: translateX(-50%) scale(0.88);
-    bottom: 8px;
+    transform: translateX(-50%) scale(0.9);
+    bottom: 10px;
   }
 }

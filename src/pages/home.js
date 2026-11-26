@@ -173,7 +173,7 @@ export function renderHomePage(content) {
             <span>${isFa ? "فایل زنده فیگما · قابل تعامل با موس شما" : "LIVE FIGMA WORKSPACE · INTERACTIVE MULTIPLAYER"}</span>
           </div>
           <p class="figma-showcase-hint">
-            ${isFa ? "موس را روی بوم ببرید، بین تب‌ها جابه‌جا شوید، با دست (H) بوم را بکشید، کامنت (C) بگذارید یا Dev Mode (</>) را فعال کنید." : "Switch tabs, drag with Hand (H), zoom 75–125%, drop a Comment (C), or toggle Dev Mode (</>) to inspect CSS tokens."}
+            ${isFa ? "موس را روی بوم ببرید، بین تب‌ها جابه‌جا شوید، با دست (H) بوم را بکشید، کامنت (C) بگذارید یا Dev Mode (&lt;/&gt;) را فعال کنید." : "Switch tabs, drag with Hand (H), zoom 75–125%, drop a Comment (C), or toggle Dev Mode (&lt;/&gt;) to inspect CSS tokens."}
           </p>
         </div>
         <div class="hero__visual reveal">

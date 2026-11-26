@@ -1,10 +1,11 @@
 /* ==========================================================================
    Authentic Figma UI3 Interactive Multi-Tab Live Workspace
-   - Interactive top tabs: Dashify, IranServer DS, Made In Iran, Farano, Word+
-   - Real Dev Mode (</>) toggle switching Right Panel to Inspect / CSS Tokens
-   - Real Hand Tool (H) drag-to-pan + Zoom (75% / 100% / 125%) + Reset
-   - Real Comment Tool (C) to drop interactive comment pins anywhere on canvas
-   - Human-like Bezier cursor engine + Interactive Multiplayer "Guest" cursor
+   - True Figma UI3 architecture: Full-bleed #1E1E1E canvas with floating
+     rounded Left Island (File/Assets, Pages, Layers), floating Right Island
+     (Design / Inspect + Zoom 75/100/125% dropdown), and floating Bottom Dock
+     with UI3 pill-shaped Dev Mode (</>) switch.
+   - Real Hand Tool (H) drag-to-pan, Zoom (75% / 100% / 125% / Reset),
+     Comment Tool (C) with edge-aware pins, and interactive Layer selection.
    ========================================================================== */
 
 const FIGMA_TABS = [
@@ -19,10 +20,10 @@ const FIGMA_TABS = [
     projectSlug: null,
     interactiveTargets: true,
     layers: [
-      { id: "layer-sales", label: "❖ KPI / Total Sales", type: "comp" },
-      { id: "layer-orders", label: "❖ KPI / Total Orders", type: "comp" },
-      { id: "layer-table", label: "❖ Table / Recent Sales", type: "comp" },
-      { id: "layer-chart", label: "❖ Chart / Sales Expert", type: "comp" },
+      { id: "layer-sales", targetId: "kpi-sales", label: "❖ KPI / Total Sales" },
+      { id: "layer-orders", targetId: "kpi-orders", label: "❖ KPI / Total Orders" },
+      { id: "layer-table", targetId: "table-recent", label: "❖ Table / Recent Sales" },
+      { id: "layer-chart", targetId: "chart-expert", label: "❖ Chart / Sales Expert" },
     ],
     defaultInspector: {
       name: "KPI / Total Sales",
@@ -49,13 +50,13 @@ const FIGMA_TABS = [
     projectSlug: "iranserver",
     interactiveTargets: false,
     layers: [
-      { id: "is-1", label: "❖ Tokens / Semantic Blue", type: "comp" },
-      { id: "is-2", label: "❖ Portal / Cloud Hosting", type: "comp" },
-      { id: "is-3", label: "❖ Flow / Checkout Funnel", type: "comp" },
-      { id: "is-4", label: "❖ Audit / GA4 + Clarity", type: "comp" },
+      { id: "is-1", label: "❖ Tokens / Semantic Blue", inspector: { name: "Tokens / Semantic Blue", x: 0, y: 0, w: 1440, h: 1080, r: 16, gap: 16, pad: 24, fillHex: "#165EF6", fillName: "brand/primary", tokenVar: "--primary" } },
+      { id: "is-2", label: "❖ Portal / Cloud Hosting", inspector: { name: "Portal / Cloud Hosting", x: 64, y: 96, w: 1312, h: 860, r: 20, gap: 20, pad: 24, fillHex: "#0B2A78", fillName: "cloud/navy", tokenVar: "--surface-navy" } },
+      { id: "is-3", label: "❖ Flow / Checkout Funnel", inspector: { name: "Flow / Checkout Funnel", x: 120, y: 140, w: 840, h: 620, r: 16, gap: 12, pad: 20, fillHex: "#57C1FF", fillName: "sky/accent", tokenVar: "--accent-sky" } },
+      { id: "is-4", label: "❖ Audit / GA4 + Clarity", inspector: { name: "Audit / GA4 + Clarity", x: 980, y: 140, w: 380, h: 480, r: 14, gap: 12, pad: 16, fillHex: "#111217", fillName: "surface/900", tokenVar: "--surface-900" } },
     ],
     defaultInspector: {
-      name: "IranServer / System",
+      name: "Tokens / Semantic Blue",
       x: 0,
       y: 0,
       w: 1440,
@@ -79,13 +80,13 @@ const FIGMA_TABS = [
     projectSlug: "made-in-iran",
     interactiveTargets: false,
     layers: [
-      { id: "mi-1", label: "❖ Tokens / Material + Tailwind", type: "comp" },
-      { id: "mi-2", label: "❖ Surface / Buyer Panel", type: "comp" },
-      { id: "mi-3", label: "❖ Surface / Supplier Panel", type: "comp" },
-      { id: "mi-4", label: "❖ Surface / Admin & Web", type: "comp" },
+      { id: "mi-1", label: "❖ Tokens / Material + Tailwind", inspector: { name: "Tokens / Material + Tailwind", x: 0, y: 0, w: 1440, h: 1080, r: 14, gap: 16, pad: 20, fillHex: "#165EF6", fillName: "b2b/primary", tokenVar: "--primary" } },
+      { id: "mi-2", label: "❖ Surface / Buyer Panel", inspector: { name: "Surface / Buyer Panel", x: 48, y: 80, w: 1344, h: 920, r: 16, gap: 16, pad: 24, fillHex: "#101217", fillName: "surface/900", tokenVar: "--surface-900" } },
+      { id: "mi-3", label: "❖ Surface / Supplier Panel", inspector: { name: "Surface / Supplier Panel", x: 48, y: 80, w: 1344, h: 920, r: 16, gap: 16, pad: 24, fillHex: "#181A20", fillName: "surface/850", tokenVar: "--surface-850" } },
+      { id: "mi-4", label: "❖ Surface / Admin & Web", inspector: { name: "Surface / Admin & Web", x: 0, y: 0, w: 1440, h: 1080, r: 12, gap: 12, pad: 16, fillHex: "#57C1FF", fillName: "b2b/sky", tokenVar: "--accent-sky" } },
     ],
     defaultInspector: {
-      name: "System / 26 Components",
+      name: "Tokens / Material + Tailwind",
       x: 0,
       y: 0,
       w: 1440,
@@ -109,13 +110,13 @@ const FIGMA_TABS = [
     projectSlug: "farano",
     interactiveTargets: false,
     layers: [
-      { id: "fr-1", label: "❖ IA / Role Access Control", type: "comp" },
-      { id: "fr-2", label: "❖ Flow / Privacy First", type: "comp" },
-      { id: "fr-3", label: "❖ AI / Persona Simulation", type: "comp" },
-      { id: "fr-4", label: "❖ Spec / PRD & Test Cases", type: "comp" },
+      { id: "fr-1", label: "❖ IA / Role Access Control", inspector: { name: "IA / Role Access Control", x: 0, y: 0, w: 1440, h: 1080, r: 16, gap: 12, pad: 24, fillHex: "#165EF6", fillName: "gov/security", tokenVar: "--primary" } },
+      { id: "fr-2", label: "❖ Flow / Privacy First", inspector: { name: "Flow / Privacy First", x: 80, y: 120, w: 960, h: 680, r: 16, gap: 16, pad: 24, fillHex: "#0B2A78", fillName: "gov/navy", tokenVar: "--surface-navy" } },
+      { id: "fr-3", label: "❖ AI / Persona Simulation", inspector: { name: "AI / Persona Simulation", x: 1060, y: 120, w: 320, h: 520, r: 14, gap: 12, pad: 16, fillHex: "#57C1FF", fillName: "ai/accent", tokenVar: "--accent-sky" } },
+      { id: "fr-4", label: "❖ Spec / PRD & Test Cases", inspector: { name: "Spec / PRD & Test Cases", x: 80, y: 820, w: 1300, h: 200, r: 12, gap: 12, pad: 16, fillHex: "#111217", fillName: "surface/900", tokenVar: "--surface-900" } },
     ],
     defaultInspector: {
-      name: "Console / Access Matrix",
+      name: "IA / Role Access Control",
       x: 0,
       y: 0,
       w: 1440,
@@ -139,13 +140,13 @@ const FIGMA_TABS = [
     projectSlug: "word-plus",
     interactiveTargets: false,
     layers: [
-      { id: "wp-1", label: "❖ System / Material 3", type: "comp" },
-      { id: "wp-2", label: "❖ Flow / Dual Study Mode", type: "comp" },
-      { id: "wp-3", label: "❖ UX / Paywall Clarity", type: "comp" },
-      { id: "wp-4", label: "❖ Engagement / Gamification", type: "comp" },
+      { id: "wp-1", label: "❖ System / Material 3", inspector: { name: "System / Material 3", x: 0, y: 0, w: 390, h: 844, r: 24, gap: 16, pad: 16, fillHex: "#57C1FF", fillName: "m3/accent", tokenVar: "--accent-sky" } },
+      { id: "wp-2", label: "❖ Flow / Dual Study Mode", inspector: { name: "Flow / Dual Study Mode", x: 16, y: 120, w: 358, h: 420, r: 20, gap: 12, pad: 16, fillHex: "#165EF6", fillName: "m3/primary", tokenVar: "--primary" } },
+      { id: "wp-3", label: "❖ UX / Paywall Clarity", inspector: { name: "UX / Paywall Clarity", x: 16, y: 560, w: 358, h: 240, r: 20, gap: 12, pad: 18, fillHex: "#111217", fillName: "surface/900", tokenVar: "--surface-900" } },
+      { id: "wp-4", label: "❖ Engagement / Gamification", inspector: { name: "Engagement / Gamification", x: 16, y: 48, w: 358, h: 64, r: 999, gap: 8, pad: 12, fillHex: "#B9C8FF", fillName: "m3/lavender", tokenVar: "--accent-lavender" } },
     ],
     defaultInspector: {
-      name: "Word+ / Mobile Frame",
+      name: "System / Material 3",
       x: 0,
       y: 0,
       w: 390,
@@ -294,16 +295,18 @@ export function renderHeroFigmaStage(lang = "en") {
 
   return `
     <div class="figma-ui3" id="figma-stage" data-lang="${lang}" dir="ltr" aria-label="Interactive Figma UI3 workspace showing Alireza's live design files">
-      <!-- Real Figma Desktop / Browser Top Tab Bar (Clickable Project Tabs!) -->
+      <!-- Authentic Figma Desktop / Web File Tab Bar -->
       <div class="fg-tabbar">
-        <div class="fg-traffic" aria-hidden="true">
-          <span class="fg-dot fg-dot--red"></span>
-          <span class="fg-dot fg-dot--yellow"></span>
-          <span class="fg-dot fg-dot--green"></span>
-        </div>
-
         <div class="fg-tabs" role="tablist" aria-label="Figma Project Files">
-          <span class="fg-home-ico" aria-hidden="true">⌂</span>
+          <span class="fg-figma-mark" aria-hidden="true">
+            <svg width="11" height="15" viewBox="0 0 38 57" fill="none">
+              <path d="M19 28.5A9.5 9.5 0 1 1 28.5 19 9.5 9.5 0 0 1 19 28.5Z" fill="#1ABCFE"/>
+              <path d="M9.5 47.5A9.5 9.5 0 0 1 19 38v9.5a9.5 9.5 0 0 1-9.5 0Z" fill="#0ACF83"/>
+              <path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19Z" fill="#FF7262"/>
+              <path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5Z" fill="#F24E1E"/>
+              <path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5Z" fill="#A259FF"/>
+            </svg>
+          </span>
           ${FIGMA_TABS.map(
             (tab, i) => `
             <button
@@ -321,24 +324,105 @@ export function renderHeroFigmaStage(lang = "en") {
         </div>
       </div>
 
-      <!-- Figma UI3 3-Column Body -->
-      <div class="fg-body">
-        <!-- Left Panel: File + Pages + Layers -->
-        <aside class="fg-left" aria-hidden="true">
+      <!-- True Figma UI3 Workspace: Full-Bleed Flat #1E1E1E Canvas + Floating Rounded Islands -->
+      <div class="fg-workspace">
+        <!-- Full-Bleed Interactive Canvas -->
+        <div class="fg-canvas" id="figma-canvas">
+          <!-- Active Tool Toast Pill -->
+          <div class="fg-tool-toast" id="fg-tool-toast" aria-live="polite"></div>
+
+          <!-- Visitor Multiplayer "Guest" Cursor -->
+          <div class="fg-guest-cursor" id="figma-guest-cursor" aria-hidden="true">
+            <svg width="17" height="19" viewBox="0 0 16 18" fill="none">
+              <path d="M1.5 1.5L6.3 15.6L8.7 9.8L14.5 7.6L1.5 1.5Z" fill="#0ACF83" stroke="#FFFFFF" stroke-width="1.35" stroke-linejoin="round"/>
+            </svg>
+            <span class="fg-guest-tag">Guest</span>
+          </div>
+
+          <!-- Artboard Container (Pan & Zoom Target) -->
+          <div class="fg-artboard-block" id="fg-artboard-block">
+            <div class="fg-artboard-label" id="fg-artboard-label">${initialTab.frameLabel}</div>
+
+            <div class="fg-artboard" id="fg-artboard" style="aspect-ratio:${initialTab.aspect};">
+              <img
+                class="fg-artboard-img"
+                id="fg-artboard-img"
+                src="${initialTab.image}"
+                alt="${initialTab.fileName}"
+                draggable="false"
+                fetchpriority="high"
+              />
+
+              <!-- Interactive Hit Targets for Dashify -->
+              <div id="fg-hotspots-layer">
+                ${DASHIFY_TARGETS.map(
+                  (t) => `
+                  <div
+                    class="fg-hotspot"
+                    data-target-id="${t.id}"
+                    style="left:${t.box.left}%;top:${t.box.top}%;width:${t.box.width}%;height:${t.box.height}%;"
+                  ></div>
+                `
+                ).join("")}
+              </div>
+
+              <div class="fg-hover-box" id="fg-hover-box" aria-hidden="true"></div>
+
+              <div class="fg-select-box" id="fg-select-box" aria-hidden="true">
+                <i class="fg-h tl"></i><i class="fg-h tr"></i><i class="fg-h bl"></i><i class="fg-h br"></i>
+                <span class="fg-dim-pill" id="fg-dim-pill">248 × 148</span>
+              </div>
+
+              <div class="fg-smart-guide" id="fg-smart-guide" aria-hidden="true">
+                <span class="fg-smart-line"></span>
+                <span class="fg-smart-pill">16</span>
+              </div>
+
+              <!-- Interactive Comment Pins Layer -->
+              <div class="fg-comments-layer" id="fg-comments-layer"></div>
+
+              <!-- Floating Comment Composer Popover (Strictly hidden when [hidden]) -->
+              <form class="fg-comment-composer" id="fg-comment-composer" hidden>
+                <input
+                  type="text"
+                  id="fg-comment-input"
+                  maxlength="140"
+                  autocomplete="off"
+                  placeholder="${lang === "fa" ? "کامنت خود را بنویسید..." : "Add a comment..."}"
+                />
+                <button type="submit" class="fg-comment-submit" aria-label="Post comment">↑</button>
+              </form>
+
+              <div class="fg-alireza-cursor" id="fg-alireza-cursor" aria-hidden="true">
+                <svg width="17" height="19" viewBox="0 0 16 18" fill="none">
+                  <path d="M1.5 1.5L6.3 15.6L8.7 9.8L14.5 7.6L1.5 1.5Z" fill="#0D99FF" stroke="#FFFFFF" stroke-width="1.35" stroke-linejoin="round"/>
+                </svg>
+                <span class="fg-alireza-tag">Alireza</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating Left Island (True UI3 Detached Panel) -->
+        <aside class="fg-island fg-left" aria-label="Layers panel">
           <div class="fg-file-head">
             <div class="fg-file-name" id="fg-file-name">${initialTab.fileName} ▾</div>
             <div class="fg-file-sub" id="fg-file-sub">${initialTab.fileSub}</div>
           </div>
 
+          <div class="fg-left-tabs" aria-hidden="true">
+            <span class="is-active">File</span>
+            <span>Assets</span>
+          </div>
+
           <div class="fg-section-head">
             <span>Pages</span>
-            <span>+</span>
           </div>
           <div class="fg-page fg-page--active">Final Design</div>
           <div class="fg-page">Components</div>
           <div class="fg-page">Design Tokens</div>
 
-          <div class="fg-section-head" style="margin-top:10px;">
+          <div class="fg-section-head" style="margin-top:8px;">
             <span>Layers</span>
           </div>
           <div class="fg-layer fg-layer--frame">▾ # Main Artboard</div>
@@ -346,153 +430,49 @@ export function renderHeroFigmaStage(lang = "en") {
             ${initialTab.layers
               .map(
                 (l, i) =>
-                  `<div class="fg-layer fg-layer--comp ${i === 0 ? "is-selected" : ""}" id="${l.id}">${l.label}</div>`
+                  `<button type="button" class="fg-layer fg-layer--comp ${i === 0 ? "is-selected" : ""}" id="${l.id}" data-layer-idx="${i}">${l.label}</button>`
               )
               .join("")}
           </div>
         </aside>
 
-        <!-- Center Flat #1E1E1E Canvas with Pixel Rulers + Bottom UI3 Dock -->
-        <div class="fg-canvas-shell">
-          <div class="fg-ruler-top" aria-hidden="true">
-            <span>0</span><span>250</span><span>500</span><span>750</span><span>1000</span><span>1250</span><span>1500</span>
-          </div>
-
-          <div class="fg-canvas-row">
-            <div class="fg-ruler-left" aria-hidden="true">
-              <span>0</span><span>200</span><span>400</span><span>600</span><span>800</span>
-            </div>
-
-            <div class="fg-canvas" id="figma-canvas">
-              <!-- Floating Canvas Zoom Bar (75% / 100% / 125% + Reset) -->
-              <div class="fg-zoom-bar" role="group" aria-label="Canvas Zoom Controls">
-                <button type="button" class="fg-zoom-pill" data-zoom="0.75">75%</button>
-                <button type="button" class="fg-zoom-pill is-active" data-zoom="1">100%</button>
-                <button type="button" class="fg-zoom-pill" data-zoom="1.25">125%</button>
-                <button type="button" class="fg-zoom-reset" id="fg-zoom-reset" title="Reset view" hidden>↺</button>
-              </div>
-
-              <!-- Active Tool Hint Pill -->
-              <div class="fg-tool-toast" id="fg-tool-toast" aria-live="polite"></div>
-
-              <!-- Visitor Multiplayer "Guest" Cursor -->
-              <div class="fg-guest-cursor" id="figma-guest-cursor" aria-hidden="true">
-                <svg width="17" height="19" viewBox="0 0 16 18" fill="none">
-                  <path d="M1.5 1.5L6.3 15.6L8.7 9.8L14.5 7.6L1.5 1.5Z" fill="#0ACF83" stroke="#FFFFFF" stroke-width="1.35" stroke-linejoin="round"/>
-                </svg>
-                <span class="fg-guest-tag">Guest</span>
-              </div>
-
-              <!-- Artboard Container (Pan & Zoom Target) -->
-              <div class="fg-artboard-block" id="fg-artboard-block">
-                <div class="fg-artboard-label" id="fg-artboard-label">${initialTab.frameLabel}</div>
-
-                <div class="fg-artboard" id="fg-artboard" style="aspect-ratio:${initialTab.aspect};">
-                  <img
-                    class="fg-artboard-img"
-                    id="fg-artboard-img"
-                    src="${initialTab.image}"
-                    alt="${initialTab.fileName}"
-                    draggable="false"
-                    fetchpriority="high"
-                  />
-
-                  <!-- Interactive Hit Targets for Dashify -->
-                  <div id="fg-hotspots-layer">
-                    ${DASHIFY_TARGETS.map(
-                      (t) => `
-                      <div
-                        class="fg-hotspot"
-                        data-target-id="${t.id}"
-                        style="left:${t.box.left}%;top:${t.box.top}%;width:${t.box.width}%;height:${t.box.height}%;"
-                      ></div>
-                    `
-                    ).join("")}
-                  </div>
-
-                  <div class="fg-hover-box" id="fg-hover-box" aria-hidden="true"></div>
-
-                  <div class="fg-select-box" id="fg-select-box" aria-hidden="true">
-                    <i class="fg-h tl"></i><i class="fg-h tr"></i><i class="fg-h bl"></i><i class="fg-h br"></i>
-                    <span class="fg-dim-pill" id="fg-dim-pill">248 × 148</span>
-                  </div>
-
-                  <div class="fg-smart-guide" id="fg-smart-guide" aria-hidden="true">
-                    <span class="fg-smart-line"></span>
-                    <span class="fg-smart-pill">16</span>
-                  </div>
-
-                  <!-- Interactive Comment Pins Layer -->
-                  <div class="fg-comments-layer" id="fg-comments-layer"></div>
-
-                  <!-- Floating Comment Composer Popover -->
-                  <form class="fg-comment-composer" id="fg-comment-composer" hidden>
-                    <input
-                      type="text"
-                      id="fg-comment-input"
-                      maxlength="140"
-                      autocomplete="off"
-                      placeholder="${lang === "fa" ? "کامنت خود را بنویسید..." : "Add a comment..."}"
-                    />
-                    <button type="submit" class="fg-comment-submit" aria-label="Post comment">↑</button>
-                  </form>
-
-                  <div class="fg-alireza-cursor" id="fg-alireza-cursor" aria-hidden="true">
-                    <svg width="17" height="19" viewBox="0 0 16 18" fill="none">
-                      <path d="M1.5 1.5L6.3 15.6L8.7 9.8L14.5 7.6L1.5 1.5Z" fill="#0D99FF" stroke="#FFFFFF" stroke-width="1.35" stroke-linejoin="round"/>
-                    </svg>
-                    <span class="fg-alireza-tag">Alireza</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Real Figma UI3 Floating Bottom Tool Dock (Interactive!) -->
-              <div class="fg-bottom-dock" role="toolbar" aria-label="Figma Tools">
-                <button type="button" class="fg-dock-btn fg-dock-btn--active" data-tool="move" title="Move (V)" aria-pressed="true">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3.5 2L13 8.2L8.4 9.1L6.2 13.5L3.5 2Z" fill="currentColor"/></svg>
-                </button>
-                <button type="button" class="fg-dock-btn" data-tool="hand" title="Hand / Pan (H)" aria-pressed="false">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5.2 8.2V4.3C5.2 3.7 5.7 3.2 6.3 3.2C6.9 3.2 7.3 3.7 7.3 4.3V7.2M7.3 6.8V3.5C7.3 2.9 7.8 2.4 8.4 2.4C9 2.4 9.4 2.9 9.4 3.5V7.2M9.4 6.8V4.2C9.4 3.6 9.9 3.1 10.5 3.1C11.1 3.1 11.5 3.6 11.5 4.2V8.8C11.5 11.4 9.8 13.4 7.4 13.4C5.4 13.4 4.1 12.1 3.2 10.3L2.5 8.9C2.2 8.3 2.5 7.6 3.1 7.4C3.7 7.2 4.3 7.5 4.6 8L5.2 9.1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-                <button type="button" class="fg-dock-btn" data-tool="comment" title="Comment (C)" aria-pressed="false">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2.8A5 5 0 0 1 13 7.8C13 10.6 10.8 12.8 8 12.8H3.2L4.4 10.3A5 5 0 0 1 8 2.8Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/></svg>
-                </button>
-                <span class="fg-dock-btn fg-dock-btn--passive" title="Frame (F)" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5 2V14M11 2V14M2 5H14M2 11H14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-                </span>
-                <span class="fg-dock-btn fg-dock-btn--passive" title="Text (T)" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3.5 4V3H12.5V4M8 3V13M6 13H10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-                </span>
-                <span class="fg-dock-sep" aria-hidden="true"></span>
-                <button type="button" class="fg-dock-dev" id="fg-dev-toggle" title="Dev Mode (Shift+D)" aria-pressed="false">&lt;/&gt;</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Design / Dev Mode Inspector -->
-        <aside class="fg-right">
+        <!-- Floating Right Island (True UI3 Detached Inspector + Zoom Dropdown) -->
+        <aside class="fg-island fg-right" aria-label="Design and Dev Mode inspector">
           <div class="fg-right-top">
             <div class="fg-avatars" aria-hidden="true">
               <span class="fg-av fg-av--owner" title="Alireza Farshchi">AF</span>
               <span class="fg-av fg-av--guest" id="figma-guest-avatar" title="Guest (You)">G</span>
             </div>
-            <div class="fg-right-actions" aria-hidden="true">
-              <span class="fg-play-btn" title="Present">▷</span>
-              <span class="fg-share-btn">Share</span>
+            <div class="fg-right-actions">
+              <span class="fg-share-btn" aria-hidden="true">Share</span>
             </div>
           </div>
 
           <div class="fg-right-tabs">
             <button type="button" class="fg-rtab is-active" id="fg-rtab-design">Design</button>
             <button type="button" class="fg-rtab" id="fg-rtab-inspect">Inspect</button>
-            <span class="fg-zoom-val" id="fg-zoom-readout">100%</span>
+
+            <!-- Native UI3 Zoom Dropdown in Right Panel Header -->
+            <div class="fg-zoom-wrap">
+              <button type="button" class="fg-zoom-trigger" id="fg-zoom-trigger" aria-expanded="false" aria-haspopup="menu">
+                <span id="fg-zoom-readout">100%</span>
+                <span aria-hidden="true">▾</span>
+              </button>
+              <div class="fg-zoom-menu" id="fg-zoom-menu" role="menu" hidden>
+                <button type="button" class="fg-zoom-opt" data-zoom="0.75" role="menuitem">Zoom to 75%</button>
+                <button type="button" class="fg-zoom-opt is-active" data-zoom="1" role="menuitem">Zoom to 100%</button>
+                <button type="button" class="fg-zoom-opt" data-zoom="1.25" role="menuitem">Zoom to 125%</button>
+                <div class="fg-zoom-divider"></div>
+                <button type="button" class="fg-zoom-opt" id="fg-zoom-reset" role="menuitem">Reset view ↺</button>
+              </div>
+            </div>
           </div>
 
           <!-- Design Mode Inspector -->
           <div id="fg-design-panel">
             <div class="fg-insp-block">
               <div class="fg-insp-title" id="insp-name">${initData.name}</div>
+              <div class="fg-insp-label">Position & Layout</div>
               <div class="fg-insp-grid">
                 <span>X <em id="insp-x">${initData.x}</em></span>
                 <span>Y <em id="insp-y">${initData.y}</em></span>
@@ -518,7 +498,7 @@ export function renderHeroFigmaStage(lang = "en") {
               </a>
             </div>
 
-            <div class="fg-insp-block" aria-hidden="true">
+            <div class="fg-insp-block">
               <div class="fg-insp-label">Auto Layout</div>
               <div class="fg-al-row">
                 <span id="insp-gap">→ ${initData.gap}</span>
@@ -552,6 +532,38 @@ export function renderHeroFigmaStage(lang = "en") {
             </div>
           </div>
         </aside>
+
+        <!-- Authentic Figma UI3 Floating Bottom Toolbar + Pill Dev Mode Switch -->
+        <div class="fg-bottom-dock" role="toolbar" aria-label="Figma Tools">
+          <button type="button" class="fg-dock-btn fg-dock-btn--active" data-tool="move" title="Move (V)" aria-pressed="true">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3.5 2L13 8.2L8.4 9.1L6.2 13.5L3.5 2Z" fill="currentColor"/></svg>
+          </button>
+          <button type="button" class="fg-dock-btn" data-tool="hand" title="Hand / Pan (H)" aria-pressed="false">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5.2 8.2V4.3C5.2 3.7 5.7 3.2 6.3 3.2C6.9 3.2 7.3 3.7 7.3 4.3V7.2M7.3 6.8V3.5C7.3 2.9 7.8 2.4 8.4 2.4C9 2.4 9.4 2.9 9.4 3.5V7.2M9.4 6.8V4.2C9.4 3.6 9.9 3.1 10.5 3.1C11.1 3.1 11.5 3.6 11.5 4.2V8.8C11.5 11.4 9.8 13.4 7.4 13.4C5.4 13.4 4.1 12.1 3.2 10.3L2.5 8.9C2.2 8.3 2.5 7.6 3.1 7.4C3.7 7.2 4.3 7.5 4.6 8L5.2 9.1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="fg-dock-btn" data-tool="comment" title="Comment (C)" aria-pressed="false">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2.8A5 5 0 0 1 13 7.8C13 10.6 10.8 12.8 8 12.8H3.2L4.4 10.3A5 5 0 0 1 8 2.8Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/></svg>
+          </button>
+
+          <span class="fg-dock-sep" aria-hidden="true"></span>
+
+          <!-- Quick Zoom Cycle Pill inside Bottom Dock (accessible on all viewports) -->
+          <div class="fg-dock-zoom" role="group" aria-label="Zoom">
+            <button type="button" class="fg-dz-btn" data-zoom="0.75">75%</button>
+            <button type="button" class="fg-dz-btn is-active" data-zoom="1">100%</button>
+            <button type="button" class="fg-dz-btn" data-zoom="1.25">125%</button>
+          </div>
+
+          <span class="fg-dock-sep" aria-hidden="true"></span>
+
+          <!-- Authentic UI3 Pill-Shaped Dev Mode Toggle Switch -->
+          <button type="button" class="fg-dev-switch" id="fg-dev-toggle" title="Toggle Dev Mode (Shift+D)" aria-pressed="false">
+            <span class="fg-dev-switch__opt fg-dev-switch__opt--design" aria-hidden="true">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3 13L5.2 6.8L11.5 2.5L13.5 4.5L9.2 10.8L3 13Z" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="fg-dev-switch__opt fg-dev-switch__opt--code" aria-hidden="true">&lt;/&gt;</span>
+          </button>
+        </div>
       </div>
     </div>
   `;
@@ -587,6 +599,8 @@ export function initHeroFigmaStage() {
   const devCssCode = document.getElementById("dev-css-code");
   const copyCssBtn = document.getElementById("fg-copy-css-btn");
 
+  const zoomTrigger = document.getElementById("fg-zoom-trigger");
+  const zoomMenu = document.getElementById("fg-zoom-menu");
   const zoomReadout = document.getElementById("fg-zoom-readout");
   const zoomResetBtn = document.getElementById("fg-zoom-reset");
   const toolToast = document.getElementById("fg-tool-toast");
@@ -618,7 +632,7 @@ export function initHeroFigmaStage() {
     dashify: [
       {
         id: "c-seed-1",
-        x: 61.5,
+        x: 59.0,
         y: 23.0,
         author: "Alireza",
         initials: "AF",
@@ -653,12 +667,16 @@ export function initHeroFigmaStage() {
     toastTimer = window.setTimeout(() => toolToast.classList.remove("is-visible"), 1900);
   }
 
+  function closeZoomMenu() {
+    if (zoomMenu) zoomMenu.hidden = true;
+    zoomTrigger?.setAttribute("aria-expanded", "false");
+  }
+
   function applyTransform(animate = false) {
     if (!artboardBlock) return;
     artboardBlock.style.transition = animate ? "transform 220ms cubic-bezier(0.22, 1, 0.36, 1)" : "none";
     artboardBlock.style.transform = `translate3d(${panX.toFixed(1)}px, ${panY.toFixed(1)}px, 0) scale(${zoom})`;
     if (zoomReadout) zoomReadout.textContent = `${Math.round(zoom * 100)}%`;
-    if (zoomResetBtn) zoomResetBtn.hidden = zoom === 1 && Math.abs(panX) < 2 && Math.abs(panY) < 2;
 
     stage.querySelectorAll("[data-zoom]").forEach((btn) => {
       const z = parseFloat(btn.getAttribute("data-zoom"));
@@ -668,11 +686,12 @@ export function initHeroFigmaStage() {
 
   function setZoom(nextZoom) {
     zoom = nextZoom;
-    if (zoom <= 1) {
-      panX = Math.max(-140, Math.min(140, panX));
-      panY = Math.max(-90, Math.min(90, panY));
-    }
+    const limitX = 160 * zoom;
+    const limitY = 120 * zoom;
+    panX = Math.max(-limitX, Math.min(limitX, panX));
+    panY = Math.max(-limitY, Math.min(limitY, panY));
     applyTransform(true);
+    closeZoomMenu();
   }
 
   function resetView() {
@@ -680,6 +699,7 @@ export function initHeroFigmaStage() {
     panX = 0;
     panY = 0;
     applyTransform(true);
+    closeZoomMenu();
   }
 
   function updateInspector(data) {
@@ -696,7 +716,6 @@ export function initHeroFigmaStage() {
     if (insp.fillHex) insp.fillHex.textContent = data.fillHex;
     if (insp.fillName) insp.fillName.textContent = data.fillName;
 
-    // Sync Dev Mode Panel
     if (devNodeName) devNodeName.textContent = data.name;
     if (devCssCode) devCssCode.innerHTML = buildCssHtml(data);
     if (devTokenChips) {
@@ -728,7 +747,11 @@ export function initHeroFigmaStage() {
     activeTool = tool;
     canvas.classList.toggle("is-hand-tool", tool === "hand");
     canvas.classList.toggle("is-comment-tool", tool === "comment");
+    if (hotspotsLayer) {
+      hotspotsLayer.style.pointerEvents = tool === "move" ? "auto" : "none";
+    }
     if (tool !== "comment") closeComposer();
+    if (tool !== "move") showHover(null);
 
     stage.querySelectorAll("[data-tool]").forEach((btn) => {
       const isActive = btn.getAttribute("data-tool") === tool;
@@ -737,7 +760,7 @@ export function initHeroFigmaStage() {
     });
 
     if (tool === "hand") {
-      showToast(lang === "fa" ? "ابزار دست (H): بوم را بکشید و جابه‌جا کنید" : "Hand Tool (H): Drag to pan canvas");
+      showToast(lang === "fa" ? "ابزار دست (H): بوم را بکشید و جابه‌جا کنید" : "Hand Tool (H): Drag canvas to pan");
     } else if (tool === "comment") {
       showToast(lang === "fa" ? "ابزار کامنت (C): روی هر جای طرح کلیک کنید" : "Comment Tool (C): Click anywhere to drop a pin");
     }
@@ -745,7 +768,10 @@ export function initHeroFigmaStage() {
 
   function closeComposer() {
     pendingCommentPos = null;
-    if (commentComposer) commentComposer.hidden = true;
+    if (commentComposer) {
+      commentComposer.hidden = true;
+      commentComposer.classList.remove("flip-x", "flip-y");
+    }
     if (commentInput) commentInput.value = "";
   }
 
@@ -753,9 +779,11 @@ export function initHeroFigmaStage() {
     if (!commentsLayer) return;
     const list = commentsByTab[activeTabId] || [];
     commentsLayer.innerHTML = list
-      .map(
-        (c, idx) => `
-      <div class="fg-comment-pin ${c.open ? "is-open" : ""} ${c.isOwner ? "is-owner" : ""}" style="left:${c.x.toFixed(2)}%;top:${c.y.toFixed(2)}%;" data-comment-id="${c.id}">
+      .map((c, idx) => {
+        const flipX = c.x > 58 ? "flip-x" : "";
+        const flipY = c.y > 58 ? "flip-y" : "";
+        return `
+      <div class="fg-comment-pin ${c.open ? "is-open" : ""} ${c.isOwner ? "is-owner" : ""} ${flipX} ${flipY}" style="left:${c.x.toFixed(2)}%;top:${c.y.toFixed(2)}%;" data-comment-id="${c.id}">
         <button type="button" class="fg-pin-badge" data-pin-toggle="${c.id}" aria-label="Comment ${idx + 1}">
           ${c.initials}
         </button>
@@ -773,8 +801,8 @@ export function initHeroFigmaStage() {
             : ""
         }
       </div>
-    `
-      )
+    `;
+      })
       .join("");
   }
 
@@ -786,6 +814,7 @@ export function initHeroFigmaStage() {
     e.stopPropagation();
     const toggleBtn = e.target.closest("[data-pin-toggle]");
     if (toggleBtn) {
+      closeComposer();
       const id = toggleBtn.getAttribute("data-pin-toggle");
       const list = commentsByTab[activeTabId] || [];
       list.forEach((c) => {
@@ -854,12 +883,41 @@ export function initHeroFigmaStage() {
     if (dimPill) dimPill.textContent = target.dim;
     if (smartGuide) smartGuide.classList.toggle("is-visible", Boolean(target.showGuide));
 
-    DASHIFY_TARGETS.forEach((t) => {
-      document.getElementById(t.layerId)?.classList.toggle("is-selected", t.id === target.id);
+    layersListEl?.querySelectorAll(".fg-layer--comp").forEach((el) => {
+      el.classList.toggle("is-selected", el.id === target.layerId);
     });
 
     updateInspector({ name: target.name, ...target.inspector });
   }
+
+  // Interactive Layer Selection in Left Island (works for ALL tabs!)
+  layersListEl?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-layer-idx]");
+    if (!btn) return;
+    const idx = parseInt(btn.getAttribute("data-layer-idx"), 10);
+    const tab = FIGMA_TABS.find((t) => t.id === activeTabId);
+    if (!tab || !tab.layers[idx]) return;
+
+    guestOverrideUntil = Date.now() + 6000;
+    const layer = tab.layers[idx];
+
+    if (tab.interactiveTargets && layer.targetId) {
+      const target = DASHIFY_TARGETS.find((t) => t.id === layer.targetId);
+      if (target) selectTarget(target);
+      return;
+    }
+
+    layersListEl.querySelectorAll(".fg-layer--comp").forEach((el, i) => {
+      el.classList.toggle("is-selected", i === idx);
+    });
+
+    if (layer.inspector) {
+      updateInspector(layer.inspector);
+      applyBox(selectBox, { left: 2, top: 2, width: 96, height: 96 });
+      selectBox.classList.add("is-visible");
+      if (dimPill) dimPill.textContent = `${layer.inspector.w} × ${layer.inspector.h}`;
+    }
+  });
 
   // Switch between interactive Figma project tabs!
   function switchTab(tabId) {
@@ -888,7 +946,7 @@ export function initHeroFigmaStage() {
       layersListEl.innerHTML = tab.layers
         .map(
           (l, i) =>
-            `<div class="fg-layer fg-layer--comp ${i === 0 ? "is-selected" : ""}" id="${l.id}">${l.label}</div>`
+            `<button type="button" class="fg-layer fg-layer--comp ${i === 0 ? "is-selected" : ""}" id="${l.id}" data-layer-idx="${i}">${l.label}</button>`
         )
         .join("");
     }
@@ -908,17 +966,19 @@ export function initHeroFigmaStage() {
       selectTarget(DASHIFY_TARGETS[0]);
     } else {
       if (hotspotsLayer) hotspotsLayer.style.display = "none";
-      selectBox.classList.remove("is-visible");
       hoverBox.classList.remove("is-visible");
       smartGuide?.classList.remove("is-visible");
       alirezaCursor.style.opacity = "0";
       updateInspector(tab.defaultInspector);
+      applyBox(selectBox, { left: 1.5, top: 1.5, width: 97, height: 97 });
+      selectBox.classList.add("is-visible");
+      if (dimPill) dimPill.textContent = `${tab.defaultInspector.w} × ${tab.defaultInspector.h}`;
     }
 
     renderComments();
   }
 
-  // Wire up Tabs, Dock Tools, Dev Mode, Zoom, Copy CSS
+  // Wire up Tabs, Dock Tools, Dev Mode, Zoom Dropdown, Copy CSS
   stage.querySelectorAll("[data-figma-tab]").forEach((btn) => {
     btn.addEventListener("click", () => switchTab(btn.getAttribute("data-figma-tab")));
   });
@@ -930,6 +990,17 @@ export function initHeroFigmaStage() {
   devToggleBtn?.addEventListener("click", () => setDevMode(!isDevMode));
   designTabBtn?.addEventListener("click", () => setDevMode(false));
   inspectTabBtn?.addEventListener("click", () => setDevMode(true));
+
+  zoomTrigger?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isOpen = !zoomMenu.hidden;
+    zoomMenu.hidden = isOpen;
+    zoomTrigger.setAttribute("aria-expanded", String(!isOpen));
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".fg-zoom-wrap")) closeZoomMenu();
+  });
 
   stage.querySelectorAll("[data-zoom]").forEach((btn) => {
     btn.addEventListener("click", () => setZoom(parseFloat(btn.getAttribute("data-zoom"))));
@@ -949,7 +1020,7 @@ export function initHeroFigmaStage() {
     }
   });
 
-  // Keyboard shortcuts when canvas is hovered or focused (ignoring text inputs)
+  // Keyboard shortcuts when stage is hovered
   let stageHovered = false;
   stage.addEventListener("pointerenter", () => {
     stageHovered = true;
@@ -978,6 +1049,7 @@ export function initHeroFigmaStage() {
       setTool("comment");
     } else if (key === "escape") {
       closeComposer();
+      closeZoomMenu();
       setTool("move");
     }
   });
@@ -990,7 +1062,7 @@ export function initHeroFigmaStage() {
 
   let guestOverrideUntil = 0;
 
-  // Interactive Guest Cursor, Hand Panning, Comment Dropping & Click-to-Inspect
+  // Interactive Guest Cursor (hidden when hovering floating islands or bottom dock!)
   const finePointer = window.matchMedia("(pointer: fine)").matches;
   if (guestCursor && finePointer) {
     canvas.addEventListener("pointerenter", () => {
@@ -1005,8 +1077,8 @@ export function initHeroFigmaStage() {
       if (isPanning) {
         const dx = e.clientX - panStartX;
         const dy = e.clientY - panStartY;
-        const limitX = 240 * zoom;
-        const limitY = 170 * zoom;
+        const limitX = 160 * zoom;
+        const limitY = 120 * zoom;
         panX = Math.max(-limitX, Math.min(limitX, panOriginX + dx));
         panY = Math.max(-limitY, Math.min(limitY, panOriginY + dy));
         applyTransform(false);
@@ -1022,11 +1094,16 @@ export function initHeroFigmaStage() {
         canvas.classList.remove("is-panning");
       }
     });
+
+    // Hide Guest cursor whenever pointer enters floating islands or dock
+    stage.querySelectorAll(".fg-island, .fg-bottom-dock").forEach((el) => {
+      el.addEventListener("pointerenter", () => canvas.classList.remove("is-guest-hover"));
+    });
   }
 
-  // Hand Tool Panning & Comment Dropping (works on mouse + touch!)
+  // Hand Tool Panning & Comment Dropping
   canvas.addEventListener("pointerdown", (e) => {
-    if (e.target.closest(".fg-bottom-dock, .fg-zoom-bar, .fg-comment-composer, .fg-comment-pin")) return;
+    if (e.target.closest(".fg-bottom-dock, .fg-island, .fg-comment-composer, .fg-comment-pin")) return;
 
     if (activeTool === "hand") {
       isPanning = true;
@@ -1051,8 +1128,10 @@ export function initHeroFigmaStage() {
           y: Math.max(6, Math.min(90, relY)),
         };
         if (commentComposer) {
-          commentComposer.style.left = `${Math.min(72, pendingCommentPos.x)}%`;
-          commentComposer.style.top = `${Math.min(78, pendingCommentPos.y)}%`;
+          commentComposer.style.left = `${pendingCommentPos.x.toFixed(2)}%`;
+          commentComposer.style.top = `${pendingCommentPos.y.toFixed(2)}%`;
+          commentComposer.classList.toggle("flip-x", pendingCommentPos.x > 58);
+          commentComposer.classList.toggle("flip-y", pendingCommentPos.y > 68);
           commentComposer.hidden = false;
           window.setTimeout(() => commentInput?.focus(), 20);
         }
