@@ -106,6 +106,11 @@
   border-top-color: transparent;
 }
 
+.site-nav.is-compact .site-nav__expanded-inner {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .site-nav__status {
   display: inline-flex;
   align-items: center;
@@ -319,23 +324,27 @@
   transform: translateY(-2.8px) rotate(-45deg);
 }
 
-/* Compact Sticky State — Never clips buttons in EN or FA! */
+/* Compact Sticky State — Razor-tight 48px Symbol Studio Pill */
 .site-nav.is-compact {
   width: fit-content;
-  min-width: min(760px, calc(100vw - 32px));
-  max-width: min(980px, calc(100vw - 32px));
-  border-radius: 16px;
+  min-width: 0;
+  max-width: calc(100vw - 32px);
+  border-radius: 14px;
   box-shadow: var(--shadow-md);
   border-color: var(--border-strong);
-  transition: max-width 560ms cubic-bezier(0.45, 0, 0.2, 1),
-    border-radius 560ms cubic-bezier(0.45, 0, 0.2, 1),
+  transition: max-width 520ms cubic-bezier(0.45, 0, 0.2, 1),
+    border-radius 520ms cubic-bezier(0.45, 0, 0.2, 1),
     box-shadow 400ms var(--ease-out);
 }
 
 .site-nav.is-compact .site-nav__bar {
-  padding: 8px 14px;
-  min-height: 52px;
-  gap: 14px;
+  padding: 5px 6px 5px 14px;
+  min-height: 48px;
+  gap: 12px;
+}
+
+html[dir="rtl"] .site-nav.is-compact .site-nav__bar {
+  padding: 5px 14px 5px 6px;
 }
 
 .site-nav.is-compact .site-nav__link {
@@ -343,13 +352,24 @@
   font-size: 0.84rem;
 }
 
+.site-nav.is-compact .site-nav__brand-name {
+  display: none;
+}
+
 .site-nav.is-compact .site-nav__brand-mark {
-  transform: scale(0.92);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+}
+
+.site-nav.is-compact .site-nav__cta-desktop {
+  border-radius: 10px;
+  padding: 9px 14px;
 }
 
 .site-nav.is-compact.is-expanded {
   width: 100%;
-  max-width: min(980px, calc(100vw - 32px));
+  max-width: min(920px, calc(100vw - 32px));
   border-radius: var(--radius-lg);
 }
 

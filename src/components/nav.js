@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Section 01 â€” Symbol Studio-Inspired Open -> Collapse Morphing Header
+   Section 01 — Symbol Studio-Inspired Open -> Collapse Morphing Header
    Opens with an expanded editorial showcase tray, then folds smoothly into
    a compact centered floating sticky bar on scroll.
    ========================================================================== */
@@ -40,15 +40,15 @@ export function renderNavigation(content, activePage) {
   const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
 
   const statusText = isFa
-    ? "Ø·Ø±Ø§Ø­ Ù…Ø­ØµÙˆÙ„ Â· +Û´ Ø³Ø§Ù„ ØªØ¬Ø±Ø¨Ù‡ Ø¯Ø± B2BØŒ ÙÛŒÙ†ØªÚ©ØŒ GovTech Ùˆ Ø³ÛŒØ³ØªÙ…â€ŒÙ‡Ø§ÛŒ Ø·Ø±Ø§Ø­ÛŒ"
-    : "Product Designer Â· 5+ yrs across B2B, Fintech, GovTech & Design Systems";
+    ? "طراح محصول · +۴ سال تجربه در B2B، فینتک، GovTech و سیستم‌های طراحی"
+    : "Product Designer · 5+ yrs across B2B, Fintech, GovTech & Design Systems";
 
   const navLinksHtml = `
     <a class="site-nav__link" href="${prefix}/" ${activePage === "home" ? 'aria-current="page"' : ""}>${content.nav.home}</a>
     <a class="site-nav__link" href="${prefix}/work/" ${activePage === "work" || activePage === "overview" || activePage === "case-study" ? 'aria-current="page"' : ""}>${content.nav.work}</a>
     <a class="site-nav__link" href="${prefix}/about/" ${activePage === "about" ? 'aria-current="page"' : ""}>${content.nav.about}</a>
     <a class="site-nav__link" href="${contactHref}">${content.nav.contact}</a>
-    <a class="site-nav__link" href="${PROFILE.resumeUrl}" target="_blank" rel="noopener noreferrer">${content.nav.resume} â†—</a>
+    <a class="site-nav__link" href="${PROFILE.resumeUrl}" target="_blank" rel="noopener noreferrer">${content.nav.resume} ↗</a>
   `;
 
   return `
@@ -60,7 +60,7 @@ export function renderNavigation(content, activePage) {
         <div class="site-nav__bar">
           <a class="site-nav__brand" href="${prefix}/">
             <span class="site-nav__brand-mark" aria-hidden="true">${PROFILE.initials}</span>
-            <span class="site-nav__brand-name">${isFa ? "Ø¹Ù„ÛŒØ±Ø¶Ø§ ÙØ±Ø´Ú†ÛŒ" : PROFILE.shortName}</span>
+            <span class="site-nav__brand-name">${isFa ? "علیرضا فرشچی" : PROFILE.shortName}</span>
           </a>
 
           <div class="site-nav__links">
@@ -72,9 +72,9 @@ export function renderNavigation(content, activePage) {
               type="button"
               class="icon-btn"
               id="theme-toggle"
-              aria-label="${isFa ? "ØªØºÛŒÛŒØ± Ø­Ø§Ù„Øª Ø±ÙˆØ´Ù† Ùˆ ØªØ§Ø±ÛŒÚ©" : "Toggle light and dark theme"}"
+              aria-label="${isFa ? "تغییر حالت روشن و تاریک" : "Toggle light and dark theme"}"
               aria-pressed="${currentTheme === "dark" ? "true" : "false"}"
-              title="${isFa ? "ØªØºÛŒÛŒØ± ØªÙ…" : "Toggle theme"}"
+              title="${isFa ? "تغییر تم" : "Toggle theme"}"
             >
               <span class="theme-icon-sun">${SUN_ICON}</span>
               <span class="theme-icon-moon">${MOON_ICON}</span>
@@ -105,18 +105,18 @@ export function renderNavigation(content, activePage) {
         </div>
 
         <!-- Symbol Studio-Inspired Expanded Tray (Opens on load, smoothly folds shut on scroll) -->
-        <div class="site-nav__expanded-tray" aria-label="${isFa ? "Ø¯Ø³ØªØ±Ø³ÛŒ Ø³Ø±ÛŒØ¹" : "Quick highlights"}">
+        <div class="site-nav__expanded-tray" aria-label="${isFa ? "دسترسی سریع" : "Quick highlights"}">
           <div class="site-nav__expanded-inner">
             <div class="site-nav__status">
               <span class="site-nav__status-dot" aria-hidden="true"></span>
               <span>${statusText}</span>
             </div>
             <div class="site-nav__quick-chips">
-              <a class="nav-chip" href="${prefix}/work/iranserver/">${isFa ? "Ø§ÛŒØ±Ø§Ù†â€ŒØ³Ø±ÙˆØ±" : "IranServer"}</a>
-              <a class="nav-chip" href="${prefix}/work/made-in-iran/">${isFa ? "Ù…ÛŒØ¯ Ø§ÛŒÙ† Ø§ÛŒØ±Ø§Ù†" : "Made In Iran"}</a>
-              <a class="nav-chip" href="${prefix}/work/farano/">${isFa ? "ÙØ±Ø§Ù†Ùˆ" : "Farano"}</a>
+              <a class="nav-chip" href="${prefix}/work/iranserver/">${isFa ? "ایران‌سرور" : "IranServer"}</a>
+              <a class="nav-chip" href="${prefix}/work/made-in-iran/">${isFa ? "مید این ایران" : "Made In Iran"}</a>
+              <a class="nav-chip" href="${prefix}/work/farano/">${isFa ? "فرانو" : "Farano"}</a>
               <button type="button" class="nav-chip nav-chip--ai" data-open-chat="ai">
-                âœ¦ ${isFa ? "Ø¯Ø³ØªÛŒØ§Ø± Ù‡ÙˆØ´ Ù…ØµÙ†ÙˆØ¹ÛŒ" : "Ask AI"}
+                ✦ ${isFa ? "دستیار هوش مصنوعی" : "Ask AI"}
               </button>
             </div>
           </div>

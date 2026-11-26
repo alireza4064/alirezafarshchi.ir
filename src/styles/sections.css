@@ -687,6 +687,310 @@ html[dir="rtl"] .cz-step--left .cz-card {
   z-index: 1;
 }
 
+/* --- Auto-Scrolling Companies & Products Marquee Strip --- */
+.brand-marquee-band {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  padding-block: 16px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+
+.brand-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  animation: marqueeScroll 38s linear infinite;
+}
+
+.brand-marquee-band:hover .brand-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.brand-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--canvas);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.brand-pill__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0.7;
+}
+
+.brand-pill__name {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.brand-pill__tag {
+  font-size: 0.74rem;
+  color: var(--ink-subtle);
+}
+
+/* --- Conceptzilla Scroll-Linked Progress Spine & Slide-In Motion --- */
+.cz-timeline__progress {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 0%;
+  background: linear-gradient(180deg, var(--primary) 0%, var(--accent-sky) 100%);
+  box-shadow: 0 0 12px var(--primary-glow);
+  z-index: 1;
+  transition: height 120ms linear;
+}
+
+.cz-step .cz-card {
+  opacity: 0;
+  transition: opacity 520ms var(--ease-out),
+    transform 560ms var(--ease-out),
+    border-color 220ms var(--ease-out),
+    box-shadow 220ms var(--ease-out);
+}
+
+.cz-step--right .cz-card {
+  transform: translateX(28px);
+}
+
+.cz-step--left .cz-card {
+  transform: translateX(-28px);
+}
+
+.cz-step.is-active .cz-card {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.cz-step.is-active .cz-step__dot {
+  background: var(--primary);
+  box-shadow: 0 0 0 5px var(--primary-soft), 0 0 12px var(--primary-glow);
+}
+
+/* --- Bliss Agency-Style Contact Section --- */
+.bliss-contact {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: clamp(32px, 5vw, 60px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(32px, 5vw, 60px);
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .bliss-contact {
+  background: #08090c;
+  border-color: #23252c;
+}
+
+.bliss-contact__left,
+.bliss-form-card {
+  position: relative;
+  z-index: 1;
+}
+
+.bliss-contact__title {
+  font-size: clamp(1.9rem, 3.2vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+
+html[dir="rtl"] .bliss-contact__title {
+  line-height: 1.32;
+  letter-spacing: 0;
+  font-weight: 800;
+}
+
+.bliss-contact__desc {
+  color: var(--ink-muted);
+  font-size: var(--text-lead);
+  margin-bottom: 28px;
+  max-width: 460px;
+}
+
+.bliss-contact__meta {
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.bliss-contact__label {
+  font-size: 0.76rem;
+  color: var(--ink-subtle);
+  margin-bottom: 10px;
+}
+
+.bliss-contact__logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+.bliss-contact__direct {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bliss-form-card {
+  background: var(--canvas);
+  border: 1px solid var(--border-strong);
+  border-radius: 22px;
+  padding: clamp(22px, 3vw, 30px);
+  display: grid;
+  gap: 14px;
+}
+
+[data-theme="dark"] .bliss-form-card {
+  background: rgba(15, 16, 20, 0.86);
+  border-color: #292b33;
+}
+
+.bliss-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.bliss-field {
+  display: grid;
+  gap: 6px;
+}
+
+.bliss-field label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+}
+
+.bliss-field input,
+.bliss-field select,
+.bliss-field textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 11px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.9rem;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.bliss-field input:focus,
+.bliss-field select:focus,
+.bliss-field textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+.bliss-form-status {
+  font-size: 0.82rem;
+  border-radius: 8px;
+  display: none;
+}
+
+.bliss-form-status.is-info {
+  display: block;
+  padding: 8px 12px;
+  background: var(--primary-soft);
+  color: var(--primary-text-on-soft);
+}
+
+.bliss-form-status.is-ok {
+  display: block;
+  padding: 10px 12px;
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.bliss-submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 8px 8px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: border-color 200ms ease, transform 180ms ease, box-shadow 200ms ease;
+}
+
+html[dir="rtl"] .bliss-submit-btn {
+  padding: 8px 20px 8px 8px;
+}
+
+.bliss-submit-btn:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.bliss-submit-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  transition: background-color 180ms ease;
+}
+
+.bliss-submit-btn:hover .bliss-submit-circle {
+  background: var(--primary-hover);
+}
+
+@media (max-width: 900px) {
+  .bliss-contact {
+    grid-template-columns: 1fr;
+  }
+
+  .bliss-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .cz-timeline__progress {
+    left: 14px;
+  }
+}
+
 @media (max-width: 820px) {
   .cz-timeline__spine {
     left: 14px;

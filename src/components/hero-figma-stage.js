@@ -273,17 +273,31 @@ export function renderHeroFigmaStage(lang = "en") {
                 </div>
               </div>
 
-              <!-- Real Figma UI3 Floating Bottom Tool Dock -->
+              <!-- Real Figma UI3 Floating Bottom Tool Dock (Authentic SVG Icons) -->
               <div class="fg-bottom-dock" aria-hidden="true">
-                <span class="fg-dock-btn fg-dock-btn--active" title="Move (V)">↖</span>
-                <span class="fg-dock-btn" title="Frame (F)">#</span>
-                <span class="fg-dock-btn" title="Shape (R)">▭</span>
-                <span class="fg-dock-btn" title="Pen (P)">✒</span>
-                <span class="fg-dock-btn" title="Text (T)">T</span>
-                <span class="fg-dock-btn" title="Comment (C)">💬</span>
-                <span class="fg-dock-btn" title="Components">❖</span>
+                <span class="fg-dock-btn fg-dock-btn--active" title="Move (V)">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3.5 2L13 8.2L8.4 9.1L6.2 13.5L3.5 2Z" fill="currentColor"/></svg>
+                </span>
+                <span class="fg-dock-btn" title="Frame (F)">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M5 2V14M11 2V14M2 5H14M2 11H14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                </span>
+                <span class="fg-dock-btn" title="Rectangle (R)">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="3" y="3" width="10" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg>
+                </span>
+                <span class="fg-dock-btn" title="Pen (P)">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2.5L13 7.5L9.5 13.5H6.5L3 7.5L8 2.5Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/><circle cx="8" cy="8.5" r="1.2" fill="currentColor"/></svg>
+                </span>
+                <span class="fg-dock-btn" title="Text (T)">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3.5 4V3H12.5V4M8 3V13M6 13H10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                </span>
+                <span class="fg-dock-btn" title="Comment (C)">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2.8A5 5 0 0 1 13 7.8C13 10.6 10.8 12.8 8 12.8H3.2L4.4 10.3A5 5 0 0 1 8 2.8Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="fg-dock-btn" title="Actions">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="3" y="3" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="3" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="9" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
+                </span>
                 <span class="fg-dock-sep"></span>
-                <span class="fg-dock-dev">&lt;/&gt;</span>
+                <span class="fg-dock-dev" title="Dev Mode">&lt;/&gt;</span>
               </div>
             </div>
           </div>

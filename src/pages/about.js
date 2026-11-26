@@ -18,10 +18,10 @@ export function renderAboutPage(content) {
             <img src="/assets/alireza-portrait.jpg" alt="${PROFILE.name}" width="48" height="48" />
             <div>
               <div style="font-weight:700;font-size:0.95rem;color:var(--ink);">
-                ${content.lang === "fa" ? "Ø¹Ù„ÛŒØ±Ø¶Ø§ Ù…Ø­Ù…Ø¯Ø²Ø§Ø¯Ù‡ ÙØ±Ø´Ú†ÛŒ" : PROFILE.name}
+                ${content.lang === "fa" ? "علیرضا محمدزاده فرشچی" : PROFILE.name}
               </div>
               <div style="font-size:0.8rem;color:var(--ink-muted);">
-                ${content.lang === "fa" ? "Ø·Ø±Ø§Ø­ Ù…Ø­ØµÙˆÙ„ Â· +Û´ Ø³Ø§Ù„ ØªØ¬Ø±Ø¨Ù‡" : "Product Designer Â· 5+ years Experience"}
+                ${content.lang === "fa" ? "طراح محصول · +۴ سال تجربه" : "Product Designer · 5+ years Experience"}
               </div>
             </div>
           </div>
@@ -38,7 +38,7 @@ export function renderAboutPage(content) {
           <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;">
             <a class="btn btn--primary" href="${PROFILE.resumeUrl}" target="_blank" rel="noopener noreferrer">
               <span>${content.experience.cta}</span>
-              <span aria-hidden="true">â†—</span>
+              <span aria-hidden="true">↗</span>
             </a>
             <a class="btn btn--secondary" href="mailto:${PROFILE.email}">
               <span>${PROFILE.email}</span>
@@ -70,7 +70,7 @@ export function renderAboutPage(content) {
                 </div>
                 <div style="text-align:end;">
                   <div style="font-weight:600;font-size:var(--text-sm);">${entry.period}</div>
-                  <div style="color:var(--ink-subtle);font-size:var(--text-caption);">${entry.domain} Â· ${entry.location}</div>
+                  <div style="color:var(--ink-subtle);font-size:var(--text-caption);">${entry.domain} · ${entry.location}</div>
                 </div>
               </div>
               <ul>
@@ -144,7 +144,7 @@ export function renderAboutPage(content) {
               <p style="color:var(--primary-text-on-soft);font-weight:500;">${a.education.degree}</p>
             </div>
             <div style="color:var(--ink-muted);font-size:var(--text-sm);">
-              ${a.education.period} Â· ${a.education.location}
+              ${a.education.period} · ${a.education.location}
             </div>
           </div>
         </div>
@@ -158,7 +158,7 @@ export function renderAboutPage(content) {
               <h3 style="font-size:1rem;font-weight:600;line-height:1.4;">${cert.title}</h3>
               ${
                 cert.url
-                  ? `<a href="${cert.url}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-text-on-soft);font-size:var(--text-sm);font-weight:600;margin-top:6px;">Verify credential â†—</a>`
+                  ? `<a href="${cert.url}" target="_blank" rel="noopener noreferrer" style="color:var(--primary-text-on-soft);font-size:var(--text-sm);font-weight:600;margin-top:6px;">Verify credential ↗</a>`
                   : ""
               }
               ${

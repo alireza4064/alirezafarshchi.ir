@@ -1,5 +1,5 @@
 /* ==========================================================================
-   English Content Module â€” Single Source of Truth (Resume + Brief Verified)
+   English Content Module — Single Source of Truth (Resume + Brief Verified)
    ========================================================================== */
 
 export const PROFILE = {
@@ -21,8 +21,8 @@ export const PROFILE = {
 export const CONTENT_EN = {
   lang: "en",
   dir: "ltr",
-  arrow: "â†’",
-  backArrow: "â†",
+  arrow: "→",
+  backArrow: "←",
   skipToContent: "Skip to content",
 
   nav: {
@@ -34,11 +34,11 @@ export const CONTENT_EN = {
     cta: "Let's talk",
     menu: "Menu",
     close: "Close",
-    switchLang: "ÙØ§Ø±Ø³ÛŒ",
+    switchLang: "فارسی",
   },
 
   hero: {
-    eyebrow: "PRODUCT DESIGNER Â· SYSTEMS THINKER",
+    eyebrow: "PRODUCT DESIGNER · SYSTEMS THINKER",
     headline: "Making complex products clearer, more connected, and easier to scale.",
     intro: [
       "I'm Alireza, a Product Designer with 5+ years of experience across B2B, B2C, fintech, gaming, AI, and digital services.",
@@ -63,12 +63,12 @@ export const CONTENT_EN = {
         summary:
           "Over 5+ years across GovTech, IT infrastructure, B2B commerce, fintech, and mobile products, I have operated as a hands-on designer who owns design systems, research, and cross-functional delivery.",
         points: [
-          "Led a quarterly UX review of the redesigned IranServer homepage using GA4, Microsoft Clarity, and heatmaps â€” reporting +22% users and an 18.5 percentage-point reduction in bounce rate.",
+          "Led a quarterly UX review of the redesigned IranServer homepage using GA4, Microsoft Clarity, and heatmaps — reporting +22% users and an 18.5 percentage-point reduction in bounce rate.",
           "Owned both product design and PRD/test-writing responsibilities at Farano, shortening the path from spec to testable flow with AI-assisted flow testing.",
           "Independently built Made In Iran's first design system from scratch across 4 surfaces (26 components) and mentored junior designers at Part Software Group.",
         ],
         links: [
-          { label: "IranServer â€” Redesign & System Ownership", href: "/en/work/iranserver/" },
+          { label: "IranServer — Redesign & System Ownership", href: "/en/work/iranserver/" },
           { label: "Full Experience & Resume", href: "/en/about/" },
           { label: "Download PDF Resume", href: PROFILE.resumeUrl, external: true },
         ],
@@ -79,15 +79,15 @@ export const CONTENT_EN = {
         shortDesc: "Explore how I approach ambiguous problems, shape user flows, and collaborate across teams.",
         headline: "Turning conflicting requirements and funnel drop-offs into validated product flows.",
         summary:
-          "I work upstream of screens â€” partnering in retrospectives, refining PRDs, running heuristic evaluations, and aligning business constraints with real user behavior.",
+          "I work upstream of screens — partnering in retrospectives, refining PRDs, running heuristic evaluations, and aligning business constraints with real user behavior.",
         points: [
           "At Farano, I surface and resolve conflicting stakeholder requirements through research and shape IA around privacy, security, and access control from day one.",
           "At IranServer, I ran Nielsen heuristic evaluations, competitive benchmarking, and GA4 purchase-funnel analysis across cart, checkout, and cloud-service flows.",
-          "On Word+, I wore both Product Designer and Product Manager hats â€” interviewing 8 users to uncover a key conversion blocker in premium messaging and shaping the product roadmap.",
+          "On Word+, I wore both Product Designer and Product Manager hats — interviewing 8 users to uncover a key conversion blocker in premium messaging and shaping the product roadmap.",
         ],
         links: [
-          { label: "Farano â€” GovTech Flows & AI-Assisted PRDs", href: "/en/work/farano/" },
-          { label: "Word+ â€” Product Design & PM Ownership", href: "/en/work/word-plus/" },
+          { label: "Farano — GovTech Flows & AI-Assisted PRDs", href: "/en/work/farano/" },
+          { label: "Word+ — Product Design & PM Ownership", href: "/en/work/word-plus/" },
           { label: "Explore All Projects", href: "/en/work/" },
         ],
       },
@@ -97,15 +97,15 @@ export const CONTENT_EN = {
         shortDesc: "Take a closer look at my work on design systems, design processes, and team collaboration.",
         headline: "Scalable design systems, practical token workflows, and healthier design operations.",
         summary:
-          "I care deeply about how design teams scale quality across surfaces without slowing engineering down â€” from token architecture to mentoring and internal workshops.",
+          "I care deeply about how design teams scale quality across surfaces without slowing engineering down — from token architecture to mentoring and internal workshops.",
         points: [
           "Owned the IranServer design system end-to-end (components, tokens, styles) while factoring in real connectivity and infrastructure constraints.",
           "Built Made In Iran's first token-based design system (26 components across buyer, supplier, admin, and public web) aligned with Material Design and Tailwind conventions.",
           "Created a Figma plugin-based token workflow at Part Software Group prior to native token support, mentored 2 junior designers, and taught internal courses on Information Architecture and Design Systems.",
         ],
         links: [
-          { label: "Made In Iran â€” 0-to-1 Design System", href: "/en/work/made-in-iran/" },
-          { label: "IranServer â€” Ecosystem Design System", href: "/en/work/iranserver/" },
+          { label: "Made In Iran — 0-to-1 Design System", href: "/en/work/made-in-iran/" },
+          { label: "IranServer — Ecosystem Design System", href: "/en/work/iranserver/" },
           { label: "Design Approach & Principles", href: "#approach" },
         ],
       },
@@ -119,7 +119,7 @@ export const CONTENT_EN = {
         points: [
           "Combine qualitative research (user interviews, usability testing, playtesting) with behavioral analytics (GA4, Clarity heatmaps) to ground design decisions.",
           "Use AI-assisted A/B flow testing, persona-based flow simulations, and test-case generation to catch edge cases early.",
-          "Contributed across 20+ products at Part Software Group â€” from fintech (Signal, Merat) and OCR/AI tools (Avasho, Avanegar) to mobile games (Khiaar, Freedom Park).",
+          "Contributed across 20+ products at Part Software Group — from fintech (Signal, Merat) and OCR/AI tools (Avasho, Avanegar) to mobile games (Khiaar, Freedom Park).",
         ],
         links: [
           { label: "Browse All Projects", href: "/en/work/" },
@@ -188,8 +188,8 @@ export const CONTENT_EN = {
       {
         company: "Farano",
         role: "Senior Product Designer",
-        period: "Mar 2026 â€” Present",
-        domain: "GovTech Â· Digital Government Services",
+        period: "Mar 2026 — Present",
+        domain: "GovTech · Digital Government Services",
         location: "Remote",
         highlights: [
           "Surface and resolve ambiguous or conflicting stakeholder requirements through research on the Iran Digital Console.",
@@ -201,8 +201,8 @@ export const CONTENT_EN = {
       {
         company: "IranServer",
         role: "Senior Product Designer",
-        period: "May 2025 â€” Mar 2026",
-        domain: "Web Hosting Â· IT Infrastructure",
+        period: "May 2025 — Mar 2026",
+        domain: "Web Hosting · IT Infrastructure",
         location: "Mashhad, Iran",
         highlights: [
           "Owned design tooling, processes, and cross-functional collaboration in a 2-person product design team alongside the team lead.",
@@ -215,8 +215,8 @@ export const CONTENT_EN = {
       {
         company: "Made In Iran",
         role: "Product Designer",
-        period: "Jan 2025 â€” Mar 2025",
-        domain: "B2B Â· B2C Â· E-commerce",
+        period: "Jan 2025 — Mar 2025",
+        domain: "B2B · B2C · E-commerce",
         location: "Mashhad, Iran",
         highlights: [
           "Built the product's first design system from scratch for a B2B platform connecting Iranian manufacturers with international buyers.",
@@ -227,8 +227,8 @@ export const CONTENT_EN = {
       {
         company: "Part Software Group",
         role: "Product Designer",
-        period: "Dec 2021 â€” Jan 2025",
-        domain: "Fintech Â· Gaming Â· EdTech Â· B2B",
+        period: "Dec 2021 — Jan 2025",
+        domain: "Fintech · Gaming · EdTech · B2B",
         location: "Mashhad, Iran",
         highlights: [
           "Contributed to 20+ projects including Signal (5M+ users), Merat/Ara, Pulse, Avasho, Avanegar, iCup, Word+, and mobile games.",
@@ -240,13 +240,13 @@ export const CONTENT_EN = {
     ],
     additionalLabel: "Additional & Overlapping Freelance Engagements:",
     additionalNote:
-      "Freelance and remote product design engagements across GovTech, legal services, accounting applications, and super apps â€” some undertaken alongside full-time employment (not consecutive full-time roles).",
+      "Freelance and remote product design engagements across GovTech, legal services, accounting applications, and super apps — some undertaken alongside full-time employment (not consecutive full-time roles).",
     freelanceEntries: [
       {
         company: "Kanon Ghazaei (National Judicial Services Portal)",
         role: "Freelance Product Designer",
-        period: "Sep 2025 â€” Dec 2025",
-        domain: "GovTech Â· Legal Services",
+        period: "Sep 2025 — Dec 2025",
+        domain: "GovTech · Legal Services",
         overlapNote: "Side freelance engagement alongside full-time Senior Product Designer role at IranServer.",
         summary:
           "Designed the public-facing portal including homepage, services directory, appointment booking flow, service center locator, and responsive mobile views.",
@@ -254,16 +254,16 @@ export const CONTENT_EN = {
       {
         company: "Accounting Applications (Hulo & Parmis)",
         role: "Freelance Product Designer",
-        period: "Sep 2022 â€” Apr 2023",
-        domain: "Accounting Â· B2B Software",
+        period: "Sep 2022 — Apr 2023",
+        domain: "Accounting · B2B Software",
         overlapNote: "Freelance engagement alongside employment at Part Software Group.",
         summary: "Designed and prototyped accounting applications including Hulo and Parmis.",
       },
       {
         company: "Bejatoo",
-        role: "UI/UX Designer (Remote Â· Australia)",
-        period: "Mar 2022 â€” Jul 2022",
-        domain: "Super App Â· Outsourcing Marketplace",
+        role: "UI/UX Designer (Remote · Australia)",
+        period: "Mar 2022 — Jul 2022",
+        domain: "Super App · Outsourcing Marketplace",
         overlapNote: "Remote engagement alongside employment at Part Software Group.",
         summary:
           "Led UX/UI design and user research for an outsourcing super app, guiding a non-design product owner toward a streamlined experience.",
@@ -276,10 +276,10 @@ export const CONTENT_EN = {
     eyebrow: "ABOUT",
     heading: "Curious by nature. Structured by design.",
     paragraphs: [
-      "I'm interested in understanding how things work â€” not just how they look.",
+      "I'm interested in understanding how things work — not just how they look.",
       "My journey in product design has taken me across different industries, product types, and team structures. Along the way, I've worked on user research, product flows, design systems, and cross-functional collaboration.",
       "I enjoy bringing structure to ambiguity, connecting details to the bigger picture, and helping teams move from ideas to well-considered solutions.",
-      "Outside individual projects, I'm also interested in improving the way design work happens â€” from shared systems and documentation to AI-assisted workflows.",
+      "Outside individual projects, I'm also interested in improving the way design work happens — from shared systems and documentation to AI-assisted workflows.",
     ],
     sculptureAlt: "Minimalist architectural sculpture of matte ceramic and cobalt-tinted frosted glass",
     moreCta: "Read full story & credentials",
@@ -299,7 +299,7 @@ export const CONTENT_EN = {
 
   footer: {
     tagline: "Designed with curiosity, clarity, and a systems mindset.",
-    copyright: `Â© ${new Date().getFullYear()} Alireza Mohammadzade Farshchi`,
+    copyright: `© ${new Date().getFullYear()} Alireza Mohammadzade Farshchi`,
   },
 
   workPage: {
@@ -335,7 +335,7 @@ export const CONTENT_EN = {
   caseStudyPage: {
     backToOverview: "Back to project overview",
     eyebrow: "PROTECTED CASE STUDY",
-    titlePrefix: "Confidential Case Study â€” ",
+    titlePrefix: "Confidential Case Study — ",
     subtitle:
       "This case study contains protected research, internal product flows, and confidential design decisions. Enter the project passphrase to decrypt the content locally.",
     inputPlaceholder: "Enter project passphrase",
@@ -354,7 +354,7 @@ export const CONTENT_EN = {
     eyebrow: "ABOUT ALIREZA",
     heading: "Product Designer with a systems mindset.",
     lead:
-      "5+ years designing B2B, B2C, GovTech, fintech, gaming, and AI-enabled digital products â€” uniting research, systems architecture, and cross-functional collaboration.",
+      "5+ years designing B2B, B2C, GovTech, fintech, gaming, and AI-enabled digital products — uniting research, systems architecture, and cross-functional collaboration.",
     experienceHeading: "Full Professional Timeline",
     freelanceHeading: "Additional & Overlapping Freelance Work",
     skillsHeading: "Capabilities & Tooling",
@@ -362,7 +362,7 @@ export const CONTENT_EN = {
     education: {
       school: "Ferdowsi University of Mashhad",
       degree: "B.S. in Computer Engineering",
-      period: "2017 â€” 2023",
+      period: "2017 — 2023",
       location: "Mashhad, Iran",
     },
     certifications: [
@@ -378,11 +378,11 @@ export const CONTENT_EN = {
       },
       {
         org: "Part Software Group",
-        title: "you.I â€” UX/UI Design & Interface Training Program (1 of 17 selected from 300 applicants)",
+        title: "you.I — UX/UI Design & Interface Training Program (1 of 17 selected from 300 applicants)",
       },
       {
         org: "Part Software Group College",
-        title: "Certificate of Appreciation â€” UI/UX Instructor (Information Architecture & Design Systems, Oct 2023)",
+        title: "Certificate of Appreciation — UI/UX Instructor (Information Architecture & Design Systems, Oct 2023)",
         image: "/assets/certificate-part-college.jpg",
       },
     ],

@@ -11,9 +11,28 @@
 
 import { getFeaturedProjects } from "../data/projects.js";
 import { PROFILE } from "../data/content-en.js";
+import { SITE_CONFIG } from "../config.js";
 import { renderProjectCard } from "../components/project-card.js";
 import { PRINCIPLE_GLYPHS } from "../components/glyphs.js";
 import { renderHeroFigmaStage, initHeroFigmaStage } from "../components/hero-figma-stage.js";
+
+const MARQUEE_BRANDS = [
+  { name: "Farano", tag: "GovTech" },
+  { name: "IranServer", tag: "Cloud & Hosting" },
+  { name: "Made In Iran", tag: "B2B Marketplace" },
+  { name: "Part Software Group", tag: "Enterprise" },
+  { name: "Signal", tag: "5M+ Fintech" },
+  { name: "Merat / Ara", tag: "Banking" },
+  { name: "Word+", tag: "EdTech" },
+  { name: "Kanon Ghazaei", tag: "Legal Portal" },
+  { name: "Dade Negar", tag: "Data SaaS" },
+  { name: "Bejatoo", tag: "Super App" },
+  { name: "Val-e-Asr", tag: "Mobile" },
+  { name: "Pulse", tag: "Sports" },
+  { name: "Avanegar & Avasho", tag: "AI APIs" },
+  { name: "Freedom Park", tag: "Game" },
+  { name: "Khiaar", tag: "Game" },
+];
 
 function renderAudiencePanelContent(item, content) {
   const linksHtml = item.links
@@ -157,6 +176,23 @@ export function renderHomePage(content) {
       </div>
     </section>
 
+    <!-- Auto-Scrolling Companies & Products Marquee Strip -->
+    <div class="brand-marquee-band" dir="ltr" aria-label="${isFa ? "شرکت‌ها و محصولاتی که روی آن‌ها کار کرده‌ام" : "Companies and products I have worked on"}">
+      <div class="brand-marquee-track">
+        ${[...MARQUEE_BRANDS, ...MARQUEE_BRANDS]
+          .map(
+            (b) => `
+          <div class="brand-pill">
+            <span class="brand-pill__dot" aria-hidden="true"></span>
+            <strong class="brand-pill__name">${b.name}</strong>
+            <span class="brand-pill__tag">${b.tag}</span>
+          </div>
+        `
+          )
+          .join("")}
+      </div>
+    </div>
+
     <!-- Section 03 — Compact Tabbed Audience Selector (Billy Sweeney-inspired) -->
     <section class="section section--bordered" id="audience" aria-labelledby="audience-heading">
       <div class="container">
@@ -222,12 +258,13 @@ export function renderHomePage(content) {
           <p class="section-desc">${content.approach.description}</p>
         </div>
 
-        <div class="cz-timeline">
+        <div class="cz-timeline" id="cz-timeline">
           <div class="cz-timeline__spine" aria-hidden="true"></div>
+          <div class="cz-timeline__progress" id="cz-timeline-progress" aria-hidden="true"></div>
           ${content.approach.principles
             .map(
               (p, i) => `
-            <div class="cz-step ${i % 2 === 0 ? "cz-step--right" : "cz-step--left"} reveal" style="--reveal-delay:${i * 75}ms;">
+            <div class="cz-step ${i % 2 === 0 ? "cz-step--right" : "cz-step--left"}" data-cz-step="${i}">
               <span class="cz-step__dot" aria-hidden="true"></span>
               <article class="cz-card">
                 <div class="cz-card__icon" aria-hidden="true">${PRINCIPLE_GLYPHS[i]}</div>
@@ -324,55 +361,102 @@ export function renderHomePage(content) {
       </div>
     </section>
 
-    <!-- Section 08 — Contact (Practical Layout + Subtle Mouse-Reactive Dot Field Canvas) -->
+    <!-- Section 08 — Bliss Agency-Inspired Contact Section (Starfield + Live Telegram Form) -->
     <section class="section section--bordered" id="contact" aria-labelledby="contact-heading">
       <div class="container">
-        <div class="contact-box contact-box--dots reveal" id="contact-box">
+        <div class="bliss-contact reveal" id="contact-box">
           <canvas class="contact-dots-canvas" id="contact-dots-canvas" aria-hidden="true"></canvas>
 
-          <div class="contact-copy">
-            <div class="eyebrow">${content.contact.eyebrow}</div>
-            <h2 class="section-title" id="contact-heading">${content.contact.heading}</h2>
-            <p class="section-desc" style="margin-bottom:26px;">${content.contact.body}</p>
-            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-              <button type="button" class="btn btn--primary" data-open-chat="chat">
-                <span>${isFa ? "شروع چت زنده (تلگرام)" : "Start Live Chat (Telegram)"}</span>
-                <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
+          <div class="bliss-contact__left">
+            <div class="eyebrow">${isFa ? "همکاری جدید" : "NEW COLLABORATIONS"}</div>
+            <h2 class="bliss-contact__title" id="contact-heading">${content.contact.heading}</h2>
+            <p class="bliss-contact__desc">${content.contact.body}</p>
+
+            <div class="bliss-contact__meta">
+              <div class="bliss-contact__label">${isFa ? "تجربه همکاری با تیم‌ها و محصولات" : "Worked with teams & products"}</div>
+              <div class="bliss-contact__logos">
+                <span>Farano</span>
+                <span>IranServer</span>
+                <span>Made In Iran</span>
+                <span>Part Software</span>
+                <span>Signal</span>
+                <span>Word+</span>
+              </div>
+            </div>
+
+            <div class="bliss-contact__direct">
+              <button type="button" class="btn btn--secondary btn--sm" id="copy-email-btn" data-email="${PROFILE.email}">
+                <span id="copy-email-label">${PROFILE.email}</span>
               </button>
-              <button type="button" class="btn btn--secondary" id="copy-email-btn" data-email="${PROFILE.email}">
-                <span id="copy-email-label">${isFa ? "کپی کردن ایمیل" : "Copy Email"}</span>
-              </button>
-              <button type="button" class="btn btn--secondary" data-open-chat="ai">
-                <span>✦ ${isFa ? "سوال از هوش مصنوعی" : "Ask AI"}</span>
-              </button>
+              <a class="btn btn--secondary btn--sm" href="${PROFILE.linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+              <a class="btn btn--secondary btn--sm" href="${PROFILE.resumeUrl}" target="_blank" rel="noopener noreferrer">${content.nav.resume} ↗</a>
             </div>
           </div>
 
-          <div class="contact-right">
-            <div class="contact-links">
-              ${content.contact.links
-                .map(
-                  (item) => `
-                <a
-                  class="contact-link-item"
-                  href="${item.href}"
-                  ${item.external ? 'target="_blank" rel="noopener noreferrer"' : ""}
-                >
-                  <span>${item.label}</span>
-                  <span style="color:var(--ink-subtle);font-weight:400;">${item.value} ↗</span>
-                </a>
-              `
-                )
-                .join("")}
+          <form class="bliss-form-card" id="bliss-contact-form">
+            <div class="bliss-form-row">
+              <div class="bliss-field">
+                <label for="bf-name">${isFa ? "نام و نام خانوادگی" : "Full name"}</label>
+                <input id="bf-name" type="text" required placeholder="${isFa ? "نام شما" : "Your name"}" />
+              </div>
+              <div class="bliss-field">
+                <label for="bf-role">${isFa ? "موضوع همکاری" : "What brings you here?"}</label>
+                <select id="bf-role">
+                  <option value="Hiring / Product Role">${isFa ? "فرصت شغلی / استخدام" : "Hiring / Product Role"}</option>
+                  <option value="Design Systems / Consulting">${isFa ? "سیستم طراحی / مشاوره" : "Design Systems / Consulting"}</option>
+                  <option value="Freelance Project">${isFa ? "پروژه فریلنسری" : "Freelance Project"}</option>
+                  <option value="General Chat">${isFa ? "گفت‌وگو و شبکه‌سازی" : "General Conversation"}</option>
+                </select>
+              </div>
             </div>
-          </div>
+
+            <div class="bliss-field">
+              <label for="bf-contact">${isFa ? "ایمیل یا آیدی تلگرام" : "Work email or Telegram"}</label>
+              <input id="bf-contact" type="text" required placeholder="${isFa ? "name@company.com یا @username" : "name@company.com or @username"}" />
+            </div>
+
+            <div class="bliss-field">
+              <label for="bf-msg">${isFa ? "پیام شما" : "The floor is yours"}</label>
+              <textarea id="bf-msg" rows="4" required placeholder="${isFa ? "درباره پروژه یا مسئله‌ای که می‌خواهید حل کنید بنویسید..." : "Tell me about the product challenge or opportunity..."}"></textarea>
+            </div>
+
+            <div class="bliss-form-status" id="bf-status" role="status"></div>
+
+            <button type="submit" class="bliss-submit-btn" id="bf-submit">
+              <span>${isFa ? "ارسال مستقیم به تلگرام علیرضا" : "Send message to Alireza"}</span>
+              <span class="bliss-submit-circle" aria-hidden="true">${content.arrow}</span>
+            </button>
+          </form>
         </div>
       </div>
     </section>
   `;
 }
 
-function initContactDotCanvas() {
+function initConceptzillaTimeline() {
+  const timeline = document.getElementById("cz-timeline");
+  const progress = document.getElementById("cz-timeline-progress");
+  const steps = timeline?.querySelectorAll("[data-cz-step]");
+  if (!timeline || !progress || !steps?.length) return;
+
+  const onScroll = () => {
+    const rect = timeline.getBoundingClientRect();
+    const viewMid = window.innerHeight * 0.68;
+    const raw = (viewMid - rect.top) / Math.max(1, rect.height);
+    const pct = Math.min(1, Math.max(0, raw));
+    progress.style.height = `${(pct * 100).toFixed(2)}%`;
+
+    steps.forEach((step) => {
+      const sRect = step.getBoundingClientRect();
+      step.classList.toggle("is-active", sRect.top < window.innerHeight * 0.78);
+    });
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+}
+
+function initContactStarfieldCanvas() {
   const box = document.getElementById("contact-box");
   const canvas = document.getElementById("contact-dots-canvas");
   if (!box || !canvas) return;
@@ -383,10 +467,10 @@ function initContactDotCanvas() {
 
   let width = 0;
   let height = 0;
-  let dots = [];
+  let particles = [];
   const mouse = { x: -9999, y: -9999, active: false };
 
-  function buildGrid() {
+  function buildField() {
     const rect = box.getBoundingClientRect();
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     width = rect.width;
@@ -395,61 +479,51 @@ function initContactDotCanvas() {
     canvas.height = Math.floor(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    const gap = 26;
-    dots = [];
-    for (let y = 16; y < height; y += gap) {
-      for (let x = 16; x < width; x += gap) {
-        dots.push({ ox: x, oy: y, x, y, vx: 0, vy: 0 });
-      }
-    }
+    const count = Math.min(110, Math.max(48, Math.floor((width * height) / 7200)));
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.22,
+      vy: (Math.random() - 0.5) * 0.22,
+      r: 0.9 + Math.random() * 1.2,
+      alpha: 0.14 + Math.random() * 0.26,
+    }));
   }
 
-  function draw() {
+  function tick() {
     ctx.clearRect(0, 0, width, height);
     const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-    const baseRgb = isDark ? "255, 255, 255" : "24, 25, 23";
-    const radius = 125;
+    const baseRgb = isDark ? "235, 240, 255" : "24, 25, 23";
 
-    for (let i = 0; i < dots.length; i++) {
-      const d = dots[i];
-      let influence = 0;
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      if (!prefersReduced) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
 
-      if (!prefersReduced && mouse.active) {
-        const dx = d.ox - mouse.x;
-        const dy = d.oy - mouse.y;
-        const dist = Math.hypot(dx, dy);
-        if (dist < radius && dist > 0.1) {
-          influence = 1 - dist / radius;
-          const push = influence * 14;
-          d.vx += ((d.ox + (dx / dist) * push) - d.x) * 0.16;
-          d.vy += ((d.oy + (dy / dist) * push) - d.y) * 0.16;
-        } else {
-          d.vx += (d.ox - d.x) * 0.1;
-          d.vy += (d.oy - d.y) * 0.1;
+        if (mouse.active) {
+          const dx = p.x - mouse.x;
+          const dy = p.y - mouse.y;
+          const d = Math.hypot(dx, dy);
+          if (d < 120 && d > 0.1) {
+            const f = (1 - d / 120) * 1.3;
+            p.x += (dx / d) * f;
+            p.y += (dy / d) * f;
+          }
         }
-      } else {
-        d.vx += (d.ox - d.x) * 0.12;
-        d.vy += (d.oy - d.y) * 0.12;
       }
-
-      d.vx *= 0.78;
-      d.vy *= 0.78;
-      d.x += d.vx;
-      d.y += d.vy;
 
       ctx.beginPath();
-      ctx.arc(d.x, d.y, 1.35 + influence * 0.9, 0, Math.PI * 2);
-      if (influence > 0.15) {
-        ctx.fillStyle = `rgba(22, 94, 246, ${(0.12 + influence * 0.24).toFixed(3)})`;
-      } else {
-        ctx.fillStyle = `rgba(${baseRgb}, ${isDark ? "0.11" : "0.09"})`;
-      }
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${baseRgb}, ${(isDark ? p.alpha : p.alpha * 0.55).toFixed(3)})`;
       ctx.fill();
     }
 
-    if (!prefersReduced) {
-      requestAnimationFrame(draw);
-    }
+    if (!prefersReduced) requestAnimationFrame(tick);
   }
 
   box.addEventListener("pointermove", (e) => {
@@ -458,14 +532,13 @@ function initContactDotCanvas() {
     mouse.y = e.clientY - rect.top;
     mouse.active = true;
   });
-
   box.addEventListener("pointerleave", () => {
     mouse.active = false;
   });
 
-  window.addEventListener("resize", buildGrid, { passive: true });
-  buildGrid();
-  draw();
+  window.addEventListener("resize", buildField, { passive: true });
+  buildField();
+  tick();
 }
 
 export function initHomePage(content) {
@@ -538,7 +611,61 @@ export function initHomePage(content) {
     });
   }
 
-  // 4. Interactive Figma UI3 Multi-Tab Workspace + Contact Mouse-Reactive Dot Field
+  // 4. Bliss Contact Form -> Live Telegram Worker Delivery
+  const blissForm = document.getElementById("bliss-contact-form");
+  const bfStatus = document.getElementById("bf-status");
+  if (blissForm && bfStatus) {
+    blissForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("bf-name")?.value.trim() || "";
+      const role = document.getElementById("bf-role")?.value || "";
+      const contact = document.getElementById("bf-contact")?.value.trim() || "";
+      const msg = document.getElementById("bf-msg")?.value.trim() || "";
+      if (!name || !contact || !msg) return;
+
+      const isFa = content.lang === "fa";
+      bfStatus.textContent = isFa ? "در حال ارسال به تلگرام علیرضا..." : "Sending directly to Alireza's Telegram...";
+      bfStatus.className = "bliss-form-status is-info";
+
+      let sessionId = "af_form";
+      try {
+        sessionId = localStorage.getItem("af-live-chat-session-v1") || "af_" + Date.now().toString(36);
+        localStorage.setItem("af-live-chat-session-v1", sessionId);
+      } catch {
+        // ignore
+      }
+
+      if (SITE_CONFIG.WORKER_URL) {
+        try {
+          const res = await fetch(`${SITE_CONFIG.WORKER_URL.replace(/\/$/, "")}/api/send`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              sessionId,
+              sender: `${name} (${role} · ${contact})`,
+              text: msg,
+              page: window.location.pathname,
+            }),
+          });
+          if (res.ok) {
+            blissForm.reset();
+            bfStatus.textContent = isFa
+              ? "✓ پیام مستقیماً به تلگرام علیرضا ارسال شد! می‌توانید گفت‌وگو را در چت زنده هم ادامه دهید."
+              : "✓ Sent directly to Alireza's Telegram! You can also continue live in the chat widget.";
+            bfStatus.className = "bliss-form-status is-ok";
+            return;
+          }
+        } catch {
+          // fallback below
+        }
+      }
+
+      window.location.href = `mailto:${PROFILE.email}?subject=${encodeURIComponent(`${role} — ${name}`)}&body=${encodeURIComponent(`${msg}\n\nContact: ${contact}`)}`;
+    });
+  }
+
+  // 5. Initialize Figma UI3 Workspace, Conceptzilla Scroll Timeline & Contact Starfield
   initHeroFigmaStage();
-  initContactDotCanvas();
+  initConceptzillaTimeline();
+  initContactStarfieldCanvas();
 }
