@@ -1,10 +1,8 @@
 /* ==========================================================================
-   Section 01 — Clean Symbol Studio Morphing Header
-   - Transparent geometric favicon (no AF box)
-   - Always-present Theme toggle, IR/UK SVG Flag language toggle, and Chat Icon
-     inside the header bar from the very start (zero popping on scroll!)
-   - Expands as tall Symbol Studio center card on homepage load -> folds into
-     razor-tight 48px centered sticky pill on scroll.
+   Section 01 — Ultra-Clean Symbol Studio Morphing Header
+   - No logo inside header (favicon stays in browser tab only)
+   - Nav Links + Minimal Theme Icon + Single Tiny Flag (target language only)
+   - "Let's talk" button lives cleanly alongside "Explore my work" in the Hero
    ========================================================================== */
 
 import { PROFILE } from "../data/content-en.js";
@@ -23,33 +21,23 @@ function computeAlternateLangHref(currentLang) {
   return `/${targetLang}/${hash}`;
 }
 
-const BRAND_FAV_SVG = `<svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-  <path d="M7 25L14.2 7H17.8L25 25H21.2L19.6 20.6H12.4L10.8 25H7ZM13.5 17.4H18.5L16 10.6L13.5 17.4Z" fill="#165EF6"/>
-  <circle cx="24.5" cy="8.5" r="2.5" fill="#57C1FF"/>
-</svg>`;
-
-const SUN_ICON = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+const SUN_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
   <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/>
   <path d="M12 2.5V5M12 19V21.5M4.93 4.93L6.7 6.7M17.3 17.3L19.07 19.07M2.5 12H5M19 12H21.5M4.93 19.07L6.7 17.3M17.3 6.7L19.07 4.93" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
 </svg>`;
 
-const MOON_ICON = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+const MOON_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
   <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
 </svg>`;
 
-const CHAT_ICON = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>`;
-
-/* Crisp SVG Flags (Iran & UK) */
-const FLAG_IR = `<svg width="18" height="13" viewBox="0 0 18 13" fill="none" aria-hidden="true" style="border-radius:2px;">
+const FLAG_IR = `<svg width="16" height="11" viewBox="0 0 18 13" fill="none" aria-hidden="true" style="border-radius:2px;">
   <rect width="18" height="4.33" fill="#239F40"/>
   <rect y="4.33" width="18" height="4.34" fill="#FFFFFF"/>
   <rect y="8.67" width="18" height="4.33" fill="#DA0000"/>
-  <circle cx="9" cy="6.5" r="1.35" fill="#DA0000"/>
+  <circle cx="9" cy="6.5" r="1.2" fill="#DA0000"/>
 </svg>`;
 
-const FLAG_UK = `<svg width="18" height="13" viewBox="0 0 18 13" fill="none" aria-hidden="true" style="border-radius:2px;">
+const FLAG_UK = `<svg width="16" height="11" viewBox="0 0 18 13" fill="none" aria-hidden="true" style="border-radius:2px;">
   <rect width="18" height="13" fill="#012169"/>
   <path d="M0 0L18 13M18 0L0 13" stroke="#FFFFFF" stroke-width="2.2"/>
   <path d="M0 0L18 13M18 0L0 13" stroke="#C8102E" stroke-width="1"/>
@@ -77,23 +65,15 @@ export function renderNavigation(content, activePage) {
     <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
     <a class="skip-link" href="#main-content">${content.skipToContent}</a>
 
-    <!-- Clean Symbol Studio Morphing Header (All controls inside bar from start) -->
     <header class="ss-nav-root ${isHome ? "ss-nav-root--home" : "ss-nav-root--compact"}" id="ss-nav-root">
       <nav class="ss-morph-card" id="site-nav" aria-label="Primary">
         <div class="ss-morph-bar">
-          <!-- Transparent Geometric Brand Favicon (No AF background box) -->
-          <a class="ss-brand-fav" href="${prefix}/" aria-label="${PROFILE.shortName}">
-            ${BRAND_FAV_SVG}
-          </a>
-
-          <!-- Nav Links -->
           <div class="ss-links">${navLinksHtml}</div>
 
-          <!-- Unified Controls (Always present in header — Theme, Flags, Chat Icon) -->
           <div class="ss-controls">
             <button
               type="button"
-              class="icon-btn"
+              class="ss-mini-btn"
               data-theme-toggle
               aria-label="${isFa ? "تغییر تم روشن و تاریک" : "Toggle theme"}"
               aria-pressed="${currentTheme === "dark" ? "true" : "false"}"
@@ -104,22 +84,12 @@ export function renderNavigation(content, activePage) {
             </button>
 
             <a
-              class="flag-switch"
+              class="ss-mini-btn"
               href="${altLangHref}"
               aria-label="${isFa ? "Switch to English" : "تغییر زبان به فارسی"}"
               title="${isFa ? "English" : "فارسی"}"
             >
-              <span class="flag-item ${!isFa ? "is-active" : ""}">${FLAG_UK}</span>
-              <span class="flag-item ${isFa ? "is-active" : ""}">${FLAG_IR}</span>
-            </a>
-
-            <a
-              class="ss-chat-icon-btn"
-              href="${contactHref}"
-              aria-label="${content.nav.cta}"
-              title="${content.nav.cta}"
-            >
-              ${CHAT_ICON}
+              ${isFa ? FLAG_UK : FLAG_IR}
             </a>
 
             <button
@@ -141,7 +111,6 @@ export function renderNavigation(content, activePage) {
         ${
           isHome
             ? `
-          <!-- Expanded Center Hero Box Content (Folds smoothly into 48px pill on scroll) -->
           <div class="ss-expanded-body" aria-hidden="false">
             <div class="ss-expanded-inner">
               <div class="ss-expanded-eyebrow">${content.hero.eyebrow}</div>
@@ -154,10 +123,15 @@ export function renderNavigation(content, activePage) {
                   height="240"
                   fetchpriority="high"
                 />
-                <a class="ss-preview-pill" href="#selected-work">
-                  <span>${content.hero.primaryCta}</span>
-                  <span aria-hidden="true">${content.arrow}</span>
-                </a>
+                <div class="ss-preview-actions">
+                  <a class="ss-preview-pill ss-preview-pill--primary" href="#selected-work">
+                    <span>${content.hero.primaryCta}</span>
+                    <span aria-hidden="true">${content.arrow}</span>
+                  </a>
+                  <a class="ss-preview-pill" href="#contact">
+                    <span>${content.nav.cta}</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -165,7 +139,6 @@ export function renderNavigation(content, activePage) {
             : ""
         }
 
-        <!-- Mobile Collapsible Drawer -->
         <div class="site-nav__drawer-wrap" id="site-nav-drawer">
           <div class="site-nav__drawer">
             ${navLinksHtml}
@@ -211,10 +184,6 @@ export function initNavigation(content) {
         Math.max(x, window.innerWidth - x),
         Math.max(y, window.innerHeight - y)
       );
-
-      document.documentElement.style.setProperty("--theme-x", `${x}px`);
-      document.documentElement.style.setProperty("--theme-y", `${y}px`);
-      document.documentElement.style.setProperty("--theme-r", `${endRadius}px`);
 
       const transition = document.startViewTransition(applyTheme);
       transition.ready.then(() => {

@@ -139,11 +139,12 @@ export function renderHomePage(content) {
   const initialExp = content.experience.entries[0];
 
   return `
-    <!-- Section 02A — Full-Viewport Symbol Studio Opening Fold + Bliss Fluid Blue Aurora Canvas -->
+    <!-- Section 02A — Full-Viewport Symbol Studio Opening Fold + Bliss WebGL Blue Silk Shader -->
     <section class="hero hero--bliss" aria-labelledby="hero-title">
-      <div class="hero-bliss-bg" aria-hidden="true">
+      <div class="hero-bliss-bg" id="hero-bliss-bg" aria-hidden="true">
         <canvas class="hero-bliss-canvas" id="hero-bliss-canvas"></canvas>
       </div>
+      <div class="hero-bliss-veil" aria-hidden="true"></div>
 
       <div class="hero-fold">
         <div class="container hero-opening-meta">
@@ -172,7 +173,7 @@ export function renderHomePage(content) {
             <span>${isFa ? "فایل زنده فیگما · قابل تعامل با موس شما" : "LIVE FIGMA WORKSPACE · INTERACTIVE MULTIPLAYER"}</span>
           </div>
           <p class="figma-showcase-hint">
-            ${isFa ? "موس را روی بوم ببرید تا به‌عنوان Guest وارد شوید، روی کارت‌ها کلیک کنید یا بین تب‌های پروژه‌ها جابه‌جا شوید." : "Hover the canvas to join as Guest, click any component to inspect it, or switch project tabs above."}
+            ${isFa ? "موس را روی بوم ببرید، بین تب‌ها جابه‌جا شوید، با دست (H) بوم را بکشید، کامنت (C) بگذارید یا Dev Mode (</>) را فعال کنید." : "Switch tabs, drag with Hand (H), zoom 75–125%, drop a Comment (C), or toggle Dev Mode (</>) to inspect CSS tokens."}
           </p>
         </div>
         <div class="hero__visual reveal">
@@ -480,50 +481,245 @@ export function renderHomePage(content) {
 
 function initHeroBlissCanvas() {
   const canvas = document.getElementById("hero-bliss-canvas");
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
+  const wrapper = document.getElementById("hero-bliss-bg");
+  if (!canvas || !wrapper) return;
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  // Low-res offscreen grid upscaled smoothly by CSS blur = silky 60fps & <1% CPU!
-  const W = 260;
-  const H = 160;
-  canvas.width = W;
-  canvas.height = H;
+  const gl = canvas.getContext("webgl", {
+    alpha: false,
+    antialias: false,
+    depth: false,
+    stencil: false,
+    powerPreference: "high-performance",
+  });
 
-  const blobs = [
-    { x: 0.22, y: 0.28, r: 0.56, sx: 0.00055, sy: 0.00042, ph: 0.0, color: "rgba(22, 94, 246, 0.72)" },
-    { x: 0.78, y: 0.24, r: 0.54, sx: 0.00048, sy: 0.00062, ph: 2.1, color: "rgba(87, 193, 255, 0.62)" },
-    { x: 0.50, y: 0.62, r: 0.58, sx: 0.00038, sy: 0.00051, ph: 4.0, color: "rgba(18, 66, 196, 0.58)" },
-    { x: 0.36, y: 0.44, r: 0.42, sx: 0.00066, sy: 0.00036, ph: 1.2, color: "rgba(185, 200, 255, 0.45)" },
-  ];
-
-  let lastFrame = 0;
-  function render(now) {
-    if (now - lastFrame < 32) {
-      if (!prefersReduced) requestAnimationFrame(render);
-      return;
-    }
-    lastFrame = now;
-
-    ctx.clearRect(0, 0, W, H);
-    const t = prefersReduced ? 0 : now;
-
-    for (const b of blobs) {
-      const cx = (b.x + Math.sin(t * b.sx + b.ph) * 0.16) * W;
-      const cy = (b.y + Math.cos(t * b.sy + b.ph) * 0.14) * H;
-      const rad = b.r * Math.max(W, H);
-      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
-      grad.addColorStop(0, b.color);
-      grad.addColorStop(1, "rgba(22, 94, 246, 0)");
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, W, H);
-    }
-
-    if (!prefersReduced) requestAnimationFrame(render);
+  if (!gl) {
+    // Lightweight fallback if WebGL is unavailable
+    wrapper.style.background =
+      "radial-gradient(ellipse 85% 65% at 74% 18%, rgba(87,193,255,0.48) 0%, rgba(22,94,246,0.34) 36%, #02040a 78%)";
+    wrapper.classList.add("is-ready");
+    return;
   }
 
-  requestAnimationFrame(render);
+  const vsSource = `
+    attribute vec2 a_pos;
+    void main() {
+      gl_Position = vec4(a_pos, 0.0, 1.0);
+    }
+  `;
+
+  const fsSource = `
+    precision highp float;
+    uniform vec2 u_res;
+    uniform float u_time;
+    uniform float u_dpr;
+
+    float hash(vec2 p) {
+      p = fract(p * vec2(123.34, 456.21));
+      p += dot(p, p + 45.32);
+      return fract(p.x * p.y);
+    }
+
+    float noise(vec2 p) {
+      vec2 i = floor(p);
+      vec2 f = fract(p);
+      f = f * f * (3.0 - 2.0 * f);
+      float a = hash(i);
+      float b = hash(i + vec2(1.0, 0.0));
+      float c = hash(i + vec2(0.0, 1.0));
+      float d = hash(i + vec2(1.0, 1.0));
+      return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+    }
+
+    float fbm(vec2 p) {
+      float v = 0.0;
+      float a = 0.55;
+      mat2 rot = mat2(0.80, -0.60, 0.60, 0.80);
+      for (int i = 0; i < 3; i++) {
+        v += a * noise(p);
+        p = rot * p * 1.92;
+        a *= 0.48;
+      }
+      return v;
+    }
+
+    // Evaluates Bliss-style sweeping volumetric silk light ribbons anchored toward upper-right
+    vec2 silkField(vec2 p, float t) {
+      // Rotate ~32deg so primary light folds fan diagonally from upper-right to left/mid
+      mat2 R = mat2(0.848, -0.530, 0.530, 0.848);
+      vec2 q = R * (p - vec2(0.24, 0.28));
+
+      // Slow, broad, fluid organic undulation
+      float warp1 = fbm(q * 1.15 + vec2(t * 0.11, -t * 0.08));
+      float warp2 = fbm(q * 1.55 - vec2(t * 0.07, t * 0.12) + warp1 * 0.75);
+
+      // Ribbon 1: Sweeping bright upper-diagonal caustic crest (upper-right -> mid-left)
+      float d1 = q.y + 0.12 * sin(q.x * 2.1 - t * 0.36) + (warp1 - 0.5) * 0.62;
+      float crest1 = exp(-abs(d1) * 4.6);
+      float glow1  = exp(-abs(d1) * 1.55);
+
+      // Ribbon 2: Secondary curving veil fanning down toward center-right
+      vec2 q2 = mat2(0.45, 0.89, -0.89, 0.45) * (p - vec2(0.32, 0.18));
+      float d2 = q2.y + 0.15 * cos(q2.x * 1.85 + t * 0.28) + (warp2 - 0.5) * 0.72;
+      float crest2 = exp(-abs(d2) * 3.5);
+      float glow2  = exp(-abs(d2) * 1.25);
+
+      // Ribbon 3: Broad upper-right atmospheric fan
+      float d3 = (q.y - 0.34) + (warp2 - 0.5) * 0.55;
+      float glow3 = exp(-abs(d3) * 2.0) * 0.68;
+
+      // Spotlight falloff anchored at upper-right so lower-left & bottom stay deep obsidian
+      float falloff = smoothstep(1.62, 0.06, length((p - vec2(0.36, 0.44)) * vec2(0.86, 1.08)));
+      float bottomDark = smoothstep(-0.78, 0.24, p.y);
+
+      float intensity = (glow1 * 0.68 + glow2 * 0.56 + glow3 * 0.48) * falloff * (0.28 + 0.72 * bottomDark);
+      float hotCore   = (crest1 * 0.82 + crest2 * 0.66) * falloff * (0.35 + 0.65 * bottomDark);
+
+      return vec2(intensity, hotCore);
+    }
+
+    void main() {
+      vec2 uv = gl_FragCoord.xy / u_res;
+      vec2 p = (gl_FragCoord.xy - 0.5 * u_res) / min(u_res.x, u_res.y);
+
+      float t = u_time;
+
+      // Subtle prismatic / chromatic dispersion along the ribbon folds
+      vec2 disp = vec2(0.014, -0.010);
+      vec2 fR = silkField(p + disp * 1.05, t);
+      vec2 fG = silkField(p, t);
+      vec2 fB = silkField(p - disp * 1.15, t);
+
+      // Portfolio Blue Spectrum Ramp:
+      // Deep Void (#02040A) -> Sapphire (#0B2A78) -> Cobalt (#165EF6) -> Sky (#57C1FF) -> Periwinkle (#B9C8FF) -> Ice Core (#EEF7FF)
+      vec3 cVoid       = vec3(0.008, 0.016, 0.042);
+      vec3 cSapphire   = vec3(0.043, 0.165, 0.470);
+      vec3 cCobalt     = vec3(0.086, 0.369, 0.965);
+      vec3 cSky        = vec3(0.341, 0.757, 1.000);
+      vec3 cPeriwinkle = vec3(0.690, 0.765, 1.000);
+      vec3 cIceWhite   = vec3(0.935, 0.972, 1.000);
+
+      vec3 col = cVoid;
+      // Rich volumetric blue layers with chromatic fringe
+      col += cSapphire   * smoothstep(0.04, 0.78, fB.x) * 1.05;
+      col += cCobalt     * smoothstep(0.14, 0.92, fG.x) * 1.12;
+      col += cPeriwinkle * smoothstep(0.24, 0.98, fR.x) * 0.42;
+      col += cSky        * pow(clamp(fB.y, 0.0, 1.0), 1.45) * 0.78;
+
+      // Radiant white-ice caustic core at peak intersections
+      float core = pow(clamp(fG.y * 0.88 + fR.y * 0.32, 0.0, 1.0), 2.35);
+      col = mix(col, cIceWhite, clamp(core * 0.88, 0.0, 0.92));
+
+      // Signature Bliss Agency diagonal micro-dot halftone / screen-print texture (~2.6px pitch)
+      float s = 0.70710678;
+      vec2 rotCoord = vec2(
+        gl_FragCoord.x * s - gl_FragCoord.y * s,
+        gl_FragCoord.x * s + gl_FragCoord.y * s
+      );
+      float pitch = 2.65 * u_dpr;
+      vec2 cell = fract(rotCoord / pitch) - 0.5;
+      float dotMask = smoothstep(0.47, 0.15, length(cell));
+
+      float lum = dot(col, vec3(0.299, 0.587, 0.114));
+      // Strongest tactile micro-dot grain across mid-tones & silk folds, clean in deep void
+      float halftoneAmt = smoothstep(0.02, 0.24, lum) * (1.0 - smoothstep(0.82, 1.08, lum) * 0.45);
+      col *= mix(1.0, mix(0.74, 1.20, dotMask), halftoneAmt * 0.64);
+
+      // Subtle micro-dither to eliminate 8-bit gradient banding
+      col += (hash(gl_FragCoord.xy + fract(t)) - 0.5) / 255.0;
+
+      // Soft bottom vignette melt
+      col *= smoothstep(0.0, 0.22, uv.y) * 0.92 + 0.08;
+
+      gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
+    }
+  `;
+
+  function compile(type, src) {
+    const sh = gl.createShader(type);
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+      gl.deleteShader(sh);
+      return null;
+    }
+    return sh;
+  }
+
+  const vs = compile(gl.VERTEX_SHADER, vsSource);
+  const fs = compile(gl.FRAGMENT_SHADER, fsSource);
+  if (!vs || !fs) {
+    wrapper.classList.add("is-ready");
+    return;
+  }
+
+  const prog = gl.createProgram();
+  gl.attachShader(prog, vs);
+  gl.attachShader(prog, fs);
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+    wrapper.classList.add("is-ready");
+    return;
+  }
+
+  gl.useProgram(prog);
+
+  // Single oversized triangle covering clip-space (fastest possible fullscreen quad)
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  const locPos = gl.getAttribLocation(prog, "a_pos");
+  gl.enableVertexAttribArray(locPos);
+  gl.vertexAttribPointer(locPos, 2, gl.FLOAT, false, 0, 0);
+
+  const uRes = gl.getUniformLocation(prog, "u_res");
+  const uTime = gl.getUniformLocation(prog, "u_time");
+  const uDpr = gl.getUniformLocation(prog, "u_dpr");
+
+  let dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const rect = wrapper.getBoundingClientRect();
+    const w = Math.max(1, Math.floor(rect.width * dpr));
+    const h = Math.max(1, Math.floor(rect.height * dpr));
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w;
+      canvas.height = h;
+      gl.viewport(0, 0, w, h);
+    }
+  }
+
+  resize();
+  window.addEventListener("resize", resize, { passive: true });
+
+  let isVisible = true;
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0]?.isIntersecting ?? true;
+      },
+      { rootMargin: "120px" }
+    );
+    io.observe(wrapper);
+  }
+
+  const start = performance.now();
+  function draw(now) {
+    if (isVisible && !document.hidden) {
+      const elapsed = prefersReduced ? 4.2 : (now - start) * 0.001 + 4.2;
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform1f(uTime, elapsed);
+      gl.uniform1f(uDpr, dpr);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+    if (!prefersReduced) {
+      requestAnimationFrame(draw);
+    }
+  }
+
+  // Render first frame immediately & trigger smooth Bliss fade-in
+  draw(start);
+  requestAnimationFrame(() => wrapper.classList.add("is-ready"));
 }
 
 function initConceptzillaTimeline() {
