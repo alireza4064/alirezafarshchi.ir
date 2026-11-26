@@ -539,44 +539,58 @@ html[dir="rtl"] .site-nav.is-compact .site-nav__bar {
 }
 
 @media (max-width: 768px) {
-  .ss-links {
-    display: none;
+  /* Native-Feel Floating Bottom Nav Pill (Same Desktop Symbol Studio Dark Style!) */
+  .ss-nav-root {
+    top: auto;
+    bottom: 14px;
+    padding: 0 12px;
   }
 
   .ss-morph-card {
-    width: auto !important;
-    min-width: 152px;
-    border-radius: 14px;
-  }
-
-  .ss-morph-card.is-expanded {
-    width: calc(100vw - 24px) !important;
+    width: min(100%, 420px) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(14px);
+    background: rgba(13, 14, 18, 0.94);
   }
 
   .ss-morph-bar {
-    padding: 6px 8px;
-    justify-content: center;
-  }
-
-  .ss-controls {
-    width: 100%;
+    padding: 6px 8px !important;
+    min-height: 48px;
+    gap: 6px;
     justify-content: space-between;
-    gap: 10px;
   }
 
-  .nav-toggle {
-    display: inline-flex;
-    color: #f4f5f8;
-    border-color: rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.08);
-    height: 30px;
-    padding: 0 11px;
-    border-radius: 8px;
+  .ss-links {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex: 1;
+    gap: 2px;
+  }
+
+  .ss-link {
+    padding: 7px 10px;
     font-size: 0.78rem;
   }
 
+  /* Hide 5th external Resume link on compact bottom dock (available in Hero, About & Contact) */
+  .ss-link:last-child {
+    display: none;
+  }
+
+  .ss-controls {
+    width: auto;
+    gap: 4px;
+  }
+
+  .nav-toggle,
+  .site-nav__drawer-wrap {
+    display: none !important;
+  }
+
   .site-footer {
-    padding-bottom: 92px;
+    padding-bottom: 112px;
   }
 }
 

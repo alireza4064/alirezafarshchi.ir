@@ -1134,28 +1134,104 @@
   box-shadow: 0 0 12px rgba(20, 174, 92, 0.45);
 }
 
-/* --- Responsive --- */
+/* Mobile App Dev Mode Bottom Sheet (Hidden on Desktop) */
+.fg-mobile-sheet {
+  display: none;
+  background: #25262b;
+  border-top: 1px solid #3c3e47;
+  padding: 10px 14px 14px;
+}
+
+.fg-mobile-sheet__handle {
+  width: 34px;
+  height: 4px;
+  border-radius: 999px;
+  background: #4d505c;
+  margin: 0 auto 10px;
+}
+
+.fg-mobile-sheet__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* --- Responsive: Authentic Figma Mobile App UI --- */
 @media (max-width: 1080px) {
   .fg-island {
     display: none;
   }
 
+  .fg-mobile-sheet {
+    display: block;
+  }
+
   .fg-workspace {
-    height: 440px;
+    height: 420px;
   }
 
   .fg-canvas {
-    padding: 18px 18px 66px;
+    padding: 18px 16px 68px;
   }
 }
 
-@media (max-width: 580px) {
+@media (max-width: 640px) {
+  .figma-ui3 {
+    border-radius: 22px;
+    border-color: #3a3d47;
+  }
+
+  .fg-tabbar {
+    height: 44px;
+    padding: 0 10px;
+    background: #242529;
+  }
+
+  .fg-tab {
+    height: 30px;
+    padding: 0 10px;
+    font-size: 11px;
+    border-radius: 999px;
+  }
+
   .fg-workspace {
-    height: 360px;
+    height: 320px;
+  }
+
+  .fg-canvas {
+    padding: 14px 12px 62px;
+  }
+
+  .fg-artboard-label {
+    font-size: 9.5px;
+    margin-bottom: 5px;
+  }
+
+  .fg-alireza-cursor {
+    display: none;
+  }
+
+  .fg-dim-pill {
+    font-size: 8px;
+    bottom: -17px;
   }
 
   .fg-bottom-dock {
-    transform: translateX(-50%) scale(0.9);
     bottom: 10px;
+    padding: 4px 6px;
+    gap: 3px;
+    max-width: calc(100% - 16px);
+  }
+
+  .fg-dock-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .fg-dz-btn {
+    padding: 3px 5px;
+    font-size: 9px;
   }
 }

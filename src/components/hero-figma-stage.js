@@ -565,6 +565,19 @@ export function renderHeroFigmaStage(lang = "en") {
           </button>
         </div>
       </div>
+
+      <!-- Figma Mobile App Bottom Inspect Sheet (Visible on <= 1080px when Dev Mode is ON) -->
+      <div class="fg-mobile-sheet" id="fg-mobile-sheet" hidden>
+        <div class="fg-mobile-sheet__handle" aria-hidden="true"></div>
+        <div class="fg-mobile-sheet__head">
+          <div>
+            <span class="fg-dev-badge" style="margin-bottom:4px;"><span class="fg-dev-dot"></span>DEV MODE · CSS</span>
+            <div class="fg-insp-title" id="dev-mobile-name" style="margin-bottom:0;">${initData.name}</div>
+          </div>
+          <button type="button" class="fg-copy-css-btn" id="fg-mobile-copy-btn">Copy CSS</button>
+        </div>
+        <pre class="fg-dev-code"><code id="dev-mobile-code">${buildCssHtml(initData)}</code></pre>
+      </div>
     </div>
   `;
 }
@@ -598,6 +611,10 @@ export function initHeroFigmaStage() {
   const devTokenChips = document.getElementById("dev-token-chips");
   const devCssCode = document.getElementById("dev-css-code");
   const copyCssBtn = document.getElementById("fg-copy-css-btn");
+  const mobileSheet = document.getElementById("fg-mobile-sheet");
+  const mobileDevName = document.getElementById("dev-mobile-name");
+  const mobileDevCode = document.getElementById("dev-mobile-code");
+  const mobileCopyBtn = document.getElementById("fg-mobile-copy-btn");
 
   const zoomTrigger = document.getElementById("fg-zoom-trigger");
   const zoomMenu = document.getElementById("fg-zoom-menu");
@@ -718,6 +735,8 @@ export function initHeroFigmaStage() {
 
     if (devNodeName) devNodeName.textContent = data.name;
     if (devCssCode) devCssCode.innerHTML = buildCssHtml(data);
+    if (mobileDevName) mobileDevName.textContent = data.name;
+    if (mobileDevCode) mobileDevCode.innerHTML = buildCssHtml(data);
     if (devTokenChips) {
       devTokenChips.innerHTML = `
         <span>${data.tokenVar || "--primary"}</span>
@@ -736,6 +755,7 @@ export function initHeroFigmaStage() {
     }
     if (designPanel) designPanel.hidden = isDevMode;
     if (devPanel) devPanel.hidden = !isDevMode;
+    if (mobileSheet) mobileSheet.hidden = !isDevMode;
     designTabBtn?.classList.toggle("is-active", !isDevMode);
     inspectTabBtn?.classList.toggle("is-active", isDevMode);
     if (isDevMode) {
@@ -1007,18 +1027,22 @@ export function initHeroFigmaStage() {
   });
   zoomResetBtn?.addEventListener("click", resetView);
 
-  copyCssBtn?.addEventListener("click", async () => {
+  const handleCopyCss = async (btn) => {
     const css = buildCssSnippet(currentInspectorData);
+    const orig = btn.textContent;
     try {
       await navigator.clipboard.writeText(css);
-      copyCssBtn.textContent = "Copied ✓";
+      btn.textContent = "Copied ✓";
       window.setTimeout(() => {
-        copyCssBtn.textContent = "Copy";
+        btn.textContent = orig;
       }, 1500);
     } catch {
-      copyCssBtn.textContent = "Copied";
+      btn.textContent = "Copied";
     }
-  });
+  };
+
+  copyCssBtn?.addEventListener("click", () => handleCopyCss(copyCssBtn));
+  mobileCopyBtn?.addEventListener("click", () => handleCopyCss(mobileCopyBtn));
 
   // Keyboard shortcuts when stage is hovered
   let stageHovered = false;

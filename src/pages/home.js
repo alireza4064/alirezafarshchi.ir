@@ -157,6 +157,32 @@ export function renderHomePage(content) {
       <div class="hero-bliss-veil" aria-hidden="true"></div>
 
       <div class="hero-fold">
+        <!-- Mobile Matching Symbol Studio Dark Hero Card (Hidden on Desktop, Shown on <= 960px) -->
+        <div class="container hero-mobile-card-wrap">
+          <div class="hero-mobile-card">
+            <div class="ss-expanded-eyebrow">${content.hero.eyebrow}</div>
+            <div class="hero-mobile-card__title">${content.hero.headline}</div>
+            <div class="ss-expanded-preview">
+              <img
+                src="/assets/sculpture-hero.jpg"
+                alt="${content.hero.sculptureAlt}"
+                width="480"
+                height="220"
+                fetchpriority="high"
+              />
+              <div class="ss-preview-actions">
+                <a class="ss-preview-pill ss-preview-pill--primary" href="#selected-work">
+                  <span>${content.hero.primaryCta}</span>
+                  <span aria-hidden="true">${content.arrow}</span>
+                </a>
+                <a class="ss-preview-pill" href="#contact">
+                  <span>${content.nav.cta}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="container hero-opening-meta">
           <p class="hero-opening-bio">${content.hero.intro[0]}</p>
           <a class="hero-scroll-cue" href="#figma-showcase">
