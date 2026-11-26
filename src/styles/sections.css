@@ -621,8 +621,8 @@ html[dir="rtl"] .audience-quick-link:hover {
   z-index: calc(1 + var(--card-i, 0));
   border-radius: 28px;
   background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: 0 22px 54px rgba(10, 14, 28, 0.09);
+  border: 1px solid rgba(20, 28, 52, 0.11);
+  box-shadow: 0 22px 54px rgba(10, 14, 28, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.85);
   overflow: hidden;
   transform-origin: center top;
   will-change: transform, filter;
@@ -630,16 +630,18 @@ html[dir="rtl"] .audience-quick-link:hover {
 }
 
 [data-theme="dark"] .work-stack-card {
-  box-shadow: 0 28px 68px rgba(0, 0, 0, 0.56);
+  border-color: rgba(185, 200, 255, 0.16);
+  box-shadow: 0 28px 68px rgba(0, 0, 0, 0.58), inset 0 1px 0 rgba(255, 255, 255, 0.10);
 }
 
 .work-stack-card:hover {
-  border-color: var(--primary-border);
-  box-shadow: 0 28px 68px rgba(14, 24, 52, 0.16), 0 0 0 1px var(--primary-border);
+  border-color: rgba(22, 94, 246, 0.42);
+  box-shadow: 0 28px 68px rgba(14, 24, 52, 0.15), 0 0 0 1px rgba(22, 94, 246, 0.22);
 }
 
 [data-theme="dark"] .work-stack-card:hover {
-  box-shadow: 0 32px 76px rgba(0, 0, 0, 0.68), 0 0 36px rgba(22, 94, 246, 0.18);
+  border-color: rgba(87, 193, 255, 0.48);
+  box-shadow: 0 32px 76px rgba(0, 0, 0, 0.68), 0 0 34px rgba(22, 94, 246, 0.20), inset 0 1px 0 rgba(185, 200, 255, 0.18);
 }
 
 .work-stack-card__link {
