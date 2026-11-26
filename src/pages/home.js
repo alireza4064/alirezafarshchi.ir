@@ -145,7 +145,7 @@ export function renderHomePage(content) {
   const initialExp = content.experience.entries[0];
 
   return `
-    <!-- Section 02 — Bliss Blue Atmospheric Hero (Symbol Studio Opening Fold + Full-Width Figma UI3 Workspace) -->
+    <!-- Section 02A — Full-Viewport Symbol Studio Opening Fold + Bliss Blue Backdrop -->
     <section class="hero hero--bliss" aria-labelledby="hero-title">
       <div class="hero-bliss-bg" aria-hidden="true">
         <div class="hero-bliss-orb hero-bliss-orb--1"></div>
@@ -153,17 +153,37 @@ export function renderHomePage(content) {
         <div class="hero-bliss-orb hero-bliss-orb--3"></div>
       </div>
 
-      <div class="container hero__stage-wrap">
-        <!-- Flanking Symbol Studio Opening Footer Row (sits cleanly beneath the center morphing box) -->
-        <div class="hero-opening-meta">
+      <div class="hero-fold">
+        <div class="container hero-opening-meta">
           <p class="hero-opening-bio">${content.hero.intro[0]}</p>
-          <a class="hero-scroll-cue" href="#figma-stage">
-            <span>${isFa ? "برای مشاهده فایل زنده فیگما اسکرول کنید ↓" : "Scroll to explore live Figma workspace ↓"}</span>
+          <a class="hero-scroll-cue" href="#figma-showcase">
+            <span>${isFa ? "اسکرول کنید تا وارد فضای زنده فیگما و پروژه‌ها شوید ↓" : "Scroll down to explore the live Figma workspace & work ↓"}</span>
           </a>
         </div>
 
-        <!-- Full-Width Interactive Figma UI3 Workspace -->
-        <div class="hero__visual">
+        <!-- Giant Anchor Display Wordmark (Symbol Studio opening rhythm) -->
+        <div class="hero-giant-strip" dir="ltr" aria-hidden="true">
+          <div class="hero-giant-track">
+            <span>ALIREZA FARSHCHI <i class="hero-giant-dot"></i> PRODUCT DESIGNER <i class="hero-giant-dot"></i></span>
+            <span>ALIREZA FARSHCHI <i class="hero-giant-dot"></i> PRODUCT DESIGNER <i class="hero-giant-dot"></i></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 02B — Dedicated Full-Width Interactive Figma UI3 Workspace -->
+    <section class="figma-showcase-section" id="figma-showcase" aria-label="${isFa ? "فضای کار زنده فیگما" : "Interactive Figma workspace"}">
+      <div class="container">
+        <div class="figma-showcase-head reveal">
+          <div class="eyebrow">
+            <span class="eyebrow__dot" aria-hidden="true"></span>
+            <span>${isFa ? "فایل زنده فیگما · قابل تعامل با موس شما" : "LIVE FIGMA WORKSPACE · INTERACTIVE MULTIPLAYER"}</span>
+          </div>
+          <p class="figma-showcase-hint">
+            ${isFa ? "موس را روی بوم ببرید تا به‌عنوان Guest وارد شوید، روی کارت‌ها کلیک کنید یا بین تب‌های پروژه‌ها جابه‌جا شوید." : "Hover the canvas to join as Guest, click any component to inspect it, or switch project tabs above."}
+          </p>
+        </div>
+        <div class="hero__visual reveal">
           ${renderHeroFigmaStage(content.lang)}
         </div>
       </div>
