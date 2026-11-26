@@ -185,16 +185,53 @@ export function initNavigation(content) {
 
   const themeButtons = document.querySelectorAll("[data-theme-toggle]");
   themeButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
       const current = document.documentElement.getAttribute("data-theme") || "light";
       const next = current === "dark" ? "light" : "dark";
-      document.documentElement.setAttribute("data-theme", next);
-      try {
-        localStorage.setItem("portfolio-theme", next);
-      } catch {
-        // ignore
+      const applyTheme = () => {
+        document.documentElement.setAttribute("data-theme", next);
+        try {
+          localStorage.setItem("portfolio-theme", next);
+        } catch {
+          // ignore
+        }
+        themeButtons.forEach((b) => b.setAttribute("aria-pressed", String(next === "dark")));
+      };
+
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!document.startViewTransition || prefersReduced) {
+        applyTheme();
+        return;
       }
-      themeButtons.forEach((b) => b.setAttribute("aria-pressed", String(next === "dark")));
+
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX || rect.left + rect.width / 2;
+      const y = e.clientY || rect.top + rect.height / 2;
+      const endRadius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y)
+      );
+
+      document.documentElement.style.setProperty("--theme-x", `${x}px`);
+      document.documentElement.style.setProperty("--theme-y", `${y}px`);
+      document.documentElement.style.setProperty("--theme-r", `${endRadius}px`);
+
+      const transition = document.startViewTransition(applyTheme);
+      transition.ready.then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${endRadius}px at ${x}px ${y}px)`,
+            ],
+          },
+          {
+            duration: 540,
+            easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+            pseudoElement: "::view-transition-new(root)",
+          }
+        );
+      });
     });
   });
 
