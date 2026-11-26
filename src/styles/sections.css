@@ -1540,11 +1540,11 @@ html[dir="rtl"] .bliss-contact__title {
 }
 
 .bliss-form-card {
-  background: rgba(14, 16, 24, 0.56);
-  backdrop-filter: blur(22px) saturate(1.35);
-  -webkit-backdrop-filter: blur(22px) saturate(1.35);
-  border: 1px solid rgba(185, 200, 255, 0.16);
-  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  background: rgba(12, 14, 21, 0.76);
+  backdrop-filter: blur(42px) saturate(1.15);
+  -webkit-backdrop-filter: blur(42px) saturate(1.15);
+  border: 1px solid rgba(185, 200, 255, 0.14);
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   border-radius: 22px;
   padding: clamp(22px, 3vw, 30px);
   display: grid;
