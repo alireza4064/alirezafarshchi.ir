@@ -128,6 +128,16 @@ function renderExperienceDetail(item, isFreelanceGroup, content) {
         )
         .join("")}
     </ul>
+    <div class="exp-detail__footer">
+      <div class="exp-detail__tags">
+        <span>${item.domain}</span>
+        <span>${item.location}</span>
+      </div>
+      <a class="exp-detail__resume-link" href="${PROFILE.resumeUrl}" target="_blank" rel="noopener noreferrer">
+        <span>${content.experience.cta}</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
   `;
 }
 
@@ -248,8 +258,8 @@ export function renderHomePage(content) {
       </div>
     </section>
 
-    <!-- Section 04 — Selected Work -->
-    <section class="section section--bordered section--surface-band" id="selected-work" aria-labelledby="work-heading">
+    <!-- Section 04 — Selected Work (Editorial Staggered Grid + Scroll-Linked Motion) -->
+    <section class="section section--ambient-band" id="selected-work" aria-labelledby="work-heading">
       <div class="container">
         <div class="section-header reveal">
           <div class="eyebrow">${content.selectedWork.eyebrow}</div>
@@ -302,7 +312,7 @@ export function renderHomePage(content) {
     </section>
 
     <!-- Section 06 — Interactive Categorized Experience Split View -->
-    <section class="section section--bordered" id="experience" aria-labelledby="experience-heading">
+    <section class="section section--surface-band" id="experience" aria-labelledby="experience-heading">
       <div class="container">
         <div class="section-header reveal">
           <div class="eyebrow">${content.experience.eyebrow}</div>
@@ -994,9 +1004,45 @@ export function initHomePage(content) {
     });
   }
 
-  // 5. Initialize Bliss Fluid Hero Canvas, Figma UI3 Workspace, Conceptzilla Timeline & Contact Starfield
+  // 5. Initialize Bliss Fluid Hero Canvas, Figma UI3 Workspace, Conceptzilla Timeline, Selected Work Parallax & Contact Starfield
   initHeroBlissCanvas();
   initHeroFigmaStage();
   initConceptzillaTimeline();
+  initSelectedWorkScrollMotion();
   initContactStarfieldCanvas();
+}
+
+function initSelectedWorkScrollMotion() {
+  const cards = document.querySelectorAll("[data-parallax-card]");
+  if (!cards.length) return;
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReduced) return;
+
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const vh = window.innerHeight || 800;
+    cards.forEach((card) => {
+      const rect = card.getBoundingClientRect();
+      if (rect.bottom < -80 || rect.top > vh + 80) return;
+      // Normalized progress from -1 (below viewport) to +1 (above viewport)
+      const progress = Math.max(-1, Math.min(1, (rect.top + rect.height * 0.5 - vh * 0.5) / (vh * 0.75)));
+      const img = card.querySelector(".project-card__media img");
+      if (img) {
+        img.style.transform = `translate3d(0, ${(progress * -16).toFixed(1)}px, 0) scale(1.08)`;
+      }
+      const depth = Math.abs(progress);
+      card.style.setProperty("--card-scroll-scale", (1 - depth * 0.018).toFixed(4));
+    });
+  };
+
+  const onScroll = () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  update();
 }

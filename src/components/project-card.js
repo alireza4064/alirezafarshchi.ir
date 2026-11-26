@@ -31,11 +31,14 @@ export function renderProjectCard(project, content, index = 0) {
     ? `<img src="${project.cover}" alt="${data.title} — ${data.domain}" loading="lazy" decoding="async" />`
     : `<div class="project-card__visual-fallback">${renderAbstractVisualSvg(index)}</div>`;
 
+  const numLabel = String(index + 1).padStart(2, "0");
+
   return `
-    <article class="project-card reveal">
+    <article class="project-card reveal" data-parallax-card="${index}">
       <a href="${href}" style="display:flex;flex-direction:column;height:100%;">
         <div class="project-card__media">
           ${mediaHtml}
+          <span class="project-card__index" aria-hidden="true">${numLabel}</span>
         </div>
         <div class="project-card__body">
           <div class="project-card__meta">

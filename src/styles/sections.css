@@ -599,15 +599,67 @@ html[dir="rtl"] .audience-quick-link:hover {
   transform: translateX(-3px);
 }
 
-/* --- 04. Selected Work Grid --- */
+/* --- 04. Creative Selected Work Showcase (Staggered Grid + Scroll Parallax) --- */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(24px, 2.5vw, 32px);
+  gap: clamp(24px, 3vw, 38px);
+  align-items: start;
+}
+
+@media (min-width: 721px) {
+  .projects-grid .project-card:nth-child(even) {
+    margin-top: 44px;
+  }
+}
+
+.project-card {
+  position: relative;
+  transform: scale(var(--card-scroll-scale, 1));
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 240ms ease,
+    box-shadow 320ms ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px) scale(1.005);
+  border-color: var(--primary-border);
+  box-shadow: 0 24px 56px rgba(10, 18, 36, 0.12), 0 0 0 1px var(--primary-border);
+}
+
+[data-theme="dark"] .project-card:hover {
+  box-shadow: 0 28px 64px rgba(0, 0, 0, 0.52), 0 0 32px rgba(22, 94, 246, 0.16);
+}
+
+.project-card__media {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card__media img {
+  will-change: transform;
+  transition: transform 120ms linear;
+}
+
+.project-card__index {
+  position: absolute;
+  top: 14px;
+  inset-inline-start: 14px;
+  z-index: 3;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(12, 14, 20, 0.72);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
 }
 
 .section-footer-cta {
-  margin-top: 36px;
+  margin-top: 44px;
   display: flex;
   justify-content: flex-start;
 }
@@ -721,28 +773,28 @@ html[dir="rtl"] .cz-step--left .cz-card {
   font-weight: 600;
 }
 
-/* --- 06. Interactive Categorized Experience Split View --- */
+/* --- 06. Balanced Executive Experience Switcher (Zero Dead Space) --- */
 .exp-split {
-  display: grid;
-  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.32fr);
-  gap: 20px;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .exp-nav {
   display: grid;
-  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .exp-nav__item {
   text-align: start;
-  padding: 16px 18px;
+  padding: 13px 16px;
   border-radius: 14px;
   background: var(--surface);
   border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   transition: border-color 180ms var(--ease-out),
     background-color 180ms var(--ease-out),
     transform 180ms var(--ease-out);
@@ -837,6 +889,52 @@ html[dir="rtl"] .cz-step--left .cz-card {
   color: var(--ink-secondary);
 }
 
+.exp-detail__footer {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.exp-detail__tags {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.exp-detail__tags span {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+}
+
+.exp-detail__resume-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--primary-text-on-soft);
+  transition: opacity 160ms ease;
+}
+
+[data-theme="dark"] .exp-detail__resume-link {
+  color: var(--accent-sky);
+}
+
+.exp-detail__resume-link:hover {
+  opacity: 0.78;
+}
+
 .exp-freelance-stack {
   display: grid;
   gap: 14px;
@@ -885,6 +983,11 @@ html[dir="rtl"] .cz-step--left .cz-card {
   width: max-content;
   will-change: transform;
   animation: marqueeScroll 54s linear infinite;
+}
+
+.brand-marquee-band:hover .brand-marquee-track,
+.hero-giant-strip:hover .hero-giant-track {
+  animation-play-state: paused;
 }
 
 @keyframes marqueeScroll {

@@ -47,12 +47,13 @@
 [data-theme="light"] {
   color-scheme: light;
 
-  /* Surfaces & Canvas (Taraznama Light) */
+  /* Surfaces & Canvas (Editorial Light + Subtle Tonal Bands) */
   --canvas: #f7f7f5;
   --surface: #ffffff;
-  --surface-subtle: #f2f2ef;
-  --surface-hover: #ecece8;
-  --surface-elevated: rgba(255, 255, 255, 0.86);
+  --surface-subtle: #f0f0ec;
+  --surface-band: #eeefe9;
+  --surface-hover: #e8e8e3;
+  --surface-elevated: rgba(255, 255, 255, 0.88);
 
   /* Ink & Typography */
   --ink: #161614;
@@ -138,23 +139,24 @@
   --dur-audience: 300ms;
 }
 
-/* --- Dark Mode (Taraznama Dark Neutrals + TopFast Reports Cobalt Blue) --- */
+/* --- Dark Mode (Cohesive Deep Obsidian + Cobalt Blue Undertone) --- */
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --canvas: #0c0c0e;
-  --surface: #131316;
-  --surface-subtle: #19191d;
-  --surface-hover: #212126;
-  --surface-elevated: rgba(19, 19, 22, 0.84);
+  --canvas: #0a0b0f;
+  --surface: #12141b;
+  --surface-subtle: #171a24;
+  --surface-band: #0f1118;
+  --surface-hover: #1d212e;
+  --surface-elevated: rgba(18, 20, 27, 0.88);
 
-  --ink: #ededeb;
-  --ink-secondary: #cbc9c3;
-  --ink-muted: #a3a29d;
-  --ink-subtle: #86857f;
+  --ink: #f0f2f7;
+  --ink-secondary: #cfd3df;
+  --ink-muted: #989eae;
+  --ink-subtle: #787e8f;
 
-  --border: #26262a;
-  --border-strong: #35353c;
+  --border: #222532;
+  --border-strong: #313647;
 
   --primary: #165ef6;
   --primary-hover: #2b6ff8;
