@@ -7,6 +7,7 @@ import { CONTENT_FA } from "./data/content-fa.js";
 import { renderNavigation, initNavigation } from "./components/nav.js";
 import { renderFooter } from "./components/footer.js";
 import { renderAssistantAndChat, initAssistantAndChat } from "./components/assistant.js";
+import { renderResumeModal, initResumeModal } from "./components/resume-modal.js";
 import { renderHomePage, initHomePage } from "./pages/home.js";
 import { renderWorkPage, initWorkPage } from "./pages/work.js";
 import { renderProjectOverviewPage, initProjectOverviewPage } from "./pages/project-overview.js";
@@ -71,10 +72,12 @@ function bootstrap() {
     <main id="main-content">${mainHtml}</main>
     ${renderFooter(content)}
     ${renderAssistantAndChat(content)}
+    ${renderResumeModal(content)}
   `;
 
   initNavigation(content);
   initAssistantAndChat(content);
+  initResumeModal();
 
   if (page === "home") initHomePage(content);
   if (page === "work") initWorkPage(content);

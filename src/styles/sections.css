@@ -1373,10 +1373,20 @@ html[dir="rtl"] .bliss-contact__title {
 .bliss-contact__logos {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 16px;
+  gap: 8px 14px;
   font-size: 0.85rem;
   font-weight: 600;
   color: #b7b9c2;
+}
+
+.bliss-contact__logos a {
+  color: #b7b9c2;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.bliss-contact__logos a:hover {
+  color: #57c1ff;
+  transform: translateY(-1px);
 }
 
 .bliss-contact__direct {

@@ -18,7 +18,7 @@ import { renderHeroFigmaStage, initHeroFigmaStage } from "../components/hero-fig
 
 /* Curated Flagship Products & Companies in Strategic Impact Order */
 const MARQUEE_BRANDS = [
-  { name: "DELTAFX", slug: "iranserver", hrefOverride: "#experience", style: "tracked" },
+  { name: "DELTAFX", slug: "deltafx", style: "tracked" },
   { name: "FARANO", slug: "farano", style: "tracked" },
   { name: "IranServer", slug: "iranserver", style: "bold" },
   { name: "Signal", slug: "signal", style: "italic" },
@@ -27,6 +27,16 @@ const MARQUEE_BRANDS = [
   { name: "Word+", slug: "word-plus", style: "bold" },
   { name: "PART SOFTWARE", slug: "part-design-system", style: "tracked" },
 ];
+
+const COMPANY_SLUGS = {
+  DeltaFX: "deltafx",
+  Farano: "farano",
+  IranServer: "iranserver",
+  "Made In Iran": "made-in-iran",
+  "Part Software Group": "part-design-system",
+  "Kanon Ghazaei": "kanon-ghazaei",
+  Bejatoo: "bejatoo",
+};
 
 function renderAudiencePanelContent(item, content) {
   const linksHtml = item.links
@@ -133,10 +143,20 @@ function renderExperienceDetail(item, isFreelanceGroup, content) {
         <span>${item.domain}</span>
         <span>${item.location}</span>
       </div>
-      <a class="exp-detail__resume-link" href="${PROFILE.resumeUrl}" target="_blank" rel="noopener noreferrer">
-        <span>${content.experience.cta}</span>
-        <span aria-hidden="true">↗</span>
-      </a>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        ${
+          COMPANY_SLUGS[item.company]
+            ? `<a class="exp-detail__resume-link" href="/${content.lang}/work/${COMPANY_SLUGS[item.company]}/">
+                <span>${content.lang === "fa" ? "صفحه پروژه" : "Company page"}</span>
+                <span aria-hidden="true">${content.arrow}</span>
+              </a>`
+            : ""
+        }
+        <a class="exp-detail__resume-link" href="${PROFILE.resumeUrl}" data-open-resume="true">
+          <span>${content.experience.cta}</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
     </div>
   `;
 }
@@ -451,19 +471,15 @@ export function renderHomePage(content) {
             </div>
           </div>
 
-          <!-- Right Interactive Code/Binary ASCII Portrait + Metrics Column -->
+          <!-- Right Interactive Falling Code Portrait + Metrics Column -->
           <div class="about-bento__side">
             <div class="about-portrait-stage" id="about-portrait-stage" aria-label="${PROFILE.name} interactive code portrait">
-              <div class="about-code-hud" aria-hidden="true">
-                <span class="about-code-hud__dot"></span>
-                <span>PORTRAIT.tsx · 01_MATRIX</span>
-              </div>
               <canvas class="about-portrait-canvas" id="about-portrait-canvas"></canvas>
               <div class="about-bento__visual-tag">
                 <img class="about-mini-avatar" src="/assets/alireza-portrait.jpg" alt="${PROFILE.name}" width="32" height="32" loading="lazy" />
                 <div>
                   <strong>${isFa ? "علیرضا محمدزاده فرشچی" : "Alireza Farshchi"}</strong>
-                  <span>${isFa ? "مشهد / ریموت · طراحی محصول" : "Design Systems · Code & AI"}</span>
+                  <span>${isFa ? "مشهد / ریموت · طراحی محصول" : "Design Systems · Product & Code"}</span>
                 </div>
               </div>
             </div>
@@ -501,13 +517,14 @@ export function renderHomePage(content) {
             <div class="bliss-contact__meta">
               <div class="bliss-contact__label">${isFa ? "شرکت‌هایی که با آن‌ها همکاری داشته‌ام" : "Companies I've worked with"}</div>
               <div class="bliss-contact__logos">
-                <span>DeltaFX</span>
-                <span>Farano</span>
-                <span>IranServer</span>
-                <span>Made In Iran</span>
-                <span>Part Software Group</span>
-                <span>Kanon Ghazaei</span>
-                <span>Bejatoo</span>
+                <a href="${prefix}/work/deltafx/">DeltaFX</a>
+                <a href="${prefix}/work/farano/">Farano</a>
+                <a href="${prefix}/work/iranserver/">IranServer</a>
+                <a href="${prefix}/work/made-in-iran/">Made In Iran</a>
+                <a href="${prefix}/work/part-design-system/">Part Software Group</a>
+                <a href="${prefix}/work/kanon-ghazaei/">Kanon Ghazaei</a>
+                <a href="${prefix}/work/bejatoo/">Bejatoo</a>
+                <a href="${prefix}/work/accounting-software/">Hulo / Parmis</a>
               </div>
             </div>
 

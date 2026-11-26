@@ -700,6 +700,144 @@ export const PROJECTS = [
       ],
     },
   },
+  {
+    slug: "deltafx",
+    featured: false,
+    cover: "/assets/sculpture-hero.jpg",
+    categories: ["Fintech", "Product Design", "Design Systems"],
+    tags: ["Trading Platforms", "Design Systems", "Fintech UX"],
+    protectedCaseStudy: true,
+    en: {
+      title: "DeltaFX",
+      domain: "Fintech · Trading & Financial Platforms",
+      role: "Senior Product Designer",
+      timeline: "Present",
+      scope: "Trading Experience, Client Portal & Scalable Design System",
+      shortDesc:
+        "Designing high-clarity financial and trading product experiences at DeltaFX with a focus on system consistency, speed, and user trust.",
+      problem:
+        "Financial and trading platforms require clear information hierarchy, rapid decision support, and dependable multi-surface consistency under real-time market conditions.",
+      contributions: [
+        "Leading product design initiatives across core client-facing workflows and platform interfaces.",
+        "Strengthening component architecture, token structure, and cross-functional design-engineering alignment.",
+        "Detailed case study documentation and visual artifacts are currently being prepared.",
+      ],
+      outcomes: [
+        "Active ongoing role — full case study breakdown will be expanded here as milestones ship.",
+      ],
+    },
+    fa: {
+      title: "دلتا اف‌اکس (DeltaFX)",
+      domain: "فینتک · پلتفرم‌های معاملاتی و مالی",
+      role: "طراح ارشد محصول",
+      timeline: "تا اکنون",
+      scope: "تجربه معاملاتی، پنل کاربری و سیستم طراحی مقیاس‌پذیر",
+      shortDesc:
+        "طراحی تجربه‌های شفاف مالی و معاملاتی در DeltaFX با تمرکز بر انسجام سیستمی، سرعت تصمیم‌گیری و اعتماد کاربر.",
+      problem:
+        "پلتفرم‌های مالی و معاملاتی نیازمند سلسله‌مراتب اطلاعاتی دقیق، سرعت بالا در تعامل و یکپارچگی کامل در تمامی سطوح محصول هستند.",
+      contributions: [
+        "هدایت طراحی محصول در جریان‌های کلیدی کاربران و رابط‌های پلتفرم.",
+        "تقویت معماری کامپوننت‌ها، سیستم توکن‌ها و هم‌راستایی تیم طراحی و فنی.",
+        "مستندسازی کامل کیس‌استادی و جزئیات بصری در حال تکمیل است.",
+      ],
+      outcomes: [
+        "همکاری فعال فعلی — جزئیات کامل این صفحه به‌مرور تکمیل خواهد شد.",
+      ],
+    },
+  },
+  {
+    slug: "bejatoo",
+    featured: false,
+    cover: null,
+    categories: ["Product Design", "Consumer"],
+    tags: ["Marketplace", "Freelance", "UX/UI"],
+    protectedCaseStudy: true,
+    en: {
+      title: "Bejatoo",
+      domain: "Consumer Digital Product · Freelance",
+      role: "Product Designer (Freelance)",
+      timeline: "Freelance Engagement",
+      scope: "End-to-End UX Flows & Visual Interface Design",
+      shortDesc:
+        "Independent freelance product design engagement shaping core user journeys, information architecture, and interface components for Bejatoo.",
+      problem:
+        "Translating product goals into a clear, approachable digital experience with consistent UI patterns ready for rapid engineering delivery.",
+      contributions: [
+        "Designed core user flows, wireframes, and high-fidelity interface screens.",
+        "Established reusable UI patterns to keep implementation clean and consistent.",
+        "Full case study details and visuals are ready to be expanded here.",
+      ],
+      outcomes: [
+        "Delivered developer-ready product flows and interface foundations.",
+      ],
+    },
+    fa: {
+      title: "بجاتو (Bejatoo)",
+      domain: "محصول دیجیتال · همکاری فریلنسری",
+      role: "طراح محصول (فریلنس)",
+      timeline: "پروژه فریلنسری",
+      scope: "طراحی جریان‌های کاربری و رابط کاربری",
+      shortDesc:
+        "همکاری مستقل طراحی محصول برای شکل‌دهی جریان‌های اصلی کاربر، معماری اطلاعات و رابط کاربری بجاتو.",
+      problem:
+        "تبدیل اهداف محصول به یک تجربه کاربری شفاف، ساده و آماده پیاده‌سازی سریع توسط تیم فنی.",
+      contributions: [
+        "طراحی جریان‌های اصلی کاربر، وایرفریم‌ها و صفحات نهایی رابط کاربری.",
+        "ایجاد الگوهای رابط کاربری قابل استفاده مجدد برای انسجام در توسعه.",
+        "جزئیات کامل‌تر این پروژه آماده تکمیل در این صفحه است.",
+      ],
+      outcomes: [
+        "تحویل جریان‌های محصول و زیرساخت UI آماده پیاده‌سازی.",
+      ],
+    },
+  },
+  {
+    slug: "accounting-software",
+    featured: false,
+    cover: null,
+    categories: ["B2B", "Product Design", "Fintech"],
+    tags: ["Accounting UX", "Enterprise", "Freelance"],
+    protectedCaseStudy: true,
+    en: {
+      title: "Accounting Platforms (Hulo / Parmis)",
+      domain: "Enterprise Accounting · B2B Freelance",
+      role: "Product Designer (Freelance)",
+      timeline: "Freelance Engagement",
+      scope: "Complex Data Tables, Financial Flows & Usability Simplification",
+      shortDesc:
+        "Freelance UX/UI product design work on accounting software workflows, focusing on clarity in dense financial tables, invoicing, and reporting.",
+      problem:
+        "Traditional accounting suites often overwhelm business operators with dense forms, legacy navigation, and high cognitive load during daily financial tasks.",
+      contributions: [
+        "Simplified high-density accounting workflows, forms, and reporting views.",
+        "Improved scannability and hierarchy across tables and financial entry screens.",
+        "Detailed screens and workflow breakdowns are ready to be expanded here.",
+      ],
+      outcomes: [
+        "Delivered cleaner, more structured accounting interfaces tailored for everyday operators.",
+      ],
+    },
+    fa: {
+      title: "نرم‌افزارهای حسابداری (هلو / پارمیس)",
+      domain: "نرم‌افزار حسابداری و مالی · B2B فریلنس",
+      role: "طراح محصول (فریلنس)",
+      timeline: "پروژه فریلنسری",
+      scope: "جداول داده مالی، فاکتورها و ساده‌سازی تجربه کاربری",
+      shortDesc:
+        "طراحی تجربه و رابط کاربری در پروژه‌های نرم‌افزار حسابداری با تمرکز بر خوانایی جداول مالی، ثبت اسناد و گزارش‌گیری.",
+      problem:
+        "نرم‌افزارهای حسابداری سنتی معمولاً به دلیل فرم‌های شلوغ و ساختار پیچیده، بار شناختی بالایی برای کاربران روزمره ایجاد می‌کنند.",
+      contributions: [
+        "ساده‌سازی جریان‌های پرتراکم حسابداری، فرم‌ها و صفحات گزارش‌گیری.",
+        "بهبود خوانایی و سلسله‌مراتب بصری در جداول و صفحات ثبت سند.",
+        "جزئیات و تصاویر کامل این پروژه آماده تکمیل در این صفحه است.",
+      ],
+      outcomes: [
+        "ارائه رابط‌های ساختارمندتر و شفاف‌تر برای کاربران روزمره سیستم‌های مالی.",
+      ],
+    },
+  },
 ];
 
 export function getProjectBySlug(slug) {
