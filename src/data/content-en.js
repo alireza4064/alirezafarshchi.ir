@@ -186,6 +186,17 @@ export const CONTENT_EN = {
       "I've worked with teams of different sizes and across different domains, contributing to product experiences, design systems, and the processes behind them.",
     entries: [
       {
+        company: "DeltaFX",
+        role: "Senior Product Designer",
+        period: "Present",
+        domain: "Fintech · Trading & Financial Platforms",
+        location: "Remote",
+        highlights: [
+          "Designing coherent trading, client-portal, and financial product experiences across complex multi-surface workflows.",
+          "Strengthening component libraries, design tokens, and cross-functional collaboration between product and engineering.",
+        ],
+      },
+      {
         company: "Farano",
         role: "Senior Product Designer",
         period: "Mar 2026 — Present",

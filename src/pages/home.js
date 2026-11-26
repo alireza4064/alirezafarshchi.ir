@@ -16,22 +16,16 @@ import { renderProjectCard } from "../components/project-card.js";
 import { PRINCIPLE_GLYPHS } from "../components/glyphs.js";
 import { renderHeroFigmaStage, initHeroFigmaStage } from "../components/hero-figma-stage.js";
 
+/* Curated Flagship Products & Companies in Strategic Impact Order */
 const MARQUEE_BRANDS = [
+  { name: "DELTAFX", slug: "iranserver", hrefOverride: "#experience", style: "tracked" },
   { name: "FARANO", slug: "farano", style: "tracked" },
   { name: "IranServer", slug: "iranserver", style: "bold" },
-  { name: "MADE IN IRAN", slug: "made-in-iran", style: "editorial" },
-  { name: "PART SOFTWARE", slug: "part-design-system", style: "tracked" },
   { name: "Signal", slug: "signal", style: "italic" },
+  { name: "MADE IN IRAN", slug: "made-in-iran", style: "editorial" },
   { name: "MERAT · ARA", slug: "merat-ara", style: "tracked" },
   { name: "Word+", slug: "word-plus", style: "bold" },
-  { name: "Kanon Ghazaei", slug: "kanon-ghazaei", style: "editorial" },
-  { name: "DadeNegar", slug: "dade-negar", style: "bold" },
-  { name: "Val-e-Asr", slug: "val-e-asr", style: "editorial" },
-  { name: "PULSE", slug: "pulse", style: "tracked" },
-  { name: "Avanegar", slug: "avanegar-avasho", style: "italic" },
-  { name: "Freedom Park", slug: "freedom-park", style: "editorial" },
-  { name: "Khiaar", slug: "khiaar", style: "bold" },
-  { name: "Nevise Negar", slug: "nevise-negar", style: "editorial" },
+  { name: "PART SOFTWARE", slug: "part-design-system", style: "tracked" },
 ];
 
 function renderAudiencePanelContent(item, content) {
@@ -145,12 +139,10 @@ export function renderHomePage(content) {
   const initialExp = content.experience.entries[0];
 
   return `
-    <!-- Section 02A — Full-Viewport Symbol Studio Opening Fold + Bliss Blue Backdrop -->
+    <!-- Section 02A — Full-Viewport Symbol Studio Opening Fold + Bliss Fluid Blue Aurora Canvas -->
     <section class="hero hero--bliss" aria-labelledby="hero-title">
       <div class="hero-bliss-bg" aria-hidden="true">
-        <div class="hero-bliss-orb hero-bliss-orb--1"></div>
-        <div class="hero-bliss-orb hero-bliss-orb--2"></div>
-        <div class="hero-bliss-orb hero-bliss-orb--3"></div>
+        <canvas class="hero-bliss-canvas" id="hero-bliss-canvas"></canvas>
       </div>
 
       <div class="hero-fold">
@@ -189,13 +181,13 @@ export function renderHomePage(content) {
       </div>
     </section>
 
-    <!-- Bliss-Style Minimal Clickable Companies & Products Marquee -->
-    <div class="brand-marquee-band" dir="ltr" aria-label="${isFa ? "شرکت‌ها و محصولاتی که روی آن‌ها کار کرده‌ام" : "Companies and products I have worked on"}">
+    <!-- Bliss-Style Curated Flagship Marquee (Seamless, No Harsh Divider) -->
+    <div class="brand-marquee-band" dir="ltr" aria-label="${isFa ? "شرکت‌ها و محصولات منتخب" : "Selected companies and flagship products"}">
       <div class="brand-marquee-track">
-        ${[...MARQUEE_BRANDS, ...MARQUEE_BRANDS]
+        ${[...MARQUEE_BRANDS, ...MARQUEE_BRANDS, ...MARQUEE_BRANDS]
           .map(
             (b) => `
-          <a class="brand-wordmark brand-wordmark--${b.style}" href="${prefix}/work/${b.slug}/">
+          <a class="brand-wordmark brand-wordmark--${b.style}" href="${b.hrefOverride || `${prefix}/work/${b.slug}/`}">
             <span class="brand-wordmark__glyph" aria-hidden="true"></span>
             <span>${b.name}</span>
           </a>
@@ -205,8 +197,8 @@ export function renderHomePage(content) {
       </div>
     </div>
 
-    <!-- Section 03 — Compact Tabbed Audience Selector (Billy Sweeney-inspired) -->
-    <section class="section section--bordered" id="audience" aria-labelledby="audience-heading">
+    <!-- Section 03 — Orchid-Style Stacked Card Deck Audience Selector -->
+    <section class="section" id="audience" aria-labelledby="audience-heading">
       <div class="container">
         <div class="section-header reveal">
           <div class="eyebrow">${content.audience.eyebrow}</div>
@@ -223,9 +215,10 @@ export function renderHomePage(content) {
               role="tab"
               class="audience-tab"
               data-audience-id="${item.id}"
+              data-audience-index="${idx}"
               aria-selected="${idx === 0 ? "true" : "false"}"
             >
-              <span class="audience-tab__dot" aria-hidden="true"></span>
+              <span class="audience-tab__num">0${idx + 1}</span>
               <span>${item.title}</span>
             </button>
           `
@@ -233,8 +226,13 @@ export function renderHomePage(content) {
             .join("")}
         </div>
 
-        <div class="audience-panel reveal" id="audience-panel" aria-live="polite">
-          ${renderAudiencePanelContent(initialAudience, content)}
+        <div class="orchid-stack reveal" id="orchid-stack">
+          <div class="orchid-stack__layer orchid-stack__layer--back2" aria-hidden="true"></div>
+          <div class="orchid-stack__layer orchid-stack__layer--back1" aria-hidden="true"></div>
+          <div class="audience-panel orchid-stack__front" id="audience-panel" aria-live="polite">
+            <div class="orchid-card-badge" id="orchid-card-num">01 · ${initialAudience.title}</div>
+            ${renderAudiencePanelContent(initialAudience, content)}
+          </div>
         </div>
       </div>
     </section>
@@ -345,14 +343,43 @@ export function renderHomePage(content) {
       </div>
     </section>
 
-    <!-- Section 07 — About -->
+    <!-- Section 07 — Elevated Bento About Me -->
     <section class="section section--bordered" id="about" aria-labelledby="about-heading">
       <div class="container about-grid">
         <div class="about-body reveal">
+          <div class="about-portrait-chip">
+            <img src="/assets/alireza-portrait.jpg" alt="${PROFILE.name}" width="48" height="48" loading="lazy" />
+            <div>
+              <div style="font-weight:700;font-size:0.92rem;color:var(--ink);">
+                ${isFa ? "علیرضا محمدزاده فرشچی" : PROFILE.name}
+              </div>
+              <div style="font-size:0.78rem;color:var(--ink-muted);">
+                ${isFa ? "طراح ارشد محصول در DeltaFX · +۵ سال تجربه" : "Senior Product Designer at DeltaFX · 5+ Years"}
+              </div>
+            </div>
+          </div>
+
           <div class="eyebrow">${content.about.eyebrow}</div>
           <h2 class="section-title" id="about-heading">${content.about.heading}</h2>
-          ${content.about.paragraphs.map((p) => `<p>${p}</p>`).join("")}
-          <div style="margin-top:26px;">
+          <p>${content.about.paragraphs[0]}</p>
+          <p>${content.about.paragraphs[1]}</p>
+
+          <div class="about-bento-stats">
+            <div class="about-stat-card">
+              <strong>5+</strong>
+              <span>${isFa ? "سال تجربه طراحی محصول و سیستم" : "Years in Product & Systems"}</span>
+            </div>
+            <div class="about-stat-card">
+              <strong>20+</strong>
+              <span>${isFa ? "محصول منتشرشده در فینتک، ابر و بازی" : "Shipped Products & Systems"}</span>
+            </div>
+            <div class="about-stat-card">
+              <strong>IBM · Part</strong>
+              <span>${isFa ? "مدرس UI/UX و منتور طراحان" : "Certified & UI/UX Instructor"}</span>
+            </div>
+          </div>
+
+          <div style="margin-top:24px;">
             <a class="btn btn--secondary" href="${prefix}/about/">
               <span>${content.about.moreCta}</span>
               <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
@@ -361,19 +388,24 @@ export function renderHomePage(content) {
         </div>
 
         <div class="reveal">
-          <div class="sculpture-frame sculpture-frame--landscape">
-            <img
-              src="/assets/sculpture-about.jpg"
-              alt="${content.about.sculptureAlt}"
-              loading="lazy"
-              decoding="async"
-            />
+          <div class="about-visual-card">
+            <div class="sculpture-frame sculpture-frame--landscape">
+              <img
+                src="/assets/sculpture-about.jpg"
+                alt="${content.about.sculptureAlt}"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="about-visual-caption">
+              <span>${isFa ? "تفکر سیستمی · تحقیق کاربر · گردش‌کار هوشمند AI" : "Systems Thinking · User Research · AI Workflows"}</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section 08 — Bliss Agency-Inspired Contact Section (Starfield + Live Telegram Form) -->
+    <!-- Section 08 — Bliss Agency-Inspired Contact Section (Companies Only + Fixed Form) -->
     <section class="section section--bordered" id="contact" aria-labelledby="contact-heading">
       <div class="container">
         <div class="bliss-contact reveal" id="contact-box">
@@ -385,14 +417,15 @@ export function renderHomePage(content) {
             <p class="bliss-contact__desc">${content.contact.body}</p>
 
             <div class="bliss-contact__meta">
-              <div class="bliss-contact__label">${isFa ? "تجربه همکاری با تیم‌ها و محصولات" : "Worked with teams & products"}</div>
+              <div class="bliss-contact__label">${isFa ? "شرکت‌هایی که با آن‌ها همکاری داشته‌ام" : "Companies I've worked with"}</div>
               <div class="bliss-contact__logos">
+                <span>DeltaFX</span>
                 <span>Farano</span>
                 <span>IranServer</span>
                 <span>Made In Iran</span>
-                <span>Part Software</span>
-                <span>Signal</span>
-                <span>Word+</span>
+                <span>Part Software Group</span>
+                <span>Kanon Ghazaei</span>
+                <span>Bejatoo</span>
               </div>
             </div>
 
@@ -412,8 +445,8 @@ export function renderHomePage(content) {
                 <input id="bf-name" type="text" required placeholder="${isFa ? "نام شما" : "Your name"}" />
               </div>
               <div class="bliss-field">
-                <label for="bf-contact">${isFa ? "ایمیل یا آیدی تلگرام" : "Work email or Telegram"}</label>
-                <input id="bf-contact" type="text" required placeholder="${isFa ? "name@company.com یا @username" : "name@company.com or @username"}" />
+                <label for="bf-contact">${isFa ? "ایمیل یا تلگرام" : "Email or Telegram"}</label>
+                <input id="bf-contact" type="text" required placeholder="${isFa ? "ایمیل یا @آیدی" : "you@mail.com / @id"}" />
               </div>
             </div>
 
@@ -443,6 +476,54 @@ export function renderHomePage(content) {
       </div>
     </section>
   `;
+}
+
+function initHeroBlissCanvas() {
+  const canvas = document.getElementById("hero-bliss-canvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Low-res offscreen grid upscaled smoothly by CSS blur = silky 60fps & <1% CPU!
+  const W = 260;
+  const H = 160;
+  canvas.width = W;
+  canvas.height = H;
+
+  const blobs = [
+    { x: 0.22, y: 0.28, r: 0.56, sx: 0.00055, sy: 0.00042, ph: 0.0, color: "rgba(22, 94, 246, 0.72)" },
+    { x: 0.78, y: 0.24, r: 0.54, sx: 0.00048, sy: 0.00062, ph: 2.1, color: "rgba(87, 193, 255, 0.62)" },
+    { x: 0.50, y: 0.62, r: 0.58, sx: 0.00038, sy: 0.00051, ph: 4.0, color: "rgba(18, 66, 196, 0.58)" },
+    { x: 0.36, y: 0.44, r: 0.42, sx: 0.00066, sy: 0.00036, ph: 1.2, color: "rgba(185, 200, 255, 0.45)" },
+  ];
+
+  let lastFrame = 0;
+  function render(now) {
+    if (now - lastFrame < 32) {
+      if (!prefersReduced) requestAnimationFrame(render);
+      return;
+    }
+    lastFrame = now;
+
+    ctx.clearRect(0, 0, W, H);
+    const t = prefersReduced ? 0 : now;
+
+    for (const b of blobs) {
+      const cx = (b.x + Math.sin(t * b.sx + b.ph) * 0.16) * W;
+      const cy = (b.y + Math.cos(t * b.sy + b.ph) * 0.14) * H;
+      const rad = b.r * Math.max(W, H);
+      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
+      grad.addColorStop(0, b.color);
+      grad.addColorStop(1, "rgba(22, 94, 246, 0)");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+    }
+
+    if (!prefersReduced) requestAnimationFrame(render);
+  }
+
+  requestAnimationFrame(render);
 }
 
 function initConceptzillaTimeline() {
@@ -553,14 +634,16 @@ function initContactStarfieldCanvas() {
 }
 
 export function initHomePage(content) {
-  // 1. Compact Tabbed Audience Selector
+  // 1. Orchid-Style Stacked Card Deck Audience Selector
   const audienceTabs = document.querySelectorAll("[data-audience-id]");
   const audiencePanel = document.getElementById("audience-panel");
+  const orchidStack = document.getElementById("orchid-stack");
   if (audienceTabs.length && audiencePanel) {
     let currentId = content.audience.items[0].id;
     audienceTabs.forEach((tab) => {
       tab.addEventListener("click", () => {
         const nextId = tab.getAttribute("data-audience-id");
+        const nextIdx = Number(tab.getAttribute("data-audience-index")) || 0;
         if (!nextId || nextId === currentId) return;
         const nextItem = content.audience.items.find((i) => i.id === nextId);
         if (!nextItem) return;
@@ -569,11 +652,14 @@ export function initHomePage(content) {
         audienceTabs.forEach((t) =>
           t.setAttribute("aria-selected", String(t.getAttribute("data-audience-id") === nextId))
         );
-        audiencePanel.classList.add("is-switching");
+        orchidStack?.classList.add("is-stacking");
         window.setTimeout(() => {
-          audiencePanel.innerHTML = renderAudiencePanelContent(nextItem, content);
-          audiencePanel.classList.remove("is-switching");
-        }, 150);
+          audiencePanel.innerHTML = `
+            <div class="orchid-card-badge">0${nextIdx + 1} · ${nextItem.title}</div>
+            ${renderAudiencePanelContent(nextItem, content)}
+          `;
+          orchidStack?.classList.remove("is-stacking");
+        }, 180);
       });
     });
   }
@@ -675,7 +761,8 @@ export function initHomePage(content) {
     });
   }
 
-  // 5. Initialize Figma UI3 Workspace, Conceptzilla Scroll Timeline & Contact Starfield
+  // 5. Initialize Bliss Fluid Hero Canvas, Figma UI3 Workspace, Conceptzilla Timeline & Contact Starfield
+  initHeroBlissCanvas();
   initHeroFigmaStage();
   initConceptzillaTimeline();
   initContactStarfieldCanvas();

@@ -55,6 +55,13 @@ function answerFromKnowledgeBase(query, lang) {
   const q = query.toLowerCase();
   const isFa = lang === "fa" || /[\u0600-\u06FF]/.test(query);
 
+  // DeltaFX
+  if (/(deltafx|delta|trading|forex|دلتا|معاملاتی)/.test(q)) {
+    return isFa
+      ? "علیرضا در حال حاضر به‌عنوان **طراح ارشد محصول در DeltaFX** (حوزه فینتک و پلتفرم معاملاتی) روی طراحی تجربه‌های یکپارچه پنل مشتریان، جریان‌های پیچیده مالی و توسعه سیستم طراحی فعالیت می‌کند."
+      : "Alireza currently works as a **Senior Product Designer at DeltaFX** (Fintech & Trading Platforms), focusing on client-portal experiences, complex financial workflows, and scalable design systems.";
+  }
+
   // IranServer
   if (/(iranserver|hosting|vps|bounce|clarity|ga4|ایران\s?سرور|هاست|پرش)/.test(q)) {
     return isFa
@@ -155,7 +162,7 @@ export function renderAssistantAndChat(content) {
       </svg>
     </button>
 
-    <!-- Floating Assistant & Live Chat Launcher -->
+    <!-- Floating Assistant Launcher (Concise Microcopy) -->
     <button
       type="button"
       class="assistant-fab"
@@ -164,7 +171,7 @@ export function renderAssistantAndChat(content) {
       aria-controls="assistant-drawer"
     >
       <span class="assistant-fab__dot" aria-hidden="true"></span>
-      <span>${isFa ? "دستیار هوش مصنوعی و چت" : "AI Assistant & Chat"}</span>
+      <span>${isFa ? "دستیار هوشمند" : "Ask AI"}</span>
     </button>
 
     <!-- Dual-Mode Slide-Over Drawer (AI Resume Assistant + Telegram Live Chat) -->
