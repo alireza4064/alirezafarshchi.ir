@@ -411,13 +411,6 @@ export function renderHomePage(content) {
             ${renderExperienceDetail(initialExp, false, content)}
           </div>
         </div>
-
-        <div class="section-footer-cta reveal">
-          <a class="btn btn--secondary" href="${PROFILE.resumeUrl}" target="_blank" rel="noopener noreferrer">
-            <span>${content.experience.cta}</span>
-            <span class="btn__arrow" aria-hidden="true">${content.arrow}</span>
-          </a>
-        </div>
       </div>
     </section>
 
@@ -629,35 +622,39 @@ function initHeroBlissCanvas() {
 
     // Evaluates Bliss-style sweeping volumetric silk light ribbons anchored toward upper-right
     vec2 silkField(vec2 p, float t) {
-      // Rotate ~32deg so primary light folds fan diagonally from upper-right to left/mid
-      mat2 R = mat2(0.848, -0.530, 0.530, 0.848);
-      vec2 q = R * (p - vec2(0.24, 0.28));
+      // Gently drifting upper-right light focus for lively, unmistakable organic flow
+      vec2 drift = vec2(sin(t * 0.42) * 0.14, cos(t * 0.34) * 0.11);
+      float ang = 0.56 + sin(t * 0.24) * 0.08;
+      float ca = cos(ang);
+      float sa = sin(ang);
+      mat2 R = mat2(ca, -sa, sa, ca);
+      vec2 q = R * (p - (vec2(0.24, 0.28) + drift));
 
-      // Slow, broad, fluid organic undulation
-      float warp1 = fbm(q * 1.15 + vec2(t * 0.11, -t * 0.08));
-      float warp2 = fbm(q * 1.55 - vec2(t * 0.07, t * 0.12) + warp1 * 0.75);
+      // Dynamic, fluid silk undulation
+      float warp1 = fbm(q * 1.18 + vec2(t * 0.28, -t * 0.22));
+      float warp2 = fbm(q * 1.62 - vec2(t * 0.20, t * 0.30) + warp1 * 0.85);
 
       // Ribbon 1: Sweeping bright upper-diagonal caustic crest (upper-right -> mid-left)
-      float d1 = q.y + 0.12 * sin(q.x * 2.1 - t * 0.36) + (warp1 - 0.5) * 0.62;
-      float crest1 = exp(-abs(d1) * 4.6);
-      float glow1  = exp(-abs(d1) * 1.55);
+      float d1 = q.y + 0.22 * sin(q.x * 2.15 - t * 0.82) + (warp1 - 0.5) * 0.78;
+      float crest1 = exp(-abs(d1) * 4.4);
+      float glow1  = exp(-abs(d1) * 1.50);
 
       // Ribbon 2: Secondary curving veil fanning down toward center-right
-      vec2 q2 = mat2(0.45, 0.89, -0.89, 0.45) * (p - vec2(0.32, 0.18));
-      float d2 = q2.y + 0.15 * cos(q2.x * 1.85 + t * 0.28) + (warp2 - 0.5) * 0.72;
-      float crest2 = exp(-abs(d2) * 3.5);
-      float glow2  = exp(-abs(d2) * 1.25);
+      vec2 q2 = mat2(0.45, 0.89, -0.89, 0.45) * (p - (vec2(0.32, 0.18) - drift * 0.65));
+      float d2 = q2.y + 0.24 * cos(q2.x * 1.90 + t * 0.68) + (warp2 - 0.5) * 0.84;
+      float crest2 = exp(-abs(d2) * 3.4);
+      float glow2  = exp(-abs(d2) * 1.22);
 
       // Ribbon 3: Broad upper-right atmospheric fan
-      float d3 = (q.y - 0.34) + (warp2 - 0.5) * 0.55;
-      float glow3 = exp(-abs(d3) * 2.0) * 0.68;
+      float d3 = (q.y - 0.32) + 0.14 * sin(q.x * 1.6 + t * 0.55) + (warp2 - 0.5) * 0.65;
+      float glow3 = exp(-abs(d3) * 1.95) * 0.72;
 
       // Spotlight falloff anchored at upper-right so lower-left & bottom stay deep obsidian
-      float falloff = smoothstep(1.62, 0.06, length((p - vec2(0.36, 0.44)) * vec2(0.86, 1.08)));
+      float falloff = smoothstep(1.68, 0.05, length((p - (vec2(0.34, 0.42) + drift * 0.5)) * vec2(0.84, 1.06)));
       float bottomDark = smoothstep(-0.78, 0.24, p.y);
 
-      float intensity = (glow1 * 0.68 + glow2 * 0.56 + glow3 * 0.48) * falloff * (0.28 + 0.72 * bottomDark);
-      float hotCore   = (crest1 * 0.82 + crest2 * 0.66) * falloff * (0.35 + 0.65 * bottomDark);
+      float intensity = (glow1 * 0.70 + glow2 * 0.58 + glow3 * 0.50) * falloff * (0.28 + 0.72 * bottomDark);
+      float hotCore   = (crest1 * 0.85 + crest2 * 0.68) * falloff * (0.35 + 0.65 * bottomDark);
 
       return vec2(intensity, hotCore);
     }
@@ -1126,7 +1123,7 @@ function initAboutDotPortrait() {
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const img = new Image();
-  img.src = "/assets/alireza-portrait.jpg";
+  img.src = "/assets/alireza-portrait-cutout.jpg";
 
   let dots = [];
   let width = 0;
@@ -1148,7 +1145,6 @@ function initAboutDotPortrait() {
     canvas.height = Math.floor(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    // Draw portrait onto offscreen canvas with cover framing focused on face
     const off = document.createElement("canvas");
     off.width = width;
     off.height = height;
@@ -1166,29 +1162,26 @@ function initAboutDotPortrait() {
     } else {
       dw = width;
       dh = dw / imgRatio;
-      dy = (height - dh) * 0.22;
+      dy = (height - dh) * 0.18;
     }
     octx.drawImage(img, dx, dy, dw, dh);
     const pixels = octx.getImageData(0, 0, width, height).data;
 
-    const gap = width < 340 ? 6 : 7;
+    const gap = width < 340 ? 6 : 6.5;
     dots = [];
 
     for (let y = Math.floor(gap * 0.5); y < height; y += gap) {
       for (let x = Math.floor(gap * 0.5); x < width; x += gap) {
-        const i = (y * width + x) * 4;
+        const i = (Math.floor(y) * width + Math.floor(x)) * 4;
         const r = pixels[i];
         const g = pixels[i + 1];
         const b = pixels[i + 2];
         const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 
-        if (lum < 0.09) continue;
+        // Pure black background cutout is skipped -> ONLY Alireza is rendered!
+        if (lum < 0.08) continue;
 
-        const baseRadius = 0.75 + Math.pow(lum, 0.85) * (gap * 0.36);
-        // Blend authentic portrait luminance with subtle signature Cobalt/Sky highlight tint
-        const cr = Math.min(255, Math.round(r * 0.72 + 45 * lum + 18));
-        const cg = Math.min(255, Math.round(g * 0.76 + 75 * lum + 24));
-        const cb = Math.min(255, Math.round(b * 0.88 + 115 * lum + 38));
+        const baseRadius = 0.72 + Math.pow(lum, 0.85) * (gap * 0.36);
 
         dots.push({
           ox: x,
@@ -1198,8 +1191,8 @@ function initAboutDotPortrait() {
           vx: 0,
           vy: 0,
           r: baseRadius,
-          phase: (x * 0.03 + y * 0.025),
-          color: `rgb(${cr},${cg},${cb})`,
+          lum,
+          phase: x * 0.03 + y * 0.025,
         });
       }
     }
@@ -1207,36 +1200,33 @@ function initAboutDotPortrait() {
 
   function renderFrame() {
     if (isVisible && dots.length) {
-      ctx.fillStyle = "#080b14";
+      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      ctx.fillStyle = isDark ? "#0d1018" : "#f3f5fa";
       ctx.fillRect(0, 0, width, height);
 
-      // Decay scroll wave velocity smoothly
       scrollVelocity *= 0.88;
 
       for (let i = 0; i < dots.length; i++) {
         const d = dots[i];
         if (!prefersReduced) {
-          // Scroll-reactive organic wave impulse
           if (Math.abs(scrollVelocity) > 0.08) {
             d.vx += Math.sin(d.phase + d.oy * 0.02) * scrollVelocity * 0.14;
             d.vy += Math.cos(d.phase + d.ox * 0.02) * scrollVelocity * 0.18;
           }
 
-          // Mouse repulsion ripple
           if (mouse.active) {
             const dx = d.x - mouse.x;
             const dy = d.y - mouse.y;
             const distSq = dx * dx + dy * dy;
-            const radius = 84;
+            const radius = 86;
             if (distSq < radius * radius && distSq > 0.1) {
               const dist = Math.sqrt(distSq);
-              const force = (1 - dist / radius) * 5.2;
+              const force = (1 - dist / radius) * 5.4;
               d.vx += (dx / dist) * force;
               d.vy += (dy / dist) * force;
             }
           }
 
-          // Spring back to original portrait pixel coordinate
           d.vx += (d.ox - d.x) * 0.11;
           d.vy += (d.oy - d.y) * 0.11;
           d.vx *= 0.78;
@@ -1246,9 +1236,25 @@ function initAboutDotPortrait() {
         }
 
         const disp = Math.abs(d.x - d.ox) + Math.abs(d.y - d.oy);
+        const radius = d.r + Math.min(1.15, disp * 0.04);
         ctx.beginPath();
-        ctx.arc(d.x, d.y, d.r + Math.min(1.1, disp * 0.04), 0, Math.PI * 2);
-        ctx.fillStyle = disp > 4 ? "#57c1ff" : d.color;
+        ctx.arc(d.x, d.y, radius, 0, Math.PI * 2);
+
+        // Cohesive Monochrome + Portfolio Cobalt/Sky Blue Palette (adapts to Light & Dark!)
+        if (disp > 4.2) {
+          ctx.fillStyle = isDark ? "#57c1ff" : "#165ef6";
+        } else if (isDark) {
+          const v = Math.round(96 + d.lum * 150);
+          const b = Math.min(255, Math.round(v + 28));
+          ctx.fillStyle = `rgb(${Math.round(v * 0.88)},${Math.round(v * 0.94)},${b})`;
+        } else {
+          // Light mode: crisp editorial graphite-cobalt halftone dots
+          const inv = 1 - d.lum * 0.65;
+          const rC = Math.round(18 + (1 - inv) * 44);
+          const gC = Math.round(30 + (1 - inv) * 78);
+          const bC = Math.round(64 + (1 - inv) * 165);
+          ctx.fillStyle = `rgb(${rC},${gC},${bC})`;
+        }
         ctx.fill();
       }
     }
