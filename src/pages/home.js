@@ -1376,7 +1376,13 @@ export function initAboutDotPortrait() {
     let dh = height;
     let dx = 0;
     let dy = 0;
-    if (imgRatio > boxRatio) {
+    if (boxRatio > 1.45) {
+      // Wide full-bleed banner (e.g. /about page): contain-fit & center so full portrait is visible!
+      dh = height * 0.92;
+      dw = dh * imgRatio;
+      dx = (width - dw) * 0.5;
+      dy = height * 0.04;
+    } else if (imgRatio > boxRatio) {
       dh = height;
       dw = dh * imgRatio;
       dx = (width - dw) * 0.5;
@@ -1388,7 +1394,8 @@ export function initAboutDotPortrait() {
     octx.drawImage(img, dx, dy, dw, dh);
     const pixels = octx.getImageData(0, 0, width, height).data;
 
-    cell = width < 340 ? 5.2 : 5.6;
+    // Adaptive cell pitch keeps 60fps silky smooth even on 1440px+ full-width banners!
+    cell = width > 960 ? 8.6 : width > 640 ? 7.2 : width < 340 ? 5.2 : 5.6;
     cols = Math.ceil(width / cell);
     rows = Math.ceil(height / cell);
     const total = cols * rows;
@@ -1469,6 +1476,9 @@ export function initAboutDotPortrait() {
           const t2 = d2 < st.trailLen * 0.75 ? 1 - d2 / (st.trailLen * 0.75) : 0;
           const trail = Math.max(t1, t2 * 0.72);
           const isHead = d1 < 1.15 || d2 < 1.05;
+
+          // Skip near-empty background cells on wide banners to keep 60fps silky smooth
+          if (lum === 0 && trail < 0.06 && width > 640) continue;
 
           const baseY = r * cell + cell * 0.5;
 
