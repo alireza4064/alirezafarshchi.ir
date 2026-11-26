@@ -1523,51 +1523,56 @@ function initAboutDotPortrait() {
           const ch = CODE_CHARS[charIdx];
 
           if (lum > 0) {
-            const alpha = Math.min(1, 0.36 + lum * 0.64 + trail * 0.22);
+            const alpha = isDark
+              ? Math.min(1, 0.36 + lum * 0.64 + trail * 0.22)
+              : Math.min(0.94, 0.46 + Math.pow(lum, 0.78) * 0.48 + trail * 0.14);
+
             if ((isHead && lum > 0.35) || disp > 9) {
-              ctx.fillStyle = isDark ? "#ffffff" : "#0b1222";
+              ctx.fillStyle = isDark ? "#ffffff" : "#0b225c";
             } else if (colorMode === "green") {
               if (isDark) {
                 const g = Math.min(255, Math.round(130 + lum * 125 + trail * 32));
                 const rC = Math.round(lum > 0.72 ? (lum - 0.72) * 380 : 12);
                 ctx.fillStyle = `rgba(${rC},${g},${Math.round(g * 0.55)},${alpha.toFixed(2)})`;
               } else {
-                ctx.fillStyle = `rgba(10,${Math.round(120 + (1 - lum) * 30)},68,${alpha.toFixed(2)})`;
+                const g = Math.round(92 + lum * 56);
+                ctx.fillStyle = `rgba(8,${g},58,${alpha.toFixed(2)})`;
               }
             } else if (colorMode === "mono") {
               const v = isDark
                 ? Math.min(255, Math.round(108 + lum * 147 + trail * 28))
-                : Math.max(10, Math.round(150 - lum * 140));
+                : Math.max(18, Math.round(108 - lum * 84));
               ctx.fillStyle = `rgba(${v},${v},${v},${alpha.toFixed(2)})`;
             } else {
               if (disp > 3.5 || (lum > 0.78 && trail > 0.45)) {
-                ctx.fillStyle = isDark ? `rgba(215, 240, 255, ${alpha.toFixed(2)})` : `rgba(14, 62, 184, ${alpha.toFixed(2)})`;
+                ctx.fillStyle = isDark ? `rgba(215, 240, 255, ${alpha.toFixed(2)})` : `rgba(10, 48, 158, ${alpha.toFixed(2)})`;
               } else if (isDark) {
                 const b = Math.min(255, Math.round(155 + lum * 100));
                 const g = Math.min(255, Math.round(92 + lum * 148));
                 const rC = Math.min(255, Math.round(36 + lum * 145));
                 ctx.fillStyle = `rgba(${rC},${g},${b},${alpha.toFixed(2)})`;
               } else {
-                const rC = Math.round(16 + (1 - lum) * 45);
-                const gC = Math.round(52 + (1 - lum) * 70);
-                const bC = Math.round(168 + (1 - lum) * 75);
+                const rC = Math.round(14 + (1 - lum) * 36);
+                const gC = Math.round(44 + (1 - lum) * 62);
+                const bC = Math.round(148 + lum * 86);
                 ctx.fillStyle = `rgba(${rC},${gC},${bC},${alpha.toFixed(2)})`;
               }
             }
           } else {
-            const bgAlpha = (0.055 + trail * (isDark ? 0.22 : 0.17)) * (isHead ? 1.35 : 1);
+            const bgAlpha = (isDark ? 0.055 : 0.045) + trail * (isDark ? 0.22 : 0.14);
+            const finalBg = bgAlpha * (isHead ? 1.3 : 1);
             if (colorMode === "green") {
               ctx.fillStyle = isDark
-                ? `rgba(0, 230, 118, ${bgAlpha.toFixed(3)})`
-                : `rgba(14, 138, 76, ${bgAlpha.toFixed(3)})`;
+                ? `rgba(0, 230, 118, ${finalBg.toFixed(3)})`
+                : `rgba(12, 128, 72, ${finalBg.toFixed(3)})`;
             } else if (colorMode === "mono") {
               ctx.fillStyle = isDark
-                ? `rgba(170, 182, 204, ${bgAlpha.toFixed(3)})`
-                : `rgba(60, 70, 90, ${bgAlpha.toFixed(3)})`;
+                ? `rgba(170, 182, 204, ${finalBg.toFixed(3)})`
+                : `rgba(55, 64, 82, ${finalBg.toFixed(3)})`;
             } else {
               ctx.fillStyle = isDark
-                ? `rgba(87, 193, 255, ${bgAlpha.toFixed(3)})`
-                : `rgba(22, 94, 246, ${bgAlpha.toFixed(3)})`;
+                ? `rgba(87, 193, 255, ${finalBg.toFixed(3)})`
+                : `rgba(22, 94, 246, ${finalBg.toFixed(3)})`;
             }
           }
 

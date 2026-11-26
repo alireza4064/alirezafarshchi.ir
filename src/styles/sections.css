@@ -1867,9 +1867,14 @@ html[dir="rtl"] .bliss-field select {
   gap: 5px;
   padding: 4px 6px;
   border-radius: 999px;
-  background: rgba(10, 12, 18, 0.72);
+  background: rgba(255, 255, 255, 0.84);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(20, 28, 52, 0.12);
+}
+
+[data-theme="dark"] .about-matrix-modes {
+  background: rgba(10, 12, 18, 0.72);
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
 .about-matrix-dot {
@@ -1886,8 +1891,12 @@ html[dir="rtl"] .bliss-field select {
 }
 
 .about-matrix-dot.is-active {
-  border-color: #ffffff;
+  border-color: #14161d;
   transform: scale(1.15);
+}
+
+[data-theme="dark"] .about-matrix-dot.is-active {
+  border-color: #ffffff;
 }
 
 .about-matrix-dot--blue { background: #165ef6; }
