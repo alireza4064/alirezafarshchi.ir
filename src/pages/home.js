@@ -143,20 +143,14 @@ function renderExperienceDetail(item, isFreelanceGroup, content) {
         <span>${item.domain}</span>
         <span>${item.location}</span>
       </div>
-      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-        ${
-          COMPANY_SLUGS[item.company]
-            ? `<a class="exp-detail__resume-link" href="/${content.lang}/work/${COMPANY_SLUGS[item.company]}/">
-                <span>${content.lang === "fa" ? "صفحه پروژه" : "Company page"}</span>
-                <span aria-hidden="true">${content.arrow}</span>
-              </a>`
-            : ""
-        }
-        <a class="exp-detail__resume-link" href="${PROFILE.resumeUrl}" data-open-resume="true">
-          <span>${content.experience.cta}</span>
-          <span aria-hidden="true">↗</span>
-        </a>
-      </div>
+      ${
+        COMPANY_SLUGS[item.company]
+          ? `<a class="exp-detail__resume-link" href="/${content.lang}/work/${COMPANY_SLUGS[item.company]}/">
+              <span>${content.lang === "fa" ? "صفحه پروژه" : "Company page"}</span>
+              <span aria-hidden="true">${content.arrow}</span>
+            </a>`
+          : ""
+      }
     </div>
   `;
 }

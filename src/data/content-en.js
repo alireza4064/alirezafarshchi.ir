@@ -39,7 +39,7 @@ export const CONTENT_EN = {
 
   hero: {
     eyebrow: "PRODUCT DESIGNER · SYSTEMS THINKER",
-    headline: "Making complex products clearer, more connected, and easier to scale.",
+    headline: "Genius is in simplicity. I design products that feel effortless.",
     intro: [
       "I'm Alireza, a Product Designer with 5+ years of experience across B2B, B2C, fintech, gaming, AI, and digital services.",
       "I bring product thinking, research, and systems design together to turn complex problems into thoughtful, scalable experiences.",
